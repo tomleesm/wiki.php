@@ -17,9 +17,29 @@ class WikiTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/')
-                    ->assertPathIs('/article/read/home')
+                    ->assertPathIs('/article/home')
                     ->assertSee('Welcome to Tom wiki. Use it to write something.')
                     ->assertSeeLink('Start writing');
+        });
+    }
+
+    /**
+     * 編輯條目後存檔
+     *
+     * @return void
+     */
+    public function testEditArticleAndSave()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/article/edit/home')
+                    ->assertSee('Home')
+                    ->assertPresent('textarea[name="articleContent"]')
+                    ->type('articleContent', 'test')
+                    ->press('Save')
+                    ->assertPathIs('/article/home')
+                    ->assertSee('test')
+                    ->assertDontSee('Welcome to Tom wiki. Use it to write something.')
+                    ->assertDontSeeLink('Start writing');
         });
     }
 }

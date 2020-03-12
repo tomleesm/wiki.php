@@ -8,10 +8,25 @@ class ArticleController extends Controller
 {
     /**
      * show an article page
-     * return Illuminate\Http\Response
      */
-    public function read()
+    public function show()
     {
-        return view('article.read');
+        return view('article.show');
+    }
+
+    /**
+     * edit an article
+     */
+    public function edit()
+    {
+        return view('article.edit');
+    }
+
+    /**
+     * update and article
+     */
+    public function update(Request $request)
+    {
+        return $request->articleContent;
     }
 }

@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/article/read/home', 'ArticleController@read')->name('article.read');
+Route::get('/article/home', 'ArticleController@show')->name('article.show');
+Route::get('/article/edit/home', 'ArticleController@edit')->name('article.edit');
+Route::match(['put', 'patch'], '/article/home', 'ArticleController@update')->name('article.update');
 
 Auth::routes();
 
