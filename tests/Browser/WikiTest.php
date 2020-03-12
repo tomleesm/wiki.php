@@ -37,6 +37,8 @@ class WikiTest extends DuskTestCase
                     ->type('articleContent', 'test')
                     ->press('Save')
                     ->assertPathIs('/article/home')
+                    // 重新連到 /article/home ，確定已經存到資料庫了
+                    ->visit('/article/home')
                     ->assertSee('test')
                     ->assertDontSee('Welcome to Tom wiki. Use it to write something.')
                     ->assertDontSeeLink('Start writing');
