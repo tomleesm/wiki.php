@@ -9,9 +9,9 @@ class ArticleController extends Controller
     /**
      * show an article page
      */
-    public function show()
+    public function show($title)
     {
-        return view('article.show');
+        return view('article.show')->with('title', $title);
     }
 
     /**
@@ -20,13 +20,5 @@ class ArticleController extends Controller
     public function edit()
     {
         return view('article.edit');
-    }
-
-    /**
-     * update and article
-     */
-    public function update(Request $request)
-    {
-        return $request->articleContent;
     }
 }
