@@ -1,5 +1,10 @@
 var MarkdownIt = require('markdown-it'),
-  md = new MarkdownIt();
+  md = new MarkdownIt({
+    html:         false,
+    langPrefix:   'highlight highlight-source-', // 配合 Markdown CSS
+    linkify:      true,
+    typographer:  true,
+  });
 
 // 抓取要轉換的 markdown
 var articleContent = document.querySelector('.article.content').innerHTML;

@@ -45910,7 +45910,13 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ (function(module, exports, __webpack_require__) {
 
 var MarkdownIt = __webpack_require__(/*! markdown-it */ "./node_modules/markdown-it/index.js"),
-    md = new MarkdownIt(); // 抓取要轉換的 markdown
+    md = new MarkdownIt({
+  html: false,
+  langPrefix: 'highlight highlight-source-',
+  // 配合 Markdown CSS
+  linkify: true,
+  typographer: true
+}); // 抓取要轉換的 markdown
 
 
 var articleContent = document.querySelector('.article.content').innerHTML; // markdown 轉成 HTML
