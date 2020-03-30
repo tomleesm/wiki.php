@@ -38,6 +38,8 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        // 設定跳轉回之前記住的 url
+        $this->redirectTo = session('backUrl');
     }
 
     /**
