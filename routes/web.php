@@ -15,8 +15,11 @@ Route::get('/article/{title}/edit', 'ArticleController@edit')->name('article.edi
 Route::match(['put', 'patch'], '/article/{title}', 'ArticleController@update')->name('article.update');
 
 // Authentication
+Route::get('input/username', 'Auth\LoginController@showInputUsernameForm');
+Route::post('input/username', 'Auth\LoginController@validateUsername');
+Route::get('input/password', 'Auth\LoginController@showInputPasswordForm');
 Route::get('login', 'Auth\LoginController@showLoginForm');
-Route::post('login', 'Auth\LoginController@login');
+Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::get('logout', 'Auth\LoginController@logout');
 
 // register
