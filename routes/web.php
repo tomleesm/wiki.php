@@ -11,7 +11,7 @@
 |
 */
 Route::get('/article/{title}', 'ArticleController@show')->name('article.show');
-Route::get('/article/{title}/edit', 'ArticleController@edit')->name('article.edit');
+Route::get('/article/{title}/edit', 'ArticleController@edit')->name('article.edit')->middleware('auth');
 Route::match(['put', 'patch'], '/article/{title}', 'ArticleController@update')->name('article.update');
 
 // Authentication
