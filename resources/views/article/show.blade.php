@@ -12,15 +12,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav nav-tabs mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Read</a>
+                        <a class="nav-link active" href="{{ route('article.show', [ 'title' => Str::slug($article->title) ]) }}">Read</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Edit</a>
+                        <a class="nav-link" href="{{ route('article.edit', [ 'title' => Str::slug($article->title) ]) }}">Edit</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sign in</a>
+                        <a class="nav-link" href="{{ url('/input/username')}}">Sign in</a>
                     </li>
                 </ul>
             </div>
