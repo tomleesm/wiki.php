@@ -12,10 +12,12 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav nav-tabs mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('article.show', [ 'title' => Str::slug($article->title) ]) }}">Read</a>
+                        {{-- request()->routeIs(): 判斷目前的路由名稱是否爲傳入的參數 --}}
+                        {{-- 這是爲了自動切換導覽列的 nav-tabes 是否顯示爲 active --}}
+                        <a class="nav-link @if (request()->routeIs('article.show')) active @endif" href="{{ route('article.show', [ 'title' => Str::slug($article->title) ]) }}">Read</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('article.edit', [ 'title' => Str::slug($article->title) ]) }}">Edit</a>
+                        <a class="nav-link @if (request()->routeIs('article.edit')) active @endif" href="{{ route('article.edit', [ 'title' => Str::slug($article->title) ]) }}">Edit</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav nav ml-auto">
