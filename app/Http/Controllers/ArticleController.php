@@ -21,7 +21,9 @@ class ArticleController extends Controller
      */
     public function edit($title)
     {
-        return view('article.edit')->with('title', $title);
+        $article = new \stdClass();
+        $article->title = $title;
+        return view('article.edit')->with('article', $article);
     }
 
     /**
