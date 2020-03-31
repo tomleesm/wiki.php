@@ -7,7 +7,25 @@
         <link rel="stylesheet" href="{{ asset('css/app.css')}}" type="text/css">
     </head>
     <body>
-    <div class="container ">
+    <div class="container">
+        <nav class="navbar navbar-expand-md">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav nav-tabs mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Read</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Edit</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sign in</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
         <h3>{{ $article->title }}</h3>
 
         <div class="article content markdown-body">
