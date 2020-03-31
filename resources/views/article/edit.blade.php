@@ -10,7 +10,8 @@
                 @method('put')
 
                 <input type="hidden" name="article[title]" value="{{ $article->title }}">
-                <textarea name="article[content]" value="{{ old('article.content') }}" id="editArticleContent"></textarea>
+                {{-- 如果 textarea 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
+                <textarea name="article[content]" id="editArticleContent">{{ old('article.content', $article->content) }}</textarea>
 
                 <button type="submit">Save</button>
             </form>

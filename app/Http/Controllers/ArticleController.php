@@ -21,8 +21,7 @@ class ArticleController extends Controller
      */
     public function edit($title)
     {
-        $article = new \stdClass();
-        $article->title = $title;
+        $article = Article::where('title', $title)->first();
         return view('article.edit')->with('article', $article);
     }
 
