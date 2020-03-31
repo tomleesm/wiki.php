@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
         <title>{{ $article->title }}</title>
-        <link rel="stylesheet" href="{{ url('/css/app.css')}}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/app.css')}}" type="text/css">
     </head>
     <body>
     <div class="container markdown-body">
@@ -16,5 +16,5 @@
         </div>
     </div>
     </body>
-    <script src="{{ url('/js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </html>
