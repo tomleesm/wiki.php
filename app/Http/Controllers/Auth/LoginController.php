@@ -75,6 +75,8 @@ class LoginController extends Controller
             Rule::exists('users')->where(function($query) use ($request) {
                 $query->where('email', $request->email)->count() === 1;
             })]
+        ], [
+            'email.required' => 'Please type E-mail.'
         ]);
 
         session(['email' => $request->email]);
