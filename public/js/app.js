@@ -45853,7 +45853,7 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-__webpack_require__(/*! ./site */ "./resources/js/site.js");
+__webpack_require__(/*! ./markdown-it-init */ "./resources/js/markdown-it-init.js");
 
 /***/ }),
 
@@ -45902,27 +45902,20 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/site.js":
-/*!******************************!*\
-  !*** ./resources/js/site.js ***!
-  \******************************/
+/***/ "./resources/js/markdown-it-init.js":
+/*!******************************************!*\
+  !*** ./resources/js/markdown-it-init.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MarkdownIt = __webpack_require__(/*! markdown-it */ "./node_modules/markdown-it/index.js"),
-    md = new MarkdownIt({
+MarkdownIt = __webpack_require__(/*! markdown-it */ "./node_modules/markdown-it/index.js"), md = new MarkdownIt({
   html: false,
   langPrefix: 'highlight highlight-source-',
   // 配合 Markdown CSS
   linkify: true,
   typographer: true
-}); // 抓取要轉換的 markdown
-
-
-var articleContent = document.querySelector('.article.content').innerHTML; // markdown 轉成 HTML
-
-var result = md.render(articleContent);
-document.querySelector('.article.content').innerHTML = result;
+});
 
 /***/ }),
 

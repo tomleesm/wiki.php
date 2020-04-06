@@ -21,7 +21,8 @@ class ArticleController extends Controller
      */
     public function edit($title)
     {
-        return view('article.edit')->with('title', $title);
+        $article = Article::where('title', $title)->first();
+        return view('article.edit')->with('article', $article);
     }
 
     /**

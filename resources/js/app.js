@@ -1,2 +1,2 @@
 require('./bootstrap');
-require('./site')
+require('./markdown-it-init')
