@@ -12,7 +12,18 @@ class ArticleController extends Controller
      */
     public function show($title)
     {
-        $article = Article::where('title', $title)->first();
+        $count = Article::where('title', $title)->count();
+
+        // 如果沒有這個條目，顯示提示訊息
+        $article = null;
+        if($count === 0) {
+            $article = new \stdClass();
+            $article->title = 'home';
+            $article->content = '';
+        } else {
+            $article = Article::where('title', $title)->first();
+        }
+
         return view('article.show')->with('article', $article);
     }
 
