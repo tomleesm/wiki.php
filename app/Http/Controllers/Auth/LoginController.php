@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Rules\OnlyOneEmail;
 
 class LoginController extends Controller
 {
@@ -70,16 +71,36 @@ class LoginController extends Controller
     public function validateUsername(Request $request)
     {
         $request->validate([
-            'email' => ['required', 'email',
-            // 在表格 users 中已有這個使用者，而且只有一個
-            Rule::exists('users')->where(function($query) use ($request) {
-                $query->where('email', $request->email)->count() === 1;
-            })]
+            'email' => [
+                'required',
+                'email',
+                // 在表格 users 中已有這個使用者，而且只有一個
+                new OnlyOneEmail
+            ]
         ], [
-            'email.required' => 'Please type E-mail.'
+            'email.required' => 'Please type E-mail.',
+            'email.email' => 'Input is not E-mail. Please type again.',
         ]);
 
         session(['email' => $request->email]);
         return redirect('/input/password');
+    }
+
+    /**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ], [
+            'password.required' => 'Please type password.'
+        ]);
     }
 }
