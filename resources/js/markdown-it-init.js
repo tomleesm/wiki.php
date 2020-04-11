@@ -1,4 +1,4 @@
-const wikilinks = require('markdown-it-wikilinks')({
+const wikilinks = require('@tomleesm/markdown-it-wikilinks')({
   makeAllLinksAbsolute: true,
   baseURL: '/article/',
   uriSuffix: '',
