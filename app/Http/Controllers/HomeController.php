@@ -8,6 +8,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return redirect('/article/home');
+        return redirect()->route('article.show', ['title' => 'home']);
     }
 }

@@ -14,12 +14,16 @@ class ArticleController extends Controller
     {
         $count = Article::where('title', $title)->count();
 
-        // 如果沒有這個條目，顯示提示訊息
+        // 如果沒有這個條目
         $article = null;
         if($count === 0) {
-            $article = new \stdClass();
-            $article->title = 'home';
-            $article->content = '';
+            if($title == 'home') {
+                $article = new \stdClass();
+                $article->title = 'home';
+                $article->content = '';
+            } else {
+                return redirect()->route('article.edit', ['title' => $title]);
+            }
         } else {
             $article = Article::where('title', $title)->first();
         }
@@ -32,7 +36,19 @@ class ArticleController extends Controller
      */
     public function edit($title)
     {
-        $article = Article::where('title', $title)->first();
+        // 檢查是否有這個條目
+        $count = Article::where('title', $title)->count();
+
+        // 如果沒有這個條目
+        $article = null;
+        if($count === 0) {
+            $article = new \stdClass();
+            $article->title = $title;
+            $article->content = '';
+        } else {
+            $article = Article::where('title', $title)->first();
+        }
+
         return view('article.edit')->with('article', $article);
     }
 

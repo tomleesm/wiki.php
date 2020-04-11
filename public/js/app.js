@@ -47252,7 +47252,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 var wikilinks = __webpack_require__(/*! @tomleesm/markdown-it-wikilinks */ "./node_modules/@tomleesm/markdown-it-wikilinks/index.js")({
   makeAllLinksAbsolute: true,
-  baseURL: '/article/',
+  baseURL: '/read/',
   uriSuffix: '',
   htmlAttributes: {
     'class': 'wikilink'

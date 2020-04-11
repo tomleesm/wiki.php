@@ -1,6 +1,6 @@
 const wikilinks = require('@tomleesm/markdown-it-wikilinks')({
   makeAllLinksAbsolute: true,
-  baseURL: '/article/',
+  baseURL: '/read/',
   uriSuffix: '',
   htmlAttributes: {
     'class': 'wikilink'
