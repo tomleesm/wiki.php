@@ -1,24 +1,48 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>輸入 username</title>
-    </head>
-    <body>
-        @if ($errors->any())
-            <ul>
-                @foreach ($errors->all() as $error)
-                    {{-- 錯誤訊息有 HTML，爲了正確顯示而取消 escape --}}
-                    <li>{!! $error !!}</li>
-                @endforeach
-            </ul>
-        @endif
+@extends('layouts.auth')
 
-        <form method="post" action="{{ url('/input/username') }}">
-            @csrf
-            <input type="text" value="{{ old('email') }}" name="email" id="email" placeholder="email">
-            <button type="submit">Next</button>
-        </form>
-    </body>
-</html>
+@section('content')
+    <div class="container">
+
+	<div class="row justify-content-center">
+	    <div class="col-md-8">
+		<div class="card">
+		    <div class="card-header">{{ __('Sign in') }}</div>
+
+		    <div class="card-body">
+			<form method="post" action="{{ url('/input/username') }}">
+			    @csrf
+
+			    <div class="form-group row">
+				<label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+				<div class="col-md-6">
+				    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+				    @error('email')
+				    <span class="invalid-feedback" role="alert">
+					<strong>{{ $message }}</strong>
+				    </span>
+				    @enderror
+				</div>
+			    </div>
+
+			    <div class="form-group row mb-0">
+				<div class="col-md-8 offset-md-4">
+                                    <a href="{{ route('register') }}">{{ __('Create account') }}</a>
+				</div>
+			    </div>
+
+			    <div class="form-group row mb-0">
+				<div class="col-md-8 offset-md-4">
+				    <button type="submit" class="btn btn-primary">
+					{{ __('Next') }}
+				    </button>
+				</div>
+			    </div>
+			</form>
+		    </div>
+		</div>
+	    </div>
+	</div>
+    </div>
+@endsection

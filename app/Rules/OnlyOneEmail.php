@@ -36,6 +36,6 @@ class OnlyOneEmail implements Rule
      */
     public function message()
     {
-        return 'Not registered E-mail. <a href="/register">Create account ?</a>';
+        return 'Not registered E-mail.';
     }
 }
