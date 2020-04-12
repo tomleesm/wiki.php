@@ -15,21 +15,24 @@ Route::get('/edit/{title}', 'ArticleController@edit')->name('article.edit')->mid
 Route::match(['put', 'patch'], '/update/{title}', 'ArticleController@update')->name('article.update');
 
 // Authentication
-Route::get('input/username', 'Auth\LoginController@showInputUsernameForm');
+Route::get('input/username', 'Auth\LoginController@showInputUsernameForm')->name('signin');
 Route::post('input/username', 'Auth\LoginController@validateUsername');
 Route::get('input/password', 'Auth\LoginController@showInputPasswordForm');
 Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name('login');
-Route::get('logout', 'Auth\LoginController@logout');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 // register
-Route::get('register', 'Auth\RegisterController@showRegistrationForm');
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
 // Password reset
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+Route::get('password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
+Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
