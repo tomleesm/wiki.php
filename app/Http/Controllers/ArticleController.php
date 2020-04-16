@@ -103,16 +103,7 @@ class ArticleController extends Controller
      */
     public function search(Request $request) {
         $keyword = $request->input('keyword');
-        $searchResult = [
-            [
-                'title' => 'ABC',
-                'content' => 'ntetnhneherhe'
-            ],
-            [
-                'title' => 'DEF',
-                'content' => 'thklwiobewrgrl'
-            ]
-        ];
+        $searchResult = Article::search($keyword)->get();
         return view('article.search')->with('searchResult', $searchResult);
     }
 }
