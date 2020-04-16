@@ -97,4 +97,22 @@ class ArticleController extends Controller
 
         return $article;
     }
+
+    /**
+     * 搜尋條目
+     */
+    public function search(Request $request) {
+        $keyword = $request->input('keyword');
+        $searchResult = [
+            [
+                'title' => 'ABC',
+                'content' => 'ntetnhneherhe'
+            ],
+            [
+                'title' => 'DEF',
+                'content' => 'thklwiobewrgrl'
+            ]
+        ];
+        return view('article.search')->with('searchResult', $searchResult);
+    }
 }

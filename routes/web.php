@@ -36,3 +36,5 @@ Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index');
+
+Route::get('/search', 'ArticleController@search')->name('article.search');
