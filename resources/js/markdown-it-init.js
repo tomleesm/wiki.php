@@ -1,7 +1,7 @@
 const wikilinks = require('@tomleesm/markdown-it-wikilinks')({
   makeAllLinksAbsolute: true,
   baseURL: '/read/',
-  uriSuffix: '',
+  uriSuffix: '?parent=' + document.querySelector('meta[name="breadcrumb-parent"]').content,
   htmlAttributes: {
     'class': 'wikilink'
   }

@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width" />
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="breadcrumb-parent" content="{{ $article->title }}">
         <title>{{ $article->title }}</title>
         <link rel="stylesheet" href="{{ asset('css/app.css')}}" type="text/css">
     </head>
