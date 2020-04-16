@@ -23,7 +23,24 @@
                         <a class="nav-link @if (request()->routeIs('article.edit')) active @endif" href="{{ route('article.edit', [ 'title' => $article->title ]) }}">Edit</a>
                     </li>
                 </ul>
+
+                <!--  SEARCH -->
                 <ul class="navbar-nav nav ml-auto">
+                    <li class="nav-item">
+                        <form action="{{ route('article.search') }}" method="get" name="search">
+                            <div class="input-group">
+                                <input type="text" name="keyword" class="form-control" placeholder="search" aria-label="search" aria-describedby="search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit" id="button-addon2">
+                                        <span><i class="fas fa-search"></i></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav nav">
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
@@ -61,6 +78,7 @@
 
     </div>
     </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     @yield('javascript')
 </html>
