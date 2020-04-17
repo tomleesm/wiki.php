@@ -11898,3 +11898,10 @@ a.text-dark:focus {
   }
 }
 
+/* 隱藏目錄 ul 和 li 預設的圓點 */
+
+nav.table-of-contents ul,
+nav.table-of-contents li {
+  list-style: none;
+}
+

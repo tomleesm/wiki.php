@@ -47820,7 +47820,9 @@ var wikitoc = __webpack_require__(/*! markdown-it-toc-done-right */ "./node_modu
 
 md.use(wikilinks);
 md.use(wikianchor);
-md.use(wikitoc);
+md.use(wikitoc, {
+  listType: 'ul'
+});
 
 /***/ }),
 

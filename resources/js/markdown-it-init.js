@@ -18,4 +18,4 @@ const wikitoc = require('markdown-it-toc-done-right');
 
 md.use(wikilinks);
 md.use(wikianchor);
-md.use(wikitoc);
+md.use(wikitoc, { listType: 'ul' });
