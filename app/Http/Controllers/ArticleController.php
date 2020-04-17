@@ -102,8 +102,11 @@ class ArticleController extends Controller
      * 搜尋條目
      */
     public function search(Request $request) {
-        $keyword = $request->input('keyword');
-        $searchResult = Article::search($keyword)->get();
-        return view('article.search')->with('searchResult', $searchResult);
+        $query = new \stdClass();
+        $query->keyword = $request->input('keyword');
+        $query->result = Article::search($query->keyword)->get();
+
+        return view('article.search')
+               ->with('query', $query);
     }
 }

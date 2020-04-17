@@ -1,7 +1,7 @@
 @extends('layouts.search')
 
 @section('content')
-@foreach ($searchResult as $result)
+    @foreach ($query->result as $result)
     <p>
         <a href="{{ route('article.show', ['title' => $result['title']]) }}">{{ $result['title'] }}</a>
     </p>
