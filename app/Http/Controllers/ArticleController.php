@@ -109,4 +109,10 @@ class ArticleController extends Controller
         return view('article.search')
                ->with('query', $query);
     }
+
+    /**
+     * 匯出條目爲 PDF
+     */
+    public function exportToPDF($title) {
+    }
 }
