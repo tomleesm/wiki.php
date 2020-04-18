@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use Dompdf\Dompdf;
 
 class ArticleController extends Controller
 {
@@ -114,5 +115,23 @@ class ArticleController extends Controller
      * 匯出條目爲 PDF
      */
     public function exportToPDF($title) {
+        // 抓取條目
+        $article = Article::where('title', $title)->first();
+        // markdown 轉換成 HTML
+        $Parsedown = new \Parsedown();
+        // 防止 XSS
+        $Parsedown->setSafeMode(true);
+        $html = $Parsedown->text($article->content);
+        // HTML 轉換成 PDF
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        // 設定紙張大小和直橫式
+        $dompdf->setPaper('A4', 'landscape');
+        // 預設字型
+        $dompdf->set_option('defaultFont', 'DejaVu');
+        // 轉換 HTML 爲 PDF
+        $dompdf->render();
+        // 下載到 client
+        $dompdf->stream();
     }
 }
