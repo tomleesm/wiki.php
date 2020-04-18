@@ -22,6 +22,9 @@
                     <li class="nav-item">
                         <a class="nav-link @if (request()->routeIs('article.edit')) active @endif" href="{{ route('article.edit', [ 'title' => $article->title ]) }}">Edit</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('article.pdf', [ 'title' => $article->title ]) }}">PDF</a>
+                    </li>
                 </ul>
 
                 <!--  SEARCH -->

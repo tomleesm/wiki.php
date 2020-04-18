@@ -14,6 +14,11 @@ Route::get('/read/{title}', 'ArticleController@show')->name('article.show');
 Route::get('/edit/{title}', 'ArticleController@edit')->name('article.edit')->middleware('auth');
 Route::match(['put', 'patch'], '/update/{title}', 'ArticleController@update')->name('article.update');
 
+// Search
+Route::get('/search', 'ArticleController@search')->name('article.search');
+// export to pdf
+Route::get('/pdf/{title}', 'ArticleController@exportToPDF')->name('article.pdf');
+
 // Authentication
 Route::get('input/username', 'Auth\LoginController@showInputUsernameForm')->name('signin');
 Route::post('input/username', 'Auth\LoginController@validateUsername');
@@ -36,5 +41,3 @@ Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index');
-
-Route::get('/search', 'ArticleController@search')->name('article.search');

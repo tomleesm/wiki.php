@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use Dompdf\Dompdf;
 
 class ArticleController extends Controller
 {
@@ -108,5 +109,32 @@ class ArticleController extends Controller
 
         return view('article.search')
                ->with('query', $query);
+    }
+
+    /**
+     * 匯出條目爲 PDF
+     */
+    public function exportToPDF($title) {
+        // 抓取條目
+        $article = Article::where('title', $title)->first();
+        // markdown 轉換成 HTML
+        $Parsedown = new \Parsedown();
+        // 防止 XSS
+        $Parsedown->setSafeMode(true);
+        // 設定使用中文字型
+        // 中文字型屬於自訂字型，不能用 $dompdf->set_option('defaultFont', 'wt011');
+        $html = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
+        $html .= '<style>@font-face { font-family: "wt011"; } * { font-family: "wt011" }</style>';
+        $html .= $Parsedown->text($article->content);
+        // HTML 轉換成 PDF
+        $dompdf = new Dompdf();
+        //$dompdf->loadHtml($html);
+        $dompdf->loadHtml($html);
+        // 設定紙張大小和直橫式
+        $dompdf->setPaper('A4', 'landscape');
+        // 轉換 HTML 爲 PDF
+        $dompdf->render();
+        // 下載到 client
+        $dompdf->stream();
     }
 }
