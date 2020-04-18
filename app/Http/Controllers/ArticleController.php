@@ -121,14 +121,17 @@ class ArticleController extends Controller
         $Parsedown = new \Parsedown();
         // 防止 XSS
         $Parsedown->setSafeMode(true);
-        $html = $Parsedown->text($article->content);
+        // 設定使用中文字型
+        // 中文字型屬於自訂字型，不能用 $dompdf->set_option('defaultFont', 'wt011');
+        $html = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
+        $html .= '<style>@font-face { font-family: "wt011"; } * { font-family: "wt011" }</style>';
+        $html .= $Parsedown->text($article->content);
         // HTML 轉換成 PDF
         $dompdf = new Dompdf();
+        //$dompdf->loadHtml($html);
         $dompdf->loadHtml($html);
         // 設定紙張大小和直橫式
         $dompdf->setPaper('A4', 'landscape');
-        // 預設字型
-        $dompdf->set_option('defaultFont', 'DejaVu');
         // 轉換 HTML 爲 PDF
         $dompdf->render();
         // 下載到 client
