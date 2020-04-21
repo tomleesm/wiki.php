@@ -15,7 +15,8 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
-        "nicolaslopezj/searchable": "^1.13"
+        "nicolaslopezj/searchable": "^1.13",
+        "venturecraft/revisionable": "^1.34"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
