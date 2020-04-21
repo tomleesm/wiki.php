@@ -25,6 +25,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('article.pdf', [ 'title' => $article->title ]) }}">PDF</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('article.history', [ 'title' => $article->title ]) }}">History</a>
+                    </li>
                 </ul>
 
                 <!--  SEARCH -->

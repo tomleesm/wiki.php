@@ -137,4 +137,11 @@ class ArticleController extends Controller
         // 下載到 client
         $dompdf->stream();
     }
+
+    /**
+     * 顯示歷史記錄
+     */
+    public function getHistories($title) {
+        return 'history';
+    }
 }
