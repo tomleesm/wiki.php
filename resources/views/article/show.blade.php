@@ -13,6 +13,9 @@
 @endif
 
 <h3>{{ $article->title }}</h3>
+<p>
+    <a href="{{ route('article.history', ['title' => $article->title]) }}" class="text-muted">Last edit by Tom at 07:23:45 pm Dec 7 2019</a>
+</p>
 
 <div class="article content markdown-body">
 {{-- 如果 $article->content 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
