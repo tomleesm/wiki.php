@@ -14,7 +14,10 @@
 
 <h3>{{ $article->title }}</h3>
 <p>
-    <a href="{{ route('article.history', ['title' => $article->title]) }}" class="text-muted">Last edit by Tom at 07:23:45 pm Dec 7 2019</a>
+    <a href="{{ route('article.history', ['title' => $article->title]) }}" class="text-muted">
+        <?php $history = $article->revisionHistory->first(); ?>
+        Last edit by {{ $history->userResponsible()->name }} at {{ $history->created_at }}
+    </a>
 </p>
 
 <div class="article content markdown-body">
