@@ -16,7 +16,11 @@
 <p>
     <a href="{{ route('article.history', ['title' => $article->title]) }}" class="text-muted">
         <?php $history = $article->revisionHistory->first(); ?>
-        Last edit by {{ $history->userResponsible()->name }} at {{ $history->created_at }}
+        <?php
+            $history_created_at = new \Carbon\Carbon($history->created_at);
+            $history_created_at->tz = 'Asia/Taipei';
+        ?>
+        Last edit by {{ $history->userResponsible()->name }} at {{ $history_created_at->diffForHumans() }}
     </a>
 </p>
 
