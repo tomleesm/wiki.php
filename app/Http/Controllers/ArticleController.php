@@ -142,6 +142,7 @@ class ArticleController extends Controller
      * 顯示歷史記錄
      */
     public function getHistories($title) {
-        return 'history';
+        $article = Article::where('title', $title)->first();
+        return view('article.history')->with('article', $article);
     }
 }

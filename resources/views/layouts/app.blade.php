@@ -26,7 +26,7 @@
                         <a class="nav-link" href="{{ route('article.pdf', [ 'title' => $article->title ]) }}">PDF</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('article.history', [ 'title' => $article->title ]) }}">History</a>
+                        <a class="nav-link @if (request()->routeIs('article.history')) active @endif" href="{{ route('article.history', [ 'title' => $article->title ]) }}">History</a>
                     </li>
                 </ul>
 
