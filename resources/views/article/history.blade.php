@@ -25,27 +25,12 @@
                 <!-- 分頁 Pagination -->
                 <div class="list-group-item">
                     <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true"><i class="fas fa-caret-left"></i></span>
-                                </a>
-                            </li>
-                            <li class="page-item active">
-                                <span class="page-link" href="#">1 <span class="sr-only">(current)</span></span>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true"><i class="fas fa-caret-right"></i></span>
-                                </a>
-                            </li>
-                        </ul>
+                            <?php use Illuminate\Pagination\LengthAwarePaginator; ?>
+                            <?php $paginator = new LengthAwarePaginator($article->revisionHistory,
+                                                                        $article->revisionHistory->count(),
+                                                                        1);
+                            ?>
+                            {{ $paginator->links('vendor.pagination.default') }}
                     </nav>
                 </div>
             </div>
