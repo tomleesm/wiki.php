@@ -30,9 +30,6 @@ class Article extends Model
         ],
     ];
 
-    // 新增條目也要列入歷史記錄
-    protected $revisionCreationsEnabled = true;
-
     // 列入歷史記錄的資料庫欄位
-    protected $keepRevisionOf = ['title', 'content', 'parent'];
+    protected $keepRevisionOf = ['content', 'parent'];
 }
