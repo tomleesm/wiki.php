@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2",
         "davejamesmiller/laravel-breadcrumbs": "^5.3",
+        "doctrine/dbal": "^2.10",
         "dompdf/dompdf": "^0.8.5",
         "erusev/parsedown": "^1.7",
         "fideloper/proxy": "^4.0",
