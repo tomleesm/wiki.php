@@ -7,9 +7,11 @@
             <div class="tab-content" id="nav-tabContent">
                 @foreach($article->revisionHistory as $history)
                     <div class="tab-pane fade @if($loop->first) show active @endif" id="list-{{ $loop->iteration }}" role="tabpanel" aria-labelledby="list-{{ $loop->iteration }}-list">
-                    <p>{{ $history->oldValue() ?? '' }}</p>
-                    <p>{{ $history->newValue() ?? '' }}</p>
-                </div>
+                        <pre>
+                        <?php $differ = new \SebastianBergmann\Diff\Differ; ?>
+                        {{ $differ->diff( $history->oldValue(), $history->newValue() ) }}
+                        </pre>
+                    </div>
                 @endforeach
             </div>
         </div>
