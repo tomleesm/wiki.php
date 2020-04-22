@@ -5,18 +5,21 @@
     <div class="row">
         <div class="sm-col-8 history diff">
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="list-1" role="tabpanel" aria-labelledby="list-1-list">1</div>
-                <div class="tab-pane fade" id="list-2" role="tabpanel" aria-labelledby="list-1-list">2</div>
-                <div class="tab-pane fade" id="list-3" role="tabpanel" aria-labelledby="list-2-list">3</div>
-                <div class="tab-pane fade" id="list-4" role="tabpanel" aria-labelledby="list-3-list">4</div>
+                @foreach($article->revisionHistory as $history)
+                    <div class="tab-pane fade @if($loop->first) show active @endif" id="list-{{ $loop->iteration }}" role="tabpanel" aria-labelledby="list-{{ $loop->iteration }}-list">
+                    <p>{{ $history->oldValue() ?? '' }}</p>
+                    <p>{{ $history->newValue() ?? '' }}</p>
+                </div>
+                @endforeach
             </div>
         </div>
         <div class="sm-col-4 history list">
             <div class="list-group list-group-flush">
-                <a href="#list-1" id="list-1-list" data-toggle="list" role="tab" aria-controls="1" class="list-group-item list-group-item-action active">Tom edited at 07:23:45 PM, 17 Dec 2019</a>
-                <a href="#list-2" id="list-2-list" data-toggle="list" role="tab" aria-controls="2" class="list-group-item list-group-item-action">Tom edited at 07:23:45 PM, 17 Dec 2019</a>
-                <a href="#list-3" id="list-3-list" data-toggle="list" role="tab" aria-controls="3" class="list-group-item list-group-item-action">Tom edited at 07:23:45 PM, 17 Dec 2019</a>
-                <a href="#list-4" id="list-4-list" data-toggle="list" role="tab" aria-controls="4" class="list-group-item list-group-item-action">Tom edited at 07:23:45 PM, 17 Dec 2019</a>
+                @foreach($article->revisionHistory as $history)
+                    <a href="#list-{{ $loop->iteration }}" id="list-{{ $loop->iteration }}-list" data-toggle="list" role="tab" aria-controls="{{ $loop->iteration }}" class="list-group-item list-group-item-action @if($loop->first) active @endif">
+                    {{ $history->userResponsible()->name }} edited at {{ $history->created_at }}
+                </a>
+                @endforeach
                 <!-- 分頁 Pagination -->
                 <div class="list-group-item">
                     <nav aria-label="Page navigation example">
