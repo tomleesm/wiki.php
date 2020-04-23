@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use Illuminate\Support\Facades\Auth;
 use Dompdf\Dompdf;
 
 class ArticleController extends Controller
@@ -68,6 +69,7 @@ class ArticleController extends Controller
     public function update($title, Request $request)
     {
         // 條目標題和內容
+        $id = Auth::id();
         $title = $request->input('article.title');
         $content = $request->input('article.content');
         // 麵包屑的上一層
@@ -78,11 +80,13 @@ class ArticleController extends Controller
 
         if(empty($article->all())) {
             $newArticle = new Article();
+            $newArticle->user_id = $id;
             $newArticle->title = $title;
             $newArticle->save();
         }
 
         $article = Article::where('title', $title)->first();
+        $article->user_id = $id;
         $article->content = $content;
         $article->parent = $parent;
         $article->save();
@@ -136,5 +140,25 @@ class ArticleController extends Controller
         $dompdf->render();
         // 下載到 client
         $dompdf->stream();
+    }
+
+    /**
+     * 顯示歷史記錄
+     */
+    public function getHistories($title, Request $request) {
+        $article = Article::where('title', $title)->first();
+
+        $page = $this->getCurrentPage($request);
+        $perPage = 1;
+        $startIndex = $perPage * ( $page - 1);
+        $histories = $article->revisionHistory->slice($startIndex, $perPage);
+
+        return view('article.history')->with(['article' => $article, 'histories' => $histories]);
+    }
+
+    private function getCurrentPage($request) {
+        $page = (int) $request->query('page');
+        if(empty($page) || ! is_int($page)) return 1;
+        else return $page;
     }
 }

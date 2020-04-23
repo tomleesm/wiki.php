@@ -19,6 +19,9 @@ Route::get('/search', 'ArticleController@search')->name('article.search');
 // export to pdf
 Route::get('/pdf/{title}', 'ArticleController@exportToPDF')->name('article.pdf');
 
+// History
+Route::get('/history/{title}', 'ArticleController@getHistories')->name('article.history');
+
 // Authentication
 Route::get('input/username', 'Auth\LoginController@showInputUsernameForm')->name('signin');
 Route::post('input/username', 'Auth\LoginController@validateUsername');

@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 class Article extends Model
 {
     use SearchableTrait;
+    use RevisionableTrait;
 
     /**
      * Searchable rules.
@@ -27,4 +29,7 @@ class Article extends Model
             'articles.content' => 1,
         ],
     ];
+
+    // 列入歷史記錄的資料庫欄位
+    protected $keepRevisionOf = ['content', 'parent'];
 }
