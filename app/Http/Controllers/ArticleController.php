@@ -145,8 +145,20 @@ class ArticleController extends Controller
     /**
      * 顯示歷史記錄
      */
-    public function getHistories($title) {
+    public function getHistories($title, Request $request) {
         $article = Article::where('title', $title)->first();
-        return view('article.history')->with('article', $article);
+
+        $page = $this->getCurrentPage($request);
+        $perPage = 1;
+        $startIndex = $perPage * ( $page - 1);
+        $histories = $article->revisionHistory->slice($startIndex, $perPage);
+
+        return view('article.history')->with(['article' => $article, 'histories' => $histories]);
+    }
+
+    private function getCurrentPage($request) {
+        $page = (int) $request->query('page');
+        if(empty($page) || ! is_int($page)) return 1;
+        else return $page;
     }
 }

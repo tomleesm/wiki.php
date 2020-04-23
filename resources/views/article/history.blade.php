@@ -5,7 +5,7 @@
     <div class="row">
         <div class="sm-col-8 history diff">
             <div class="tab-content" id="nav-tabContent">
-                @foreach($article->revisionHistory as $history)
+                @foreach($histories as $history)
                     <div class="tab-pane fade @if($loop->first) show active @endif" id="list-{{ $loop->iteration }}" role="tabpanel" aria-labelledby="list-{{ $loop->iteration }}-list">
                         <pre>
                         <?php $differ = new \SebastianBergmann\Diff\Differ; ?>
@@ -17,7 +17,7 @@
         </div>
         <div class="sm-col-4 history list">
             <div class="list-group list-group-flush">
-                @foreach($article->revisionHistory as $history)
+                @foreach($histories as $history)
                     <a href="#list-{{ $loop->iteration }}" id="list-{{ $loop->iteration }}-list" data-toggle="list" role="tab" aria-controls="{{ $loop->iteration }}" class="list-group-item list-group-item-action @if($loop->first) active @endif">
                     {{ $history->userResponsible()->name }} edited at {{ $history->created_at }}
                 </a>
@@ -30,7 +30,8 @@
                                                                         $article->revisionHistory->count(),
                                                                         1);
                             ?>
-                            {{ $paginator->links('vendor.pagination.default') }}
+                            {{ $paginator->withPath("/history/$article->title")
+                                         ->links('vendor.pagination.default') }}
                     </nav>
                 </div>
             </div>
