@@ -248,7 +248,23 @@ class WikiTest extends DuskTestCase
                     ->assertPathIs('/read/home')
                     ->assertSourceHas('<th style="text-align:right">Description</th>')
                     ->assertSourceHas('<td>A</td>')
-                    ->assertSourceHas('<td style="text-align:right">B</td>');
+                    ->assertSourceHas('<td style="text-align:right">B</td>')
+                    // 連結
+                    ->clickLink('Edit')
+                    ->assertPathIs('/edit/home')
+                    ->type('article[content]', '[Google](https://www.google.com)')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '[YouTube](https://www.youtube.com "YouTube")')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', 'Auto onverted link https://zh.wikipedia.org/')
+                    ->assertSourceHas('<a href="https://www.google.com">Google</a>')
+                    ->assertSourceHas('<a href="https://www.youtube.com" title="YouTube">YouTube</a>')
+                    ->assertSourceHas('Auto onverted link <a href="https://zh.wikipedia.org/">https://zh.wikipedia.org/</a>')
+                    ->click('@edit-save-button')
+                    ->assertPathIs('/read/home')
+                    ->assertSourceHas('<a href="https://www.google.com">Google</a>')
+                    ->assertSourceHas('<a href="https://www.youtube.com" title="YouTube">YouTube</a>')
+                    ->assertSourceHas('Auto onverted link <a href="https://zh.wikipedia.org/">https://zh.wikipedia.org/</a>');
         });
     }
 }
