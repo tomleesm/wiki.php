@@ -187,6 +187,18 @@ class WikiTest extends DuskTestCase
                     ->assertSourceHas('<em>This is italic text 1</em>')
                     ->assertSourceHas('<em>This is italic text 2</em>')
                     ->assertSourceHas('<s>Strikethrough</s>')
+                    // Blockquotes
+                    ->clickLink('Edit')
+                    ->assertPathIs('/edit/home')
+                    ->type('article[content]', '> A')
+                    ->assertSourceHas("<blockquote>\n<p>A</p>\n</blockquote>")
+                    ->clear('article[content]')
+                    ->type('article[content]', '> A')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '>> B')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '> > > C')
+                    ->assertSourceHas("<blockquote>\n<p>A</p>\n<blockquote>\n<p>B</p>\n<blockquote>\n<p>C</p>\n</blockquote>\n</blockquote>\n</blockquote>")
                     // 無序清單
                     ->clickLink('Edit')
                     ->assertPathIs('/edit/home')
