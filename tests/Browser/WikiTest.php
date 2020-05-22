@@ -232,7 +232,23 @@ class WikiTest extends DuskTestCase
                     ->assertSourceHas('<ol start="57">')
                     ->click('@edit-save-button')
                     ->assertPathIs('/read/home')
-                    ->assertSourceHas('<ol start="57">');
+                    ->assertSourceHas('<ol start="57">')
+                    // 表格
+                    ->clickLink('Edit')
+                    ->assertPathIs('/edit/home')
+                    ->type('article[content]', '| Option | Description |')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '| ------ | -----------: |')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '| A | B |')
+                    ->assertSourceHas('<th style="text-align:right">Description</th>')
+                    ->assertSourceHas('<td>A</td>')
+                    ->assertSourceHas('<td style="text-align:right">B</td>')
+                    ->click('@edit-save-button')
+                    ->assertPathIs('/read/home')
+                    ->assertSourceHas('<th style="text-align:right">Description</th>')
+                    ->assertSourceHas('<td>A</td>')
+                    ->assertSourceHas('<td style="text-align:right">B</td>');
         });
     }
 }
