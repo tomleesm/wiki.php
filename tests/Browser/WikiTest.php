@@ -264,7 +264,19 @@ class WikiTest extends DuskTestCase
                     ->assertPathIs('/read/home')
                     ->assertSourceHas('<a href="https://www.google.com">Google</a>')
                     ->assertSourceHas('<a href="https://www.youtube.com" title="YouTube">YouTube</a>')
-                    ->assertSourceHas('Auto onverted link <a href="https://zh.wikipedia.org/">https://zh.wikipedia.org/</a>');
+                    ->assertSourceHas('Auto onverted link <a href="https://zh.wikipedia.org/">https://zh.wikipedia.org/</a>')
+                    // 圖片
+                    ->clickLink('Edit')
+                    ->assertPathIs('/edit/home')
+                    ->type('article[content]', '![Minion](https://octodex.github.com/images/minion.png)')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")')
+                    ->assertSourceHas('<img src="https://octodex.github.com/images/minion.png" alt="Minion">')
+                    ->assertSourceHas('<img src="https://octodex.github.com/images/stormtroopocat.jpg" alt="Stormtroopocat" title="The Stormtroopocat">')
+                    ->click('@edit-save-button')
+                    ->assertPathIs('/read/home')
+                    ->assertSourceHas('<img src="https://octodex.github.com/images/minion.png" alt="Minion">')
+                    ->assertSourceHas('<img src="https://octodex.github.com/images/stormtroopocat.jpg" alt="Stormtroopocat" title="The Stormtroopocat">');
         });
     }
 }
