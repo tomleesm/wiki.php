@@ -1,78 +1,39 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+### 新聞稿
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+專案完成了，寫在 GitHub 上的 wiki 文件想要找個地方統一整理，於是...
 
-## About Laravel
+- 想要用 Markdown 寫 wiki，但是 Mediawiki 的 Markdown 外掛很鳥？
+- 聽說 [Gollum](https://github.com/gollum/gollum) 很不錯，但你知道它對中文的支援很差嗎？
+- 找到 [Wiki.js](https://wiki.js.org/) ，但用過之後覺得不像是 wiki？
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+要不要試試 Tom wiki ？
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 支援 Markdown 格式
+- 編輯時自動預覽
+- 支援中文條目
+- 和 mediawiki 一樣使用 `[[條目]]` 連結到其他頁面
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 常見問答
 
-## Learning Laravel
+問: GitHub wiki 很好用啊，為什麼要另外找個地方統一整理？   
+答: 因為 GitHub wiki 附屬在每個專案，容易造成 wiki 紀錄分散在不同的地方，不便日後查詢。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+問: Mediawiki 的 Markdown 外掛很鳥？能否說明的更具體一點？   
+答: 它不支援 Syntax highlighting、表格、表情符號、上標/下標、註腳
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+問: Gollum 的中文支援有那麼差嗎？   
+答: 當你用 Gollum 編輯條目「新聞」，它會自動轉成英文拼音「Xin Wen」，雖然可以儲存中文內容，但是無法使用 `[[新聞]]` 來連結，必須使用 `[[Xin Wen]]`。雖然可以設定參數 --h1-title，但是情況依舊相同，而中文支援較佳的 adapter rugged 很難安裝
 
-## Laravel Sponsors
+問: 我覺得 Wiki.js 超讚的，你怎麼會覺得它不好呢？   
+答: Wiki.js 功能強大，但是它比較類似 Google 文件，不像 wiki 那樣直接輸入 `[[條目]]` 連結到其他頁面。
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+問: Tom wiki 支援 markdown 到什麼程度呢？   
+答: 除了基本的 markdown，還支援 GitHub Flavored Markdown
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+### 客戶經驗談
 
-## Contributing
+John 是一個記性不太好的工程師，所以他平常有在 GitHub wiki 寫筆記的習慣，把專案中遇到的問題、解決方案和常見模式都記下來。做了幾個專案後，他發現常常要去之前的專案找筆記，所以想要找一個 wiki 程式集中管理，最好是用 markdown，這樣就不用轉換語法了。有一天他找到了 Tom wiki，除了支援基本的 markdown 語法，每一頁的麵包屑讓他不至於在查筆記時迷路，必須回到首頁從頭開始找起。
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 使用手冊
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+請參考 [使用手冊](https://github.com/tomleesm/wiki/wiki)
