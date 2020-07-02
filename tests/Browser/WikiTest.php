@@ -8,17 +8,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Artisan;
 
 class WikiTest extends DuskTestCase
 {
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        Artisan::call('migrate:refresh');
-    }
-
+    use RefreshDatabase;
     /**
      * 尚未有任何條目時，條目 home 顯示提示訊息
      *
@@ -34,9 +28,8 @@ class WikiTest extends DuskTestCase
         });
     }
 
-    /**
-     * 會員登入認證
-     */
+    /*****
+    // 會員登入認證
     public function testLogin()
     {
         $this->browse(function (Browser $browser) {
@@ -98,9 +91,7 @@ class WikiTest extends DuskTestCase
         return $user;
     }
 
-    /**
-     * Markdown 語法測試
-     */
+    // Markdown 語法測試
     public function testMarkdown() {
         $this->browse(function (Browser $browser) {
             $user = $this->createOneUser();
@@ -291,4 +282,5 @@ class WikiTest extends DuskTestCase
                     ->assertSourceHas('<img src="https://octodex.github.com/images/stormtroopocat.jpg" alt="Stormtroopocat" title="The Stormtroopocat">');
         });
     }
+    *****/
 }
