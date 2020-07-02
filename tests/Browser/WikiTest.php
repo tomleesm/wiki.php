@@ -28,6 +28,19 @@ class WikiTest extends DuskTestCase
         });
     }
 
+    public function testCreateOneUserInDB() {
+        $user = factory(User::class)->create();
+        $this->assertDatabaseHas('users', [
+            'name' => $user->name,
+            'email' => $user->email,
+        ]);
+    }
+    public function testOnlyOneRecordIfRefreshDatabaseTraitEnable() {
+        factory(User::class)->create();
+        $this->assertSame(1, User::all()->count());
+    }
+
+
     /*****
     // 會員登入認證
     public function testLogin()
