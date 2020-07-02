@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Rules\OnlyOneEmail;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -101,6 +102,21 @@ class LoginController extends Controller
             'password' => 'required|string',
         ], [
             'password.required' => 'Please type password.'
+        ]);
+    }
+
+    /**
+     * Get the failed login response instance.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            'password' => [trans('auth.failed')],
         ]);
     }
 }

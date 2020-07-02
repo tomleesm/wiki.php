@@ -36,6 +36,12 @@ class ArticleController extends Controller
             $article = $this->createArticleWithParent($title);
         }
 
+        // markdown 轉換成 HTML
+        $Parsedown = new \Parsedown();
+        // 防止 XSS
+        $Parsedown->setSafeMode(true);
+        $article->content = $Parsedown->text($article->content);
+
         return view('article.show')->with('article', $article);
     }
 

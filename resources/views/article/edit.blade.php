@@ -15,7 +15,7 @@
                 {{-- 如果 textarea 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
                 <textarea name="article[content]" id="editArticleContent" class="form-control" rows="25">{{ old('article.content', $article->content) }}</textarea>
 
-                <button class="btn btn-primary">Save</button>
+                <button class="btn btn-primary" dusk="edit-save-button">Save</button>
             </form>
         </div>
         <div class="col-sm preview">
