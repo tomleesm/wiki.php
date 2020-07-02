@@ -33,13 +33,12 @@ jobs:
         sudo -u postgres psql -c "CREATE USER test WITH PASSWORD 'test'"
         sudo -u postgres psql -c "CREATE DATABASE test OWNER test"
         sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE test to test"
+    - name: Database migration and seeding
+      run: php artisan migrate --seed
+    - name: Run chrome driver Linux in the background
+      run: nohup bash -c './vendor/laravel/dusk/bin/chromedriver-linux > /dev/null 2>&1 &'
+    - name: Run `php artisan serve` in the background to have a local server to use for the tests.
+      run: nohup bash -c 'php artisan serve > /dev/null 2>&1 &'
+
     - name: Execute tests (Dusk tests) via Dusk
-      env:
-        APP_URL: http://localhost
-        DB_CONNECTION: pgsql
-        DB_HOST: 127.0.0.1
-        DB_PORT: 5432
-        DB_DATABASE: test
-        DB_USERNAME: test
-        DB_PASSWORD: test
       run: php artisan dusk
