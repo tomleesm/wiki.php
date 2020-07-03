@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Auth;
 
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
@@ -9,24 +9,10 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class WikiTest extends DuskTestCase
+class AuthTest extends DuskTestCase
 {
 
     use RefreshDatabase;
-    /**
-     * 尚未有任何條目時，條目 home 顯示提示訊息
-     *
-     * @group homePage
-     */
-    public function testHomeEmpty()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/')
-                    ->assertPathIs('/read/home')
-                    ->assertSee('Welcome to Wiki.')
-                    ->assertSeeLink('Start to write something.');
-        });
-    }
 
     /**
      * 顯示註冊連結和頁面
@@ -65,11 +51,12 @@ class WikiTest extends DuskTestCase
                     ->press('Register')
                     // 回到首頁
                     ->assertPathIs('/read/home');
-                    // 檢查真的註冊成功
-                    $user = User::find(1);
-                    $this->assertEquals($newUser->name, $user->name);
-                    $this->assertEquals($newUser->email, $user->email);
-                    $this->assertTrue(Hash::check($newUser->password, $user->password));
+
+            // 檢查真的註冊成功
+            $user = User::find(1);
+            $this->assertEquals($newUser->name, $user->name);
+            $this->assertEquals($newUser->email, $user->email);
+            $this->assertTrue(Hash::check($newUser->password, $user->password));
         });
     }
 }
