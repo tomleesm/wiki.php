@@ -16,7 +16,7 @@ class WikiTest extends DuskTestCase
     /**
      * 尚未有任何條目時，條目 home 顯示提示訊息
      *
-     * @return void
+     * @group homePage
      */
     public function testHomeEmpty()
     {
@@ -28,4 +28,18 @@ class WikiTest extends DuskTestCase
         });
     }
 
+    /**
+     * 顯示註冊連結和頁面
+     *
+     * @group registration
+     */
+    public function testShowRegistrationLinkAndPage()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/')
+                    ->assertSeeLink('Register')
+                    ->clickLink('Register')
+                    ->assertPathIs('/register');
+        });
+    }
 }
