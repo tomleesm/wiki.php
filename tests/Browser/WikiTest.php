@@ -42,4 +42,34 @@ class WikiTest extends DuskTestCase
                     ->assertPathIs('/register');
         });
     }
+
+    /**
+     * 正常註冊流程
+     *
+     * @group registration
+     */
+    public function testNormalRegistration()
+    {
+        $this->browse(function (Browser $browser) {
+            $newUser = factory(User::class)->make();
+            // factory 密碼是已經用 Bcrypt 處理過的，所以覆寫它
+            $newUser->password = Str::random(10);
+
+            $browser->visit('/')
+                    ->clickLink('Register')
+                    // 輸入註冊資料
+                    ->type('name', $newUser->name)
+                    ->type('email', $newUser->email)
+                    ->type('password', $newUser->password)
+                    ->type('password_confirmation', $newUser->password)
+                    ->press('Register')
+                    // 回到首頁
+                    ->assertPathIs('/read/home');
+                    // 檢查真的註冊成功
+                    $user = User::find(1);
+                    $this->assertEquals($newUser->name, $user->name);
+                    $this->assertEquals($newUser->email, $user->email);
+                    $this->assertTrue(Hash::check($newUser->password, $user->password));
+        });
+    }
 }
