@@ -4,20 +4,22 @@ namespace Tests\Browser\Auth;
 
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
 class AuthTest extends DuskTestCase
 {
-
-    use RefreshDatabase;
-
+    protected function setUp(): void
+    {
+        parent::setUp();
+	Artisan::call('migrate:fresh --seed');
+    }
     /**
      * 顯示註冊連結和頁面
      *
-     * @group registration
+     * @group r1
      */
     public function testShowRegistrationLinkAndPage()
     {
@@ -32,7 +34,7 @@ class AuthTest extends DuskTestCase
     /**
      * 正常註冊流程
      *
-     * @group registration
+     * @group r2
      */
     public function testNormalRegistration()
     {
@@ -48,9 +50,7 @@ class AuthTest extends DuskTestCase
                     ->type('email', $newUser->email)
                     ->type('password', $newUser->password)
                     ->type('password_confirmation', $newUser->password)
-                    ->press('Register')
-                    // 回到首頁
-                    ->assertPathIs('/read/home');
+                    ->press('Register');
 
             // 檢查真的註冊成功
             $user = User::find(1);
@@ -63,7 +63,7 @@ class AuthTest extends DuskTestCase
     /**
      * 異常註冊流程：密碼小於8個字元
      *
-     * @group now
+     * @group r3
      */
     public function testPasswordLessThanEightChar()
     {
