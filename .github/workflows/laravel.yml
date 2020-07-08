@@ -33,8 +33,8 @@ jobs:
         sudo -u postgres psql -c "CREATE USER test WITH PASSWORD 'test'"
         sudo -u postgres psql -c "CREATE DATABASE test OWNER test"
         sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE test to test"
-    - name: Database migration and seeding
-      run: php artisan migrate --seed
+    - name: Database migration
+      run: php artisan migrate
     - name: Run chrome driver Linux in the background
       run: nohup bash -c './vendor/laravel/dusk/bin/chromedriver-linux > /dev/null 2>&1 &'
     - name: Run `php artisan serve` in the background to have a local server to use for the tests.
