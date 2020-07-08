@@ -6,6 +6,7 @@ use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Laravel\Dusk\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Artisan;
 
 abstract class DuskTestCase extends BaseTestCase
 {
@@ -40,5 +41,18 @@ abstract class DuskTestCase extends BaseTestCase
                 ChromeOptions::CAPABILITY, $options
             )
         );
+    }
+
+    /**
+     * 測試執行後清空資料
+     *
+     * 因爲 trait RefreshDatabase 不一定會正確執行
+     *
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+	Artisan::call('migrate:fresh');
+        parent::tearDown();
     }
 }

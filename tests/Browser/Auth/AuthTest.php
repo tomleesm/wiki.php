@@ -6,16 +6,10 @@ use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use App\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
 class AuthTest extends DuskTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-	Artisan::call('migrate:fresh --seed');
-    }
     /**
      * 顯示註冊連結和頁面
      *
