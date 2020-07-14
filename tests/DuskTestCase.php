@@ -44,15 +44,15 @@ abstract class DuskTestCase extends BaseTestCase
     }
 
     /**
-     * 測試執行後清空資料
+     * 測試執行前清空資料
      *
      * 因爲 trait RefreshDatabase 不一定會正確執行
      *
      * @return void
      */
-    protected function tearDown(): void
+    protected function setUp(): void
     {
+        parent::setUp();
 	Artisan::call('migrate:fresh');
-        parent::tearDown();
     }
 }

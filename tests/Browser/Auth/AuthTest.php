@@ -51,6 +51,9 @@ class AuthTest extends DuskTestCase
             $this->assertEquals($newUser->name, $user->name);
             $this->assertEquals($newUser->email, $user->email);
             $this->assertTrue(Hash::check($newUser->password, $user->password));
+
+            // 登出，確保不會影響其他測試執行
+            $browser->clickLink($newUser->name)->clickLink('Logout');
         });
     }
 
@@ -75,6 +78,48 @@ class AuthTest extends DuskTestCase
                     ->type('password_confirmation', $newUser->password)
                     ->press('Register')
                     ->assertSee('The password must be at least 8 characters.');
+        });
+    }
+
+    /**
+     * 異常註冊流程：E-mail 已經有人註冊了
+     *
+     * @group r4
+     */
+    public function testEmailHasBeenRegistered()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = factory(User::class)->create();
+
+            $browser->visit('/register')
+                    // 輸入註冊資料
+                    ->type('name', $user->name)
+                    ->type('email', $user->email)
+                    ->type('password', 'password')
+                    ->type('password_confirmation', 'password')
+                    ->press('Register')
+                    ->assertSee('The email has already been taken.');
+        });
+    }
+
+    /**
+     * 異常註冊流程：密碼和密碼確認欄位輸入不一樣
+     *
+     * @group r5
+     */
+    public function testFieldPasswordAndConfirmationDifferent()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = factory(User::class)->make();
+
+            $browser->visit('/register')
+                    // 輸入註冊資料
+                    ->type('name', $user->name)
+                    ->type('email', $user->email)
+                    ->type('password', '12345678')
+                    ->type('password_confirmation', '87654321')
+                    ->press('Register')
+                    ->assertSee('The password confirmation does not match.');
         });
     }
 }
