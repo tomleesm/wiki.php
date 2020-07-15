@@ -5,6 +5,8 @@ namespace Tests\Browser\Auth;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use App\User;
+use App\Setting;
+use App\Enums\AvailableSetting;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -120,6 +122,38 @@ class AuthTest extends DuskTestCase
                     ->type('password_confirmation', '87654321')
                     ->press('Register')
                     ->assertSee('The password confirmation does not match.');
+        });
+    }
+
+    /**
+     * 註冊後需要確認 E-mail 可用
+     *
+     * @group r6
+     */
+    public function testConfirmEmailAfterRegister()
+    {
+        // 設定「註冊後需要確認 E-mail 可用」
+        Setting::set(AvailableSetting::confirmEmailAfterRegister(), true);
+
+        $this->browse(function (Browser $browser) {
+            $user = factory(User::class)->make();
+            $user->password = Str::random(10);
+
+            $browser->visit('/register')
+                    // 輸入註冊資料
+                    ->type('name', $user->name)
+                    ->type('email', $user->email)
+                    ->type('password', $user->password)
+                    ->type('password_confirmation', $user->password)
+                    ->press('Register');
+
+            // 用 Mock 寄出確認信
+            // assertSee 請到 $user->email 收信，點擊「確認」按鈕
+            // 正常登入後，顯示上一步的「確認 E-mail 可用提示訊息」
+            // 確認 E-mail 可用
+            // 確認顯示訊息 E-mail $user->email 已確認，確認有連結 Login
+            // click link Login
+            // 正常登入後，應該回到首頁，右上方顯示 $user->name
         });
     }
 }
