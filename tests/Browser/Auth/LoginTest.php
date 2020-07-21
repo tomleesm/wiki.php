@@ -51,29 +51,27 @@ class LoginTest extends DuskTestCase
          });
      }
 
+
     /**
      *
-     * 必須登入才能使用的網址，登入成功後跳轉回該網址
+     * 登出
      *
      * @group login3
      *
      */
-    public function testRedirectRequireAuth()
-    {
+     public function testLogout()
+     {
          $this->browse(function (Browser $browser) {
              $user = factory(User::class)->create();
 
-             // 連到網址 /edit/test
-             $browser->visit('/edit/test')
-                     // 應該跳轉到登入頁面
-                     ->assertPathIs('/input/username')
-                     ->type('email', $user->email)
-                     ->press('Next')
-                     ->assertSee($user->email)
-                     ->assertPathIs('/input/password')
-                     ->type('password', 'password')
-                     ->press('Login')
-                     ->assertPathIs('/edit/test');
+             // 登入後右上角應該顯示使用者名稱
+             $browser->loginAs($user)->visit('/')
+                     ->assertSee($user->name)
+                     // 點選連結 Logout 後，顯示連結 Login 和 Register
+                     ->clickLink($user->name)
+                     ->clickLink('Logout')
+                     ->assertSeeLink('Login')
+                     ->assertSeeLink('Register');
          });
-    }
+     }
 }
