@@ -84,4 +84,33 @@ class MarkdownTest extends DuskTestCase
                     ->assertSourceHas('<h1>測試</h1>');
         });
     }
+
+    /**
+     *
+     * issue#48 水平線
+     *
+     * @group md3
+     *
+     */
+    public function testHorizontalLine()
+    {
+        $this->browse(function (Browser $browser) {
+            // 顯示編輯器
+            $user = factory(User::class)->create();
+
+            $browser->loginAs($user)
+                    ->visit('/edit/home')
+                    // 輸入 ---, ___ 和 ***
+                    ->type('article[content]', '___')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '---')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '***')
+                    // 應該顯示三個 <hr>
+                    ->assertSourceHas("<hr>\n<hr>\n<hr>")
+                    ->click('@edit-save-button')
+                    // 儲存後顯示相同的 <hr>
+                    ->assertSourceHas("<hr>\n<hr>\n<hr>");
+        });
+    }
 }
