@@ -50,4 +50,28 @@ class LoginTest extends DuskTestCase
                      ->assertSee($user->name);
          });
      }
+
+
+    /**
+     *
+     * 登出
+     *
+     * @group login3
+     *
+     */
+     public function testLogout()
+     {
+         $this->browse(function (Browser $browser) {
+             $user = factory(User::class)->create();
+
+             // 登入後右上角應該顯示使用者名稱
+             $browser->loginAs($user)->visit('/')
+                     ->assertSee($user->name)
+                     // 點選連結 Logout 後，顯示連結 Login 和 Register
+                     ->clickLink($user->name)
+                     ->clickLink('Logout')
+                     ->assertSeeLink('Login')
+                     ->assertSeeLink('Register');
+         });
+     }
 }
