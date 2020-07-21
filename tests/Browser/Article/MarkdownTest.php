@@ -113,4 +113,45 @@ class MarkdownTest extends DuskTestCase
                     ->assertSourceHas("<hr>\n<hr>\n<hr>");
         });
     }
+
+    /**
+     *
+     * issue#49 粗體、斜體和刪除線
+     *
+     * @group md4
+     *
+     */
+    public function testBoldItalicDel()
+    {
+        $this->browse(function (Browser $browser) {
+            // 顯示編輯器
+            $user = factory(User::class)->create();
+
+            $browser->loginAs($user)
+                    ->visit('/edit/home')
+                    // 輸入粗體、斜體和刪除線
+                    ->type('article[content]', '**This is bold text 1**')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '__This is bold text 2__')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '*This is italic text 1*')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '_This is italic text 2_')
+                    ->keys('#editArticleContent', ['{return_key}'])
+                    ->append('article[content]', '~~Strikethrough~~')
+                    // 顯示粗體、斜體和刪除線
+                    ->assertSourceHas('<strong>This is bold text 1</strong>')
+                    ->assertSourceHas('<strong>This is bold text 2</strong>')
+                    ->assertSourceHas('<em>This is italic text 1</em>')
+                    ->assertSourceHas('<em>This is italic text 2</em>')
+                    ->assertSourceHas('<s>Strikethrough</s>')
+                    // 儲存後顯示相同的粗體、斜體和刪除線
+                    ->click('@edit-save-button')
+                    ->assertSourceHas('<strong>This is bold text 1</strong>')
+                    ->assertSourceHas('<strong>This is bold text 2</strong>')
+                    ->assertSourceHas('<em>This is italic text 1</em>')
+                    ->assertSourceHas('<em>This is italic text 2</em>')
+                    ->assertSourceHas('<del>Strikethrough</del>');
+        });
+    }
 }
