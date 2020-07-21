@@ -50,4 +50,30 @@ class LoginTest extends DuskTestCase
                      ->assertSee($user->name);
          });
      }
+
+    /**
+     *
+     * 必須登入才能使用的網址，登入成功後跳轉回該網址
+     *
+     * @group login3
+     *
+     */
+    public function testRedirectRequireAuth()
+    {
+         $this->browse(function (Browser $browser) {
+             $user = factory(User::class)->create();
+
+             // 連到網址 /edit/test
+             $browser->visit('/edit/test')
+                     // 應該跳轉到登入頁面
+                     ->assertPathIs('/input/username')
+                     ->type('email', $user->email)
+                     ->press('Next')
+                     ->assertSee($user->email)
+                     ->assertPathIs('/input/password')
+                     ->type('password', 'password')
+                     ->press('Login')
+                     ->assertPathIs('/edit/test');
+         });
+    }
 }
