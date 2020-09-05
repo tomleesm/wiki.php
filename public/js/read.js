@@ -84,17 +84,31 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */
+/******/ ({
+
+/***/ "./resources/js/read.js":
+/*!******************************!*\
+  !*** ./resources/js/read.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var articleContent = document.getElementById('readArticleContent').innerHTML; // 產生預覽
+
+document.getElementById('readArticleContent').innerHTML = md.render(articleContent);
+
+/***/ }),
+
+/***/ 1:
 /*!************************************!*\
   !*** multi ./resources/js/read.js ***!
   \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-!(function webpackMissingModule() { var e = new Error("Cannot find module '/home/tom/apps/wiki/resources/js/read.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+module.exports = __webpack_require__(/*! /home/tom/apps/wiki/resources/js/read.js */"./resources/js/read.js");
 
 
 /***/ })
-/******/ ]);
+
+/******/ });

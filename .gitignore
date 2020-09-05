@@ -3,9 +3,8 @@
 
 /public/hot
 /public/storage
-public/js/app.js
-public/js/read.js
-public/css/app.css
+/public/js
+/public/css
 
 /storage/*.key
 

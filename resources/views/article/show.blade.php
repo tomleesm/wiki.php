@@ -24,13 +24,13 @@
     </a>
 </p>
 
-<div class="article content markdown-body">
+<div id="readArticleContent" class="article content markdown-body">
 {{-- 如果 $article->content 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
-{{-- 交由 Parsedown escape --}}
 {!! $article->content !!}
 </div>
 @endempty
 @endsection
 
 @section('javascript')
+    <script src="{{ asset('js/read.js')}}" defer></script>
 @endsection
