@@ -84,34 +84,17 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ "./resources/js/read.js":
-/*!******************************!*\
-  !*** ./resources/js/read.js ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// 抓取要轉換的 markdown
-var articleContent = document.querySelector('.article.content').innerHTML; // markdown 轉成 HTML
-
-var result = md.render(articleContent); // 顯示在頁面上
-
-document.querySelector('.article.content').innerHTML = result;
-
-/***/ }),
-
-/***/ 1:
+/******/ ([
+/* 0 */,
+/* 1 */
 /*!************************************!*\
   !*** multi ./resources/js/read.js ***!
   \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/tom/apps/wiki/resources/js/read.js */"./resources/js/read.js");
+!(function webpackMissingModule() { var e = new Error("Cannot find module '/home/tom/apps/wiki/resources/js/read.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 
 
 /***/ })
-
-/******/ });
+/******/ ]);
