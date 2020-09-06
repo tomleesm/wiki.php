@@ -13,6 +13,7 @@
 Route::get('/read/{title}', 'ArticleController@show')->name('article.show');
 Route::get('/edit/{title}', 'ArticleController@edit')->name('article.edit')->middleware('auth');
 Route::match(['put', 'patch'], '/update/{title}', 'ArticleController@update')->name('article.update');
+Route::post('/render-markdown', 'ArticleController@renderMarkdown');
 
 // Search
 Route::get('/search', 'ArticleController@search')->name('article.search');

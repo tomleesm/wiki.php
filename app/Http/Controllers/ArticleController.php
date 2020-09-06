@@ -168,4 +168,13 @@ class ArticleController extends Controller
         if(empty($page) || ! is_int($page)) return 1;
         else return $page;
     }
+
+    public function renderMarkdown(Request $request) {
+        $markdown = $request->post('markdown');
+        // markdown 轉換成 HTML
+        $Parsedown = new Parsedown();
+        // 防止 XSS
+        $Parsedown->setSafeMode(true);
+        return $Parsedown->text($markdown);
+    }
 }

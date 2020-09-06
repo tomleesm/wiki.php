@@ -6,9 +6,21 @@ document.getElementById('editArticleContent').addEventListener('keyup', function
 });
 
 function refreshPreview() {
+  const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   // 抓取編輯條目的 textarea 的值
-  var articleContent = document.getElementById('editArticleContent').value;
+  const markdown = document.getElementById('editArticleContent').value;
+  var formData = new FormData();
+  formData.append('markdown', markdown);
 
-  // 產生預覽
-  // document.querySelector('.preview').innerHTML = md.render(articleContent);
+  fetch('/render-markdown', {
+    method: 'POST',
+    headers: new Headers({
+        'X-CSRF-TOKEN': token
+    }),
+    body: formData
+  }).then(function( response ) {
+     return response.text();
+  }).then(function ( text ) {
+     document.querySelector('.preview').innerHTML = text;
+  });
 }
