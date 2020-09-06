@@ -18,7 +18,7 @@
                 <button class="btn btn-primary" dusk="edit-save-button">Save</button>
             </form>
         </div>
-        <div class="col-sm preview">
+        <div class="col-sm preview markdown-body">
         </div>
     </div>
 </div>

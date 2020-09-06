@@ -18,3 +18,8 @@ nav.table-of-contents ul,
 nav.table-of-contents li {
   list-style: none;
 }
+
+/* Edit 預覽的圖片不要太大 */
+.preview img {
+  max-width: 100%;
+}
