@@ -93,12 +93,9 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// 抓取要轉換的 markdown
-var articleContent = document.querySelector('.article.content').innerHTML; // markdown 轉成 HTML
+var articleContent = document.getElementById('readArticleContent').innerHTML; // 產生預覽
 
-var result = md.render(articleContent); // 顯示在頁面上
-
-document.querySelector('.article.content').innerHTML = result;
+document.getElementById('readArticleContent').innerHTML = md.render(articleContent);
 
 /***/ }),
 

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -100,15 +100,27 @@ document.getElementById('editArticleContent').addEventListener('keyup', function
 });
 
 function refreshPreview() {
-  // 抓取編輯條目的 textarea 的值
-  var articleContent = document.getElementById('editArticleContent').value; // 產生預覽
+  var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // 抓取編輯條目的 textarea 的值
 
-  document.querySelector('.preview').innerHTML = md.render(articleContent);
+  var markdown = document.getElementById('editArticleContent').value;
+  var formData = new FormData();
+  formData.append('markdown', markdown);
+  fetch('/render-markdown', {
+    method: 'POST',
+    headers: new Headers({
+      'X-CSRF-TOKEN': token
+    }),
+    body: formData
+  }).then(function (response) {
+    return response.text();
+  }).then(function (text) {
+    document.querySelector('.preview').innerHTML = text;
+  });
 }
 
 /***/ }),
 
-/***/ 2:
+/***/ 1:
 /*!************************************!*\
   !*** multi ./resources/js/edit.js ***!
   \************************************/

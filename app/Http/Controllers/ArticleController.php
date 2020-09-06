@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Article;
 use Illuminate\Support\Facades\Auth;
 use Dompdf\Dompdf;
+use Parsedown;
 
 class ArticleController extends Controller
 {
@@ -37,7 +38,7 @@ class ArticleController extends Controller
         }
 
         // markdown 轉換成 HTML
-        $Parsedown = new \Parsedown();
+        $Parsedown = new Parsedown();
         // 防止 XSS
         $Parsedown->setSafeMode(true);
         $article->content = $Parsedown->text($article->content);
@@ -166,5 +167,14 @@ class ArticleController extends Controller
         $page = (int) $request->query('page');
         if(empty($page) || ! is_int($page)) return 1;
         else return $page;
+    }
+
+    public function renderMarkdown(Request $request) {
+        $markdown = $request->post('markdown');
+        // markdown 轉換成 HTML
+        $Parsedown = new Parsedown();
+        // 防止 XSS
+        $Parsedown->setSafeMode(true);
+        return $Parsedown->text($markdown);
     }
 }

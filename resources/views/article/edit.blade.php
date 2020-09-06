@@ -25,5 +25,5 @@
 @endsection
 
 @section('javascript')
-    <script src="{{ asset('js/edit.js')}}" defer></script>
+    <script src="{{ mix('js/edit.js')}}" defer></script>
 @endsection
