@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -102,13 +102,12 @@ document.getElementById('editArticleContent').addEventListener('keyup', function
 function refreshPreview() {
   // 抓取編輯條目的 textarea 的值
   var articleContent = document.getElementById('editArticleContent').value; // 產生預覽
-
-  document.querySelector('.preview').innerHTML = md.render(articleContent);
+  // document.querySelector('.preview').innerHTML = md.render(articleContent);
 }
 
 /***/ }),
 
-/***/ 2:
+/***/ 1:
 /*!************************************!*\
   !*** multi ./resources/js/edit.js ***!
   \************************************/

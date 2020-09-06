@@ -32,5 +32,4 @@
 @endsection
 
 @section('javascript')
-    <script src="{{ asset('js/read.js')}}" defer></script>
 @endsection

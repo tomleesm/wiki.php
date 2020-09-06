@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Article;
 use Illuminate\Support\Facades\Auth;
 use Dompdf\Dompdf;
+use Parsedown;
 
 class ArticleController extends Controller
 {
@@ -37,10 +38,10 @@ class ArticleController extends Controller
         }
 
         // markdown 轉換成 HTML
-        /* $Parsedown = new \Parsedown(); */
+        $Parsedown = new Parsedown();
         // 防止 XSS
-        /* $Parsedown->setSafeMode(true); */
-        /* $article->content = $Parsedown->text($article->content); */
+        $Parsedown->setSafeMode(true);
+        $article->content = $Parsedown->text($article->content);
 
         return view('article.show')->with('article', $article);
     }

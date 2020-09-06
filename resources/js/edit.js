@@ -10,5 +10,5 @@ function refreshPreview() {
   var articleContent = document.getElementById('editArticleContent').value;
 
   // 產生預覽
-  document.querySelector('.preview').innerHTML = md.render(articleContent);
+  // document.querySelector('.preview').innerHTML = md.render(articleContent);
 }
