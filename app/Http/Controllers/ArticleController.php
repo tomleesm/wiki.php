@@ -175,6 +175,15 @@ class ArticleController extends Controller
         $Parsedown = new Parsedown();
         // 防止 XSS
         $Parsedown->setSafeMode(true);
-        return $Parsedown->text($markdown);
+        $html = $Parsedown->text($markdown);
+
+        // 轉換 [[]] 爲 wiki link
+        $html = preg_replace_callback('/\[\[([^\]]+)\]\]/', function($matches) {
+            $linkText = $matches[1];
+            $URL = sprintf('/read/%s', urlencode($linkText));
+            return sprintf('<a href="%s">%s</a>', $URL, $linkText);
+        }, $html);
+
+        return $html;
     }
 }
