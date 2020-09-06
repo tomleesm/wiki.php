@@ -37,11 +37,7 @@ class ArticleController extends Controller
             $article = $this->createArticleWithParent($title);
         }
 
-        // markdown 轉換成 HTML
-        $Parsedown = new Parsedown();
-        // 防止 XSS
-        $Parsedown->setSafeMode(true);
-        $article->content = $Parsedown->text($article->content);
+        $article->content = $this->renderMarkdownToHTML($article->content);
 
         return view('article.show')->with('article', $article);
     }
@@ -171,7 +167,10 @@ class ArticleController extends Controller
 
     public function renderMarkdown(Request $request) {
         $markdown = $request->post('markdown');
-        // markdown 轉換成 HTML
+        return $this->renderMarkdownToHTML($markdown);
+    }
+
+    private function renderMarkdownToHTML($markdown) {
         $Parsedown = new Parsedown();
         // 防止 XSS
         $Parsedown->setSafeMode(true);
