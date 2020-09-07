@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Article;
 use Illuminate\Support\Facades\Auth;
 use Dompdf\Dompdf;
-use Parsedown;
 
 class ArticleController extends Controller
 {
@@ -122,7 +121,7 @@ class ArticleController extends Controller
         // 抓取條目
         $article = Article::where('title', $title)->first();
         // markdown 轉換成 HTML
-        $Parsedown = new \Parsedown();
+        $Parsedown = new \ParsedownToC();
         // 防止 XSS
         $Parsedown->setSafeMode(true);
         // 設定使用中文字型
@@ -168,7 +167,7 @@ class ArticleController extends Controller
     }
 
     private function renderMarkdownToHTML($markdown, $title) {
-        $Parsedown = new Parsedown();
+        $Parsedown = new \ParsedownToc();
         // 防止 XSS
         $Parsedown->setSafeMode(true);
         $html = $Parsedown->text($markdown);

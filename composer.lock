@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce22f40d290494f178d1add83c0b82f7",
+    "content-hash": "124dd59c8119a252e32b6ca2731c460e",
     "packages": [
         {
             "name": "bensampo/laravel-enum",
@@ -1007,6 +1007,56 @@
             "description": "Highlight PHP code in terminal",
             "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
+        },
+        {
+            "name": "keinos/parsedown-toc",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KEINOS/parsedown-extension_table-of-contents.git",
+                "reference": "824b3b0b0fea1dd5daf056f3058310f9d4d5b0be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KEINOS/parsedown-extension_table-of-contents/zipball/824b3b0b0fea1dd5daf056f3058310f9d4d5b0be",
+                "reference": "824b3b0b0fea1dd5daf056f3058310f9d4d5b0be",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown": "^1.7",
+                "ext-mbstring": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Extension.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KEINOS",
+                    "homepage": "https://github.com/KEINOS",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "CONTRIBUTORS",
+                    "homepage": "https://github.com/KEINOS/parsedown-extension_table-of-contents/graphs/contributors",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "Table of Contents Extension for Parsedown, the Parser for Markdown.",
+            "homepage": "https://github.com/KEINOS/parsedown-extension_table-of-contents/",
+            "keywords": [
+                "extension",
+                "markdown",
+                "parser"
+            ],
+            "time": "2020-06-27T03:58:36+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -5377,6 +5427,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {
