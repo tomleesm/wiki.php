@@ -17,7 +17,7 @@ class ArticleController extends Controller
     {
         $count = Article::where('title', $title)->count();
         // 設定麵包屑的巢狀結構
-        $breadcrumbParent = $request->query('parent');
+        $breadcrumbParent = urlDecode($request->query('parent'));
 
         // 如果沒有這個條目
         $article = null;
@@ -47,7 +47,7 @@ class ArticleController extends Controller
         // 檢查是否有這個條目
         $count = Article::where('title', $title)->count();
         // 設定麵包屑的巢狀結構
-        $breadcrumbParent = $request->query('parent');
+        $breadcrumbParent = urlDecode($request->query('parent'));
 
         // 如果沒有這個條目
         $article = null;
@@ -176,7 +176,8 @@ class ArticleController extends Controller
         // 轉換 [[]] 爲 wiki link
         $html = preg_replace_callback('/\[\[([^\]]+)\]\]/', function($matches) use($title) {
             $linkText = $matches[1];
-            $URL = sprintf('/read/%s?parent=%s', urlencode($linkText), $title);
+            $breadcrumbParent = $title;
+            $URL = sprintf('/read/%s?parent=%s', urlEncode($linkText), urlEncode($breadcrumbParent));
             return sprintf('<a href="%s">%s</a>', $URL, $linkText);
         }, $html);
 
