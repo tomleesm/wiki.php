@@ -115,6 +115,11 @@ function refreshPreview() {
     return response.text();
   }).then(function (text) {
     document.querySelector('.preview').innerHTML = text;
+  }).then(function () {
+    // 用 Fetch callback 確保執行完 AJAX 後才載入 prism.js
+    var script = document.createElement("script");
+    script.src = '/js/prism.js';
+    document.body.appendChild(script);
   });
 }
 

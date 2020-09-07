@@ -1,5 +1,7 @@
 {
     "/js/app.js": "/js/app.js?id=56dde4ff44ccf004fc88",
     "/css/app.css": "/css/app.css?id=a79ad1b2cd7dea40b737",
-    "/js/edit.js": "/js/edit.js?id=8e91b00081b283351c65"
+    "/js/edit.js": "/js/edit.js?id=af9ca9717abe31f1f4c3",
+    "/js/prism.js": "/js/prism.js?id=2c5ce01a83f377581c69",
+    "/css/prism.css": "/css/prism.css?id=d8eb9f0731f6f5a5d2ba"
 }

@@ -32,4 +32,5 @@
 @endsection
 
 @section('javascript')
+    <script src="{{ asset('js/prism.js')}}" defer></script>
 @endsection

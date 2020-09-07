@@ -8,8 +8,9 @@
         <meta name="breadcrumb-parent" content="{{ $article->title }}">
         <title>{{ $article->title }}</title>
         <link rel="stylesheet" href="{{ asset('css/app.css')}}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/prism.css')}}" type="text/css">
     </head>
-    <body>
+    <body class="line-numbers">
     <div class="container">
         <nav class="navbar navbar-expand-md">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
