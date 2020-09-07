@@ -103,8 +103,10 @@ function refreshPreview() {
   var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // 抓取編輯條目的 textarea 的值
 
   var markdown = document.getElementById('editArticleContent').value;
+  var breadcrumbParent = document.querySelector('meta[name="breadcrumb-parent"]').getAttribute('content');
   var formData = new FormData();
   formData.append('markdown', markdown);
+  formData.append('parent', breadcrumbParent);
   fetch('/render-markdown', {
     method: 'POST',
     headers: new Headers({
