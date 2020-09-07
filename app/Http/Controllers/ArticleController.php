@@ -21,23 +21,20 @@ class ArticleController extends Controller
 
         // 如果沒有這個條目
         $article = null;
-        if($count === 0) {
-            if($title == 'home') {
-                $article = new \stdClass();
-                $article->title = 'home';
-                $article->content = '';
-                $article->parent = $breadcrumbParent;
-            } else {
-                return redirect()->route('article.edit', ['title' => $title, 'parent' => $breadcrumbParent]);
-            }
-        } else {
+        if ($count === 0 && $title == 'home') {
+            $article = new \stdClass();
+            $article->title = 'home';
+            $article->content = '';
+        } else if ($count === 0 && $title != 'home') {
+            return redirect()->route('article.edit', ['title' => $title, 'parent' => $breadcrumbParent]);
+        } else if ($count !== 0) {
             // routes/breadcrumbs.php 的第二個設定是遞迴呼叫，
             // 所以 $article->parent 要指向 Article 物件，不能只是字串
             // 一樣要遞迴產生 Article 物件
             $article = $this->createArticleWithParent($title);
         }
 
-        $article->content = $this->renderMarkdownToHTML($article->content);
+        $article->content = $this->renderMarkdownToHTML($article->content, $title);
 
         return view('article.show')->with('article', $article);
     }
@@ -167,19 +164,19 @@ class ArticleController extends Controller
 
     public function renderMarkdown(Request $request) {
         $markdown = $request->post('markdown');
-        return $this->renderMarkdownToHTML($markdown);
+        return $this->renderMarkdownToHTML($markdown, $request->post('parent'));
     }
 
-    private function renderMarkdownToHTML($markdown) {
+    private function renderMarkdownToHTML($markdown, $title) {
         $Parsedown = new Parsedown();
         // 防止 XSS
         $Parsedown->setSafeMode(true);
         $html = $Parsedown->text($markdown);
 
         // 轉換 [[]] 爲 wiki link
-        $html = preg_replace_callback('/\[\[([^\]]+)\]\]/', function($matches) {
+        $html = preg_replace_callback('/\[\[([^\]]+)\]\]/', function($matches) use($title) {
             $linkText = $matches[1];
-            $URL = sprintf('/read/%s', urlencode($linkText));
+            $URL = sprintf('/read/%s?parent=%s', urlencode($linkText), $title);
             return sprintf('<a href="%s">%s</a>', $URL, $linkText);
         }, $html);
 
