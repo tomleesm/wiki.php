@@ -121,7 +121,8 @@ class ArticleController extends Controller
         // 抓取條目
         $article = Article::where('title', $title)->first();
         // markdown 轉換成 HTML
-        $Parsedown = new \ParsedownToC();
+        // PDF 不產生目錄，所以不是用 ParsedownToC
+        $Parsedown = new \Parsedown();
         // 防止 XSS
         $Parsedown->setSafeMode(true);
         // 設定使用中文字型
@@ -129,6 +130,12 @@ class ArticleController extends Controller
         $html = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
         $html .= '<style>@font-face { font-family: "wt011"; } * { font-family: "wt011" }</style>';
         $html .= $Parsedown->text($article->content);
+
+        // 刪除 [toc]
+        $needle = '<p>[toc]</p>';
+        $replace = '';
+        $html = str_replace($needle, $replace, $html);
+
         // HTML 轉換成 PDF
         $dompdf = new Dompdf();
         //$dompdf->loadHtml($html);
