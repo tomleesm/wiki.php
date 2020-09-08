@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use App\Markdown;
 use Illuminate\Support\Facades\Auth;
-use Dompdf\Dompdf;
 
 class ArticleController extends Controller
 {
@@ -33,7 +33,8 @@ class ArticleController extends Controller
             $article = $this->createArticleWithParent($title);
         }
 
-        $article->content = $this->renderMarkdownToHTML($article->content, $title);
+        $markdown = new Markdown($article->content, $title);
+        $article->content = $markdown->toHTML();
 
         return view('article.show')->with('article', $article);
     }
@@ -120,32 +121,8 @@ class ArticleController extends Controller
     public function exportToPDF($title) {
         // 抓取條目
         $article = Article::where('title', $title)->first();
-        // markdown 轉換成 HTML
-        // PDF 不產生目錄，所以不是用 ParsedownToC
-        $Parsedown = new \Parsedown();
-        // 防止 XSS
-        $Parsedown->setSafeMode(true);
-        // 設定使用中文字型
-        // 中文字型屬於自訂字型，不能用 $dompdf->set_option('defaultFont', 'wt011');
-        $html = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
-        $html .= '<style>@font-face { font-family: "wt011"; } * { font-family: "wt011" }</style>';
-        $html .= $Parsedown->text($article->content);
-
-        // 刪除 [toc]
-        $needle = '<p>[toc]</p>';
-        $replace = '';
-        $html = str_replace($needle, $replace, $html);
-
-        // HTML 轉換成 PDF
-        $dompdf = new Dompdf();
-        //$dompdf->loadHtml($html);
-        $dompdf->loadHtml($html);
-        // 設定紙張大小和直橫式
-        $dompdf->setPaper('A4', 'landscape');
-        // 轉換 HTML 爲 PDF
-        $dompdf->render();
-        // 下載到 client
-        $dompdf->stream();
+        $markdown = new Markdown($article->content);
+        $markdown->toPDF();
     }
 
     /**
@@ -169,24 +146,7 @@ class ArticleController extends Controller
     }
 
     public function renderMarkdown(Request $request) {
-        $markdown = $request->post('markdown');
-        return $this->renderMarkdownToHTML($markdown, $request->post('parent'));
-    }
-
-    private function renderMarkdownToHTML($markdown, $title) {
-        $Parsedown = new \ParsedownToc();
-        // 防止 XSS
-        $Parsedown->setSafeMode(true);
-        $html = $Parsedown->text($markdown);
-
-        // 轉換 [[]] 爲 wiki link
-        $html = preg_replace_callback('/\[\[([^\]]+)\]\]/', function($matches) use($title) {
-            $linkText = $matches[1];
-            $breadcrumbParent = $title;
-            $URL = sprintf('/read/%s?parent=%s', urlEncode($linkText), urlEncode($breadcrumbParent));
-            return sprintf('<a href="%s">%s</a>', $URL, $linkText);
-        }, $html);
-
-        return $html;
+        $markdown = new Markdown($request->post('markdown'), $request->post('parent'));
+        return $markdown->toHTML();
     }
 }
