@@ -14,13 +14,15 @@ class ArticleController extends Controller
      */
     public function show($title, Request $request)
     {
+        // 檢查是否有這個條目
         $count = Article::where('title', $title)->count();
         // 設定麵包屑的巢狀結構
         $breadcrumbParent = urlDecode($request->query('parent'));
 
-        // 如果沒有這個條目
         $article = null;
+        // 沒有這個條目，而且條目爲 home
         if ($count === 0 && $title == 'home') {
+            // 顯示預設歡迎訊息
             $article = new \stdClass();
             $article->title = 'home';
             $article->content = '';
