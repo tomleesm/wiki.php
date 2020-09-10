@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@empty($article->content)
+@if( empty($article->content) && $article->title == 'home' )
     <p>Welcome to Wiki.</p>
     <p><a href="{{ route('article.edit', ['title' => 'home']) }}">Start to write something.</a></p>
 @else
