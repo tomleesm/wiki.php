@@ -99,18 +99,6 @@ class ArticleController extends Controller
     }
 
     /**
-     * 搜尋條目
-     */
-    public function search(Request $request) {
-        $query = new \stdClass();
-        $query->keyword = $request->input('keyword');
-        $query->result = Article::search($query->keyword)->get();
-
-        return view('article.search')
-               ->with('query', $query);
-    }
-
-    /**
      * 匯出條目爲 PDF
      */
     public function exportToPDF($title) {

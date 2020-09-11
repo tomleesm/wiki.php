@@ -27,22 +27,6 @@
                     </li>
                 </ul>
 
-                <!--  SEARCH -->
-                <ul class="navbar-nav nav ml-auto">
-                    <li class="nav-item">
-                        <form action="{{ route('article.search') }}" method="get" name="search">
-                            <div class="input-group">
-                                <input type="text" name="keyword" class="form-control" placeholder="search" aria-label="search" aria-describedby="search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit" id="button-addon2">
-                                        <span><i class="fas fa-search"></i></span>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </li>
-                </ul>
-
                 <ul class="navbar-nav nav">
                 <!-- Authentication Links -->
                 @guest
