@@ -23,10 +23,6 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "@tomleesm/markdown-it-wikilinks": "^1.1.1",
-        "github-markdown-css": "^4.0.0",
-        "markdown-it": "^10.0.0",
-        "markdown-it-anchor": "5.0.2",
-        "markdown-it-toc-done-right": "3.0.1"
+        "github-markdown-css": "^4.0.0"
     }
 }
