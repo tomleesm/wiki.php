@@ -6,8 +6,6 @@
     <p><a href="{{ route('article.edit', ['title' => 'home']) }}">Start to write something.</a></p>
 @else
 
-{{ Breadcrumbs::render('article', $article) }}
-
 <h3>{{ $article->title }}</h3>
 <p>
     <a href="{{ route('article.history', ['title' => $article->title]) }}" class="text-muted">

@@ -6,21 +6,18 @@ use Dompdf\Dompdf;
 class Markdown extends \ParsedownToC
 {
     private $markdown = '';
-    private $breadcrumbParent = '';
 
-    public function __construct($markdown, $breadcrumbParent = '') {
+    public function __construct($markdown) {
         // 防止 XSS
         $this->setSafeMode(true);
 
         $this->markdown = $markdown;
-        // 上一層麵包屑
-        $this->breadcrumbParent = $breadcrumbParent;
     }
 
     public function toHTML() {
         // 把 markdown 轉換成 html
         $html = $this->text($this->markdown);
-        // 把 [[test]] 轉成連結 /read/test?parent=breadcrumbParent
+        // 把 [[test]] 轉成連結 /read/test
         return $this->convertWikiLinks($html);
     }
 
@@ -51,9 +48,9 @@ class Markdown extends \ParsedownToC
         return preg_replace_callback('/\[\[([^\]]+)\]\]/', function($matches) {
             // 抓取 [[test]] 之間的文字
             $linkText = $matches[1];
-            // url = /read/test?parent=home
-            $URL = sprintf('/read/%s?parent=%s', urlEncode($linkText), urlEncode($this->breadcrumbParent));
-            // 回傳 <a href="/read/test?parent=home">test</a>
+            // url = /read/test
+            $URL = sprintf('/read/%s', urlEncode($linkText));
+            // 回傳 <a href="/read/test">test</a>
             return sprintf('<a href="%s">%s</a>', $URL, $linkText);
         }, $html);
     }
