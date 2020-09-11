@@ -17,9 +17,7 @@
         "keinos/parsedown-toc": "^1.1",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
-        "nicolaslopezj/searchable": "^1.13",
-        "sebastian/diff": "3.*",
-        "venturecraft/revisionable": "^1.34"
+        "nicolaslopezj/searchable": "^1.13"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

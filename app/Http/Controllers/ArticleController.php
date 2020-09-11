@@ -121,31 +121,6 @@ class ArticleController extends Controller
     }
 
     /**
-     * 顯示歷史記錄
-     */
-    public function getHistories($title, Request $request) {
-        // 用標題抓取條目
-        $article = Article::where('title', $title)->first();
-
-        // 目前頁碼
-        $page = $this->getCurrentPage($request);
-        $perPage = 10;
-        // 這一頁從第幾筆開始
-        $startIndex = $perPage * ( $page - 1);
-        // 這一頁的歷史記錄顯示範圍
-        $histories = $article->revisionHistory->slice($startIndex, $perPage);
-
-        return view('article.history')->with(['article' => $article, 'histories' => $histories]);
-    }
-
-    // 目前頁碼
-    private function getCurrentPage($request) {
-        $page = (int) $request->query('page');
-        if(empty($page) || ! is_int($page)) return 1;
-        else return $page;
-    }
-
-    /**
      * 產生編輯條目的預覽結果
      */
     public function renderMarkdown(Request $request) {
