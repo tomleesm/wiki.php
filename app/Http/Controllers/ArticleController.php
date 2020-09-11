@@ -99,16 +99,6 @@ class ArticleController extends Controller
     }
 
     /**
-     * 匯出條目爲 PDF
-     */
-    public function exportToPDF($title) {
-        // 用標題抓取條目
-        $article = Article::where('title', $title)->first();
-        $markdown = new Markdown($article->content);
-        $markdown->toPDF();
-    }
-
-    /**
      * 產生編輯條目的預覽結果
      */
     public function renderMarkdown(Request $request) {
