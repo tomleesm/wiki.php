@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width" />
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="breadcrumb-parent" content="{{ $article->title }}">
         <title>{{ $article->title }}</title>
         <link rel="stylesheet" href="{{ asset('css/app.css')}}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/prism.css')}}" type="text/css">
@@ -22,28 +21,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @if (request()->routeIs('article.edit')) active @endif" href="{{ route('article.edit', [ 'title' => $article->title ]) }}">Edit</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('article.pdf', [ 'title' => $article->title ]) }}">PDF</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link @if (request()->routeIs('article.history')) active @endif" href="{{ route('article.history', [ 'title' => $article->title ]) }}">History</a>
-                    </li>
-                </ul>
-
-                <!--  SEARCH -->
-                <ul class="navbar-nav nav ml-auto">
-                    <li class="nav-item">
-                        <form action="{{ route('article.search') }}" method="get" name="search">
-                            <div class="input-group">
-                                <input type="text" name="keyword" class="form-control" placeholder="search" aria-label="search" aria-describedby="search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit" id="button-addon2">
-                                        <span><i class="fas fa-search"></i></span>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
                     </li>
                 </ul>
 

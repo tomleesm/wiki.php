@@ -16,8 +16,6 @@ class ArticleController extends Controller
     {
         // 檢查是否有這個條目
         $count = Article::where('title', $title)->count();
-        // 設定麵包屑的巢狀結構
-        $breadcrumbParent = urlDecode($request->query('parent'));
 
         $article = null;
         // 沒有這個條目，而且條目爲 home
@@ -29,15 +27,15 @@ class ArticleController extends Controller
         // 沒有這個條目，而且條目不是 home
         } else if ($count === 0 && $title != 'home') {
             // 跳轉到編輯頁面
-            return redirect()->route('article.edit', ['title' => $title, 'parent' => $breadcrumbParent]);
+            return redirect()->route('article.edit', ['title' => $title]);
         // 有這個條目
         } else if ($count !== 0) {
-            // 產生條目和麵包屑
-            $article = $this->createArticleWithParent($title);
+            // 產生條目
+            $article = Article::where('title', $title)->first();
         }
 
         // 把 markdown 語法轉成 HTML
-        $markdown = new Markdown($article->content, $title);
+        $markdown = new Markdown($article->content);
         $article->content = $markdown->toHTML();
 
         return view('article.show')->with('article', $article);
@@ -50,8 +48,6 @@ class ArticleController extends Controller
     {
         // 檢查是否有這個條目
         $count = Article::where('title', $title)->count();
-        // 設定麵包屑的巢狀結構
-        $breadcrumbParent = urlDecode($request->query('parent'));
 
         $article = null;
         // 如果沒有這個條目
@@ -60,7 +56,6 @@ class ArticleController extends Controller
             $article = new \stdClass();
             $article->title = $title;
             $article->content = '';
-            $article->parent = $breadcrumbParent;
         } else {
             // 抓取條目
             $article = Article::where('title', $title)->first();
@@ -80,8 +75,6 @@ class ArticleController extends Controller
         // 條目標題和內容
         $title = $request->input('article.title');
         $content = $request->input('article.content');
-        // 麵包屑的上一層
-        $parent = $request->input('article.parent');
 
         // 用標題檢查條目是否存在，沒有的話先新增條目，有的話就更新內容
         $article = Article::where('title', $title)->get();
@@ -99,83 +92,17 @@ class ArticleController extends Controller
         $article = Article::where('title', $title)->first();
         $article->user_id = $id;
         $article->content = $content;
-        $article->parent = $parent;
         $article->save();
 
         // 跳轉到顯示條目
         return redirect()->route('article.show', ['title' => $title]);
     }
 
-    // routes/breadcrumbs.php 設定是遞迴呼叫
-    // 所以 $article->parent 要指向 Article 物件，不能只是字串
-    // 一樣要遞迴產生 Article 物件
-    private function createArticleWithParent($title) {
-        // 用標題抓取條目
-        $article = Article::where('title', $title)->first();
-
-        // 如果 parent 不是空的，表示它不是最上層條目
-        if( ! empty($article->parent) ) {
-            // 抓取更上層的條目
-            $article->parent = $this->createArticleWithParent($article->parent);
-        }
-
-        return $article;
-    }
-
-    /**
-     * 搜尋條目
-     */
-    public function search(Request $request) {
-        $query = new \stdClass();
-        $query->keyword = $request->input('keyword');
-        $query->result = Article::search($query->keyword)->get();
-
-        return view('article.search')
-               ->with('query', $query);
-    }
-
-    /**
-     * 匯出條目爲 PDF
-     */
-    public function exportToPDF($title) {
-        // 用標題抓取條目
-        $article = Article::where('title', $title)->first();
-        $markdown = new Markdown($article->content);
-        $markdown->toPDF();
-    }
-
-    /**
-     * 顯示歷史記錄
-     */
-    public function getHistories($title, Request $request) {
-        // 用標題抓取條目
-        $article = Article::where('title', $title)->first();
-
-        // 目前頁碼
-        $page = $this->getCurrentPage($request);
-        // 每頁只有一筆資料？
-        $perPage = 1;
-        // 這一頁從第幾筆開始
-        $startIndex = $perPage * ( $page - 1);
-        // 這一頁的歷史記錄顯示範圍
-        $histories = $article->revisionHistory->slice($startIndex, $perPage);
-
-        return view('article.history')->with(['article' => $article, 'histories' => $histories]);
-    }
-
-    // 目前頁碼
-    private function getCurrentPage($request) {
-        $page = (int) $request->query('page');
-        if(empty($page) || ! is_int($page)) return 1;
-        else return $page;
-    }
-
     /**
      * 產生編輯條目的預覽結果
      */
     public function renderMarkdown(Request $request) {
-        $markdown = new Markdown($request->post('markdown'),
-                                 $request->post('parent'));
+        $markdown = new Markdown($request->post('markdown'));
         return $markdown->toHTML();
     }
 }
