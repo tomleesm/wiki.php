@@ -70,8 +70,6 @@ class ArticleController extends Controller
      */
     public function update($title, Request $request)
     {
-        // 目前登入的使用者 id
-        $id = Auth::id();
         // 條目標題和內容
         $title = $request->input('article.title');
         $content = $request->input('article.content');
@@ -83,14 +81,12 @@ class ArticleController extends Controller
         if(empty($article->all())) {
             // 新增條目
             $newArticle = new Article();
-            $newArticle->user_id = $id;
             $newArticle->title = $title;
             $newArticle->save();
         }
 
         // 更新條目內容、作者id、麵包屑上一層
         $article = Article::where('title', $title)->first();
-        $article->user_id = $id;
         $article->content = $content;
         $article->save();
 
