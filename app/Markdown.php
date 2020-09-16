@@ -21,19 +21,17 @@ class Markdown extends \ParsedownToC
      */
 
     public function text($text) {
-        // Parses the markdown text except the ToC tag. This also searches
-        // the list of contents and available to get from "contentsList()"
-        // method.
         $html = $this->body($text);
 
-        $tag_origin  = $this->getTagToC();
+        if ($this->hasTagNotoc($text)) {
+            return $this->removeTagNotoc($html);
+        }
 
-        $toc_data = $this->contentsList();
-        $toc_id   = $this->getIdAttributeToC();
-        $needle  = '<p>' . $tag_origin . '</p>';
-        $replace = "<div id=\"${toc_id}\">${toc_data}</div>";
+        $toc = sprintf("<div id=\"%s\">%s</div>",
+                        $this->getIdAttributeToC(),
+                        $this->contentsList());
 
-        return $replace . $html;
+        return $toc . $html;
     }
 
     public function toHTML() {
@@ -55,8 +53,12 @@ class Markdown extends \ParsedownToC
         }, $html);
     }
 
-    private function removeToCTag($html) {
-        // 刪除 [toc]
-        return str_replace('<p>[toc]</p>', '', $html);
+    private function removeTagNotoc($html) {
+        // 刪除 [notoc]
+        return str_replace('<p>[notoc]</p>', '', $html);
+    }
+
+    private function hasTagNotoc($text) {
+        return strpos($text, '[notoc]') !== false;
     }
 }
