@@ -12,31 +12,22 @@ class Markdown extends \ParsedownToC
         $this->markdown = $markdown;
     }
 
-    /**
-     * 覆寫 text()，不需要 [toc]，預設顯示目錄
-     *
-     * @param string $text
-     *
-     * @return string
-     */
+    public function toHTML() {
+        // 把 markdown 轉換成 html，但不處理 [toc]
+        $html = $this->body($this->markdown);
 
-    public function text($text) {
-        $html = $this->body($text);
-
-        if ($this->hasTagNotoc($text)) {
+        // 如果有 [notoc]
+        if ($this->hasTagNotoc()) {
             return $this->removeTagNotoc($html);
         }
 
+        // 產生目錄
         $toc = sprintf("<div id=\"%s\">%s</div>",
                         $this->getIdAttributeToC(),
                         $this->contentsList());
 
-        return $toc . $html;
-    }
-
-    public function toHTML() {
-        // 把 markdown 轉換成 html
-        $html = $this->text($this->markdown);
+        // 目錄加到最前面
+        $html = $toc . $html;
         // 把 [[test]] 轉成連結 /read/test
         return $this->convertWikiLinks($html);
     }
@@ -58,7 +49,7 @@ class Markdown extends \ParsedownToC
         return str_replace('<p>[notoc]</p>', '', $html);
     }
 
-    private function hasTagNotoc($text) {
-        return strpos($text, '[notoc]') !== false;
+    private function hasTagNotoc() {
+        return strpos($this->markdown, '[notoc]') !== false;
     }
 }
