@@ -12,6 +12,30 @@ class Markdown extends \ParsedownToC
         $this->markdown = $markdown;
     }
 
+    /**
+     * 覆寫 text()，不需要 [toc]，預設顯示目錄
+     *
+     * @param string $text
+     *
+     * @return string
+     */
+
+    public function text($text) {
+        // Parses the markdown text except the ToC tag. This also searches
+        // the list of contents and available to get from "contentsList()"
+        // method.
+        $html = $this->body($text);
+
+        $tag_origin  = $this->getTagToC();
+
+        $toc_data = $this->contentsList();
+        $toc_id   = $this->getIdAttributeToC();
+        $needle  = '<p>' . $tag_origin . '</p>';
+        $replace = "<div id=\"${toc_id}\">${toc_data}</div>";
+
+        return $replace . $html;
+    }
+
     public function toHTML() {
         // 把 markdown 轉換成 html
         $html = $this->text($this->markdown);
