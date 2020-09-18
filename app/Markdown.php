@@ -15,6 +15,7 @@ class Markdown extends \ParsedownToC
     public function toHTML() {
         // 把 markdown 轉換成 html，但不處理 [toc]
         $html = $this->body($this->markdown);
+        $html = '<div id="body">' . $html . '</div>';
 
         // 如果有 [notoc]
         if ($this->hasTagNotoc()) {
@@ -26,8 +27,7 @@ class Markdown extends \ParsedownToC
                         $this->getIdAttributeToC(),
                         $this->contentsList());
 
-        // 目錄加到最前面
-        $html = $toc . $html;
+        $html .= $toc;
         // 把 [[test]] 轉成連結 /read/test
         return $this->convertWikiLinks($html);
     }
