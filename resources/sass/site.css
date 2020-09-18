@@ -2,9 +2,6 @@
 .markdown-body {
   box-sizing: border-box;
   min-width: 200px;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 45px;
 }
 
 @media (max-width: 767px) {
@@ -22,4 +19,53 @@ nav.table-of-contents li {
 /* Edit 預覽的圖片不要太大 */
 .preview img {
   max-width: 100%;
+}
+
+/******** 目錄設定 ********/
+
+/* 編輯時的預覽不顯示目錄 */
+.preview > #toc{
+  display: none;
+}
+/* #body, $toc 的最近上層元素要設爲 display: flex 才能用 order */
+.content {
+  display: flex;
+}
+#body {
+  /* 內容在左邊 */
+  order: 1;
+}
+#toc {
+  min-width: 200px;
+  /* 目錄在右邊 */
+  order: 2;
+}
+/* 目錄內的所有 ul */
+#toc ul {
+  /* 不要顯示清單樣式（圓點） */
+  list-style-type: none;
+  /* 預設的 padding 太寬了，縮爲一半 */
+  padding-left: 20px;
+}
+/* 目錄內的第一層 ul */
+#toc > ul {
+  /* 左邊的灰色分隔線 */
+  border-left: 2px solid #ccc;
+
+  /* 和左邊內容區塊隔一點距離 */
+  margin-left: 1em;
+
+  /* 如果設定 sticky 在 #toc 這種區塊元素，似乎會失效，所以設定在 #toc > ul */
+  position: sticky;
+  top: 10px;
+
+  /* 爲使 overflow 有效，區塊容器要有 height 或 max-height */
+  /* 設定放在 $toc 會讓sticky 失效，所以放在這裡 */
+  max-height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#toc a {
+  /* 顏色只能套用在 inline 元素，例如 <a> */
+  color: #99979c;
 }
