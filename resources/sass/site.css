@@ -27,19 +27,23 @@ nav.table-of-contents li {
 .preview > #toc{
   display: none;
 }
+
 /* #body, $toc 的最近上層元素要設爲 display: flex 才能用 order */
 .content {
   display: flex;
 }
+
 #body {
   /* 內容在左邊 */
   order: 1;
 }
+
 #toc {
   min-width: 200px;
   /* 目錄在右邊 */
   order: 2;
 }
+
 /* 目錄內的所有 ul */
 #toc ul {
   /* 不要顯示清單樣式（圓點） */
@@ -47,6 +51,7 @@ nav.table-of-contents li {
   /* 預設的 padding 太寬了，縮爲一半 */
   padding-left: 20px;
 }
+
 /* 目錄內的第一層 ul */
 #toc > ul {
   /* 左邊的灰色分隔線 */
@@ -65,6 +70,7 @@ nav.table-of-contents li {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
 #toc a {
   /* 顏色只能套用在 inline 元素，例如 <a> */
   color: #99979c;
