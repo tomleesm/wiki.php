@@ -101,4 +101,22 @@ class ArticleController extends Controller
         $markdown = new Markdown($request->post('markdown'));
         return $markdown->toHTML();
     }
+
+    /**
+     * 上傳圖片
+     *
+     * @param Request $request
+     *
+     * @return json
+     */
+
+    public function uploadImage(Request $request) {
+        $image = $request->file('image');
+
+        return json_encode([
+            'original_name' => $image->getClientOriginalName(), // 客戶端的檔名
+            'size' => $image->getClientSize(), // 檔案大小(單位是 bytes)
+        ]);
+    }
+
 }
