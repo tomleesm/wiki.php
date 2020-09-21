@@ -138,13 +138,13 @@ class ArticleController extends Controller
      * 顯示圖片
      */
     public function showImage($id) {
-        if( ! Str::isUuid($id)) {
+        if( ! Str::isUuid($id) || empty($image = Image::find($id))) {
             return abort(404);
         }
 
+        // 在瀏覽器中直接顯示圖片
         return response()
-                   ->stream(function() use ($id) {
-                       $image = Image::find($id);
+                   ->stream(function() use ($image) {
                        fpassthru($image->content);
                    }, 200,
                    // content-type 設定成 image/* ，會跳出檔案儲存對話恇

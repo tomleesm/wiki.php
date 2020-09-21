@@ -57,8 +57,11 @@ class Image
         $stmt = $pdo->prepare("SELECT id, content, original_name
                                FROM images WHERE id = ?");
         $stmt->execute([ $id ]);
+        // 和 Eloquent 一樣的 $model->property 格式
+        $result = $stmt->fetch(\PDO::FETCH_OBJ);
 
-        return $stmt->fetch(\PDO::FETCH_OBJ);
-
+        // 如果找不到檔案
+        if($result === false) return null;
+        return $result;
     }
 }
