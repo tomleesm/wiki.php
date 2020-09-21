@@ -7,6 +7,7 @@ use App\Article;
 use App\Markdown;
 use App\Image;;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -133,4 +134,21 @@ class ArticleController extends Controller
         ]);
     }
 
+    /**
+     * 顯示圖片
+     */
+    public function showImage($id) {
+        if( ! Str::isUuid($id)) {
+            return abort(404);
+        }
+
+        return response()
+                   ->stream(function() use ($id) {
+                       $image = Image::find($id);
+                       fpassthru($image->content);
+                   }, 200,
+                   // content-type 設定成 image/* ，會跳出檔案儲存對話恇
+                   ['Content-Type' => 'image/apng,image/bmp,image/gif,image/x-icon,image/jpeg,image/png,image/svg+xml,image/tiff,image/webp']
+               );
+    }
 }

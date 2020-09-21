@@ -8,12 +8,16 @@ use Illuminate\Support\Facades\DB;
 class Image
 {
     /**
-     * 把上傳的圖片存到資料庫
-     *
      * Eloquent 用 PDO 存檔時，都是用 PDO::PARAM_STR 儲存
      * 但是存二進位檔案需要改用 PDO::PARAM_LOB，所以使用底層的 PDO
      * 雖然有元件 https://packagist.org/packages/ooxif/laravel-query-param
      * 但是只能用在 Laravel framework 5
+     */
+
+    /**
+     * 把上傳的圖片存到資料庫
+     *
+     * @return UUID $id
      */
     public static function store(\Illuminate\Http\UploadedFile $image) {
         $pdo = DB::connection()->getPdo();
@@ -42,5 +46,19 @@ class Image
         $pdo->commit();
 
         return $id;
+    }
+
+    /**
+     * 抓取資料庫中的圖片檔
+     */
+    public static function find($id) {
+        $pdo = DB::connection()->getPdo();
+
+        $stmt = $pdo->prepare("SELECT id, content, original_name
+                               FROM images WHERE id = ?");
+        $stmt->execute([ $id ]);
+
+        return $stmt->fetch(\PDO::FETCH_OBJ);
+
     }
 }
