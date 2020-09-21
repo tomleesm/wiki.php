@@ -7,8 +7,6 @@ use App\Article;
 use App\Markdown;
 use App\Image;;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -118,40 +116,17 @@ class ArticleController extends Controller
 
         // 如果上傳失敗，回傳錯誤訊息
         if( ! $requestImage->isValid()) {
-            return  json_encode([
+            return  response()->json([
                 'status' => 'upload file fails',
                 'error_code' => $requestImage->getError(),
                 'error_message' => $requestImage->getErrorMessage(),
             ]);
         }
 
-        /**
-         * Eloquent 不能儲存 blob 二進位檔案，所以直接用 PDO 處理
-         *
-         * Eloquent 用 PDO 存檔時，都是用 PDO::PARAM_STR 儲存，但是存二進位檔案需要改用 PDO::PARAM_LOB
-         * 所以使用底層的 PDO
-         */
-        $db = DB::connection()->getPdo();
-        $stmt = $db->prepare("insert into images (id, content, original_name, created_at, updated_at) values (?, ?, ?, ?, ?)");
+        // 儲存檔案到資料庫，回傳 id
+        $id = Image::store($requestImage);
 
-        // 從檔案暫存路徑讀取二進位檔案
-        $binary = file_get_contents($requestImage->path());
-
-        $id = (string) Str::orderedUuid(); // 主鍵 UUID
-        $name = $requestImage->getClientOriginalName();
-        $now = now();
-
-        $stmt->bindParam(1, $id);
-        $stmt->bindParam(2, $binary, \PDO::PARAM_LOB);
-        $stmt->bindParam(3, $name); // 原始檔名
-        $stmt->bindParam(4, $now);
-        $stmt->bindParam(5, $now);
-
-        $db->beginTransaction();
-        $stmt->execute();
-        $db->commit();
-
-        return json_encode([
+        return response()->json([
             'status' => 'upload file successfully',
             'original_name' => $requestImage->getClientOriginalName(),
             'id' => $id, // UUID
