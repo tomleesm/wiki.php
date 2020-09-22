@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-sm edit">
+        <div class="col-sm edit" draggable="true">
             <h3>{{ $article->title }}</h3>
             <form action="{{ route('article.update', ['title' => $article->title]) }}" method="post">
                 @csrf
