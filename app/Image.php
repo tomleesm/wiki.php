@@ -51,7 +51,7 @@ class Image
     /**
      * 抓取資料庫中的圖片檔
      */
-    public static function find($id) {
+    public static function findOrFail($id) {
         $pdo = DB::connection()->getPdo();
 
         $stmt = $pdo->prepare("SELECT id, content, original_name
@@ -61,7 +61,8 @@ class Image
         $result = $stmt->fetch(\PDO::FETCH_OBJ);
 
         // 如果找不到檔案
-        if($result === false) return null;
+        if($result === false)
+            throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
         return $result;
     }
 }
