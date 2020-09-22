@@ -129,7 +129,7 @@ class ArticleController extends Controller
 
         return response()->json([
             'status' => 'upload file successfully',
-            'original_name' => $requestImage->getClientOriginalName(),
+            'originalName' => $requestImage->getClientOriginalName(),
             'id' => $id, // UUID
         ]);
     }
