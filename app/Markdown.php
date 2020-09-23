@@ -3,14 +3,11 @@ namespace App;
 
 use Mews\Purifier\Facades\Purifier;
 
-class Markdown extends \ParsedownToC
+class Markdown
 {
     private $markdown = '';
 
     public function __construct($markdown) {
-        // 防止 XSS
-        $this->setSafeMode(false);
-
         $this->markdown = $markdown;
     }
 
@@ -20,42 +17,59 @@ class Markdown extends \ParsedownToC
         // 不處理 [text](網址) 這種格式，所以先轉換 markdown
         // 而不是轉換後的 <p><a href="網址">網址</a></p>
         $this->urlToEmbedHTML();
-        // 把 markdown 轉換成 html，但不處理 [toc]
-        $html = $this->body($this->markdown);
-        $html = '<div id="body">' . $html . '</div>';
 
         // 如果有 [notoc]
         if ($this->hasTagNotoc()) {
-            return $this->removeTagNotoc($html);
+            // 只轉內文，不產生目錄
+            $this->markdownToHTMLNoTOC();
+            $this->removeTagNotoc();
+        } else {
+            // 產生內文並加上目錄
+            $this->createBodyAndTOC();
         }
 
-        // 產生目錄
-        $toc = sprintf("<div id=\"%s\">%s</div>",
-                        $this->getIdAttributeToC(),
-                        $this->contentsList());
+        // wiki link [[wiki]]
+        $this->wikiLink();
+        // 待辦事項
+        /* $this->todoList(); */
+        // emoji 表情文字
+        /* $this->emoji(); */
+        // XSS 過濾
+        $this->xss_filter();
 
-        $html .= $toc;
-        // 把 [[test]] 轉成連結 /read/test
-        $html = $this->convertWikiLinks($html);
-        /* return $html; */
-        return $this->xss_filter($html);
+        return $this->markdown;
+    }
+
+    private function markdownToHTMLNoTOC() {
+        $p = new \Parsedown();
+        $p->setSafeMode(false);
+        $this->markdown = '<div id="body">' . $p->text($this->markdown) . '</div>';
+    }
+
+    // 產生內文並加上目錄
+    private function createBodyAndTOC() {
+        $p = new \ParsedownToC();
+
+        $body = '<div id="body">' . $p->body($this->markdown) . '</div>';
+        $toc  = '<div id="toc">' . $p->contentsList() . '</div>';
+        $this->markdown = $body . $toc;
     }
 
     // 轉換 [[]] 爲 wiki link
-    private function convertWikiLinks($html) {
-        return preg_replace_callback('/\[\[([^\]]+)\]\]/', function($matches) {
+    private function wikiLink() {
+        $this->markdown = preg_replace_callback('/\[\[([^\]]+)\]\]/', function($matches) {
             // 抓取 [[test]] 之間的文字
             $linkText = $matches[1];
             // url = /read/test
             $URL = sprintf('/read/%s', urlEncode($linkText));
             // 回傳 <a href="/read/test">test</a>
             return sprintf('<a href="%s">%s</a>', $URL, $linkText);
-        }, $html);
+        }, $this->markdown);
     }
 
-    private function removeTagNotoc($html) {
+    private function removeTagNotoc() {
         // 刪除 [notoc]
-        return str_replace('<p>[notoc]</p>', '', $html);
+        $this->markdown = str_replace('<p>[notoc]</p>', '', $this->markdown);
     }
 
     private function hasTagNotoc() {
@@ -92,7 +106,7 @@ class Markdown extends \ParsedownToC
      * 而是用 HTMLPurifier
      * mews/purifier 不知道爲什麼不能用
      **/
-    private function xss_filter($html) {
+    private function xss_filter() {
         $config = \HTMLPurifier_Config::createDefault();
         // 啓用 html id
         $config->set('Attr.EnableID', true);
@@ -109,6 +123,6 @@ class Markdown extends \ParsedownToC
         $def->addAttribute('iframe', 'allowfullscreen', 'Bool');
 
         $purifier = new \HTMLPurifier($config);
-        return $purifier->purify($html);
+        $this->markdown = $purifier->purify($this->markdown);
     }
 }
