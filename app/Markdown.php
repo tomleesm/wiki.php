@@ -31,7 +31,7 @@ class Markdown
         // wiki link [[wiki]]
         $this->wikiLink();
         // 待辦事項
-        /* $this->todoList(); */
+        $this->taskList();
         // emoji 表情文字
         /* $this->emoji(); */
         // XSS 過濾
@@ -117,12 +117,34 @@ class Markdown
         $config->set('HTML.SafeIframe', true);
         $config->set('URI.SafeIframeRegexp', '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%');
         // 有列在$allowTags 的標籤才能使用，否則標籤會直接拿掉
-        $allowTags = explode(',', 'div,b,strong,i,em,u,a,ul,ol,li,p,hr,br,span,img,iframe,code,pre,h1,h2,h3,h4,h5,h6,del,table,tbody,th,tr,td');
+        $allowTags = explode(',', 'div,b,strong,i,em,u,a,ul,ol,li,p,hr,br,span,img,iframe,code,pre,h1,h2,h3,h4,h5,h6,del,table,tbody,th,tr,td,input');
         $config->set('HTML.AllowedElements', $allowTags);
         $def = $config->getHTMLDefinition(true);
         $def->addAttribute('iframe', 'allowfullscreen', 'Bool');
 
+        // 需要定義 <input>，否則顯示 Element 'input' is not supported
+        $def->addElement(
+          'input',   // name
+          'Inline',  // content set
+          'Empty', // not allowed children
+          'Common', // attribute collection
+          array( // attributes
+            'type' => 'Text',
+            'name' => 'ID',
+            'checked' => 'Bool',
+          )
+        );
+
         $purifier = new \HTMLPurifier($config);
         $this->markdown = $purifier->purify($this->markdown);
+    }
+
+    private function taskList() {
+        if (strpos($this->markdown, '[x]') !== false || strpos($this->markdown, '[ ]') !== false) {
+            $this->markdown = str_replace(['[x]', '[ ]'], [
+                '<input type="checkbox" checked="true" name="task[]">',
+                '<input type="checkbox" name="task[]">',
+            ], $this->markdown);
+        }
     }
 }
