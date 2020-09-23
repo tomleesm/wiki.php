@@ -33,7 +33,7 @@ class Markdown
         // 待辦事項
         $this->taskList();
         // emoji 表情文字
-        /* $this->emoji(); */
+        $this->emoji();
         // XSS 過濾
         $this->xss_filter();
 
@@ -147,5 +147,10 @@ class Markdown
                 '<input type="checkbox" name="task[]" disabled="true">',
             ], $this->markdown);
         }
+    }
+
+    // emoji 表情文字
+    private function emoji() {
+        $this->markdown = \LitEmoji\LitEmoji::encodeUnicode($this->markdown);
     }
 }

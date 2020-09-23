@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1c1478ed11fa1a0417d2e45c5f8f33f",
+    "content-hash": "d3d8a16158feead94596a8a8a2ea47f6",
     "packages": [
         {
             "name": "bensampo/laravel-enum",
@@ -682,6 +682,44 @@
                 "validator"
             ],
             "time": "2020-09-19T14:37:56+00:00"
+        },
+        {
+            "name": "elvanto/litemoji",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elvanto/litemoji.git",
+                "reference": "a71f785642a93194d0b88edebcc5d6ca0b07d282"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elvanto/litemoji/zipball/a71f785642a93194d0b88edebcc5d6ca0b07d282",
+                "reference": "a71f785642a93194d0b88edebcc5d6ca0b07d282",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "milesj/emojibase": "5.0.1",
+                "phpunit/phpunit": "^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LitEmoji\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP library simplifying the conversion of unicode, HTML and shortcode emoji.",
+            "keywords": [
+                "emoji",
+                "php-emoji"
+            ],
+            "time": "2020-06-08T05:24:49+00:00"
         },
         {
             "name": "erusev/parsedown",
