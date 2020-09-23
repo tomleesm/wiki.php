@@ -132,6 +132,7 @@ class Markdown
             'type' => 'Text',
             'name' => 'ID',
             'checked' => 'Bool',
+            'disabled' => 'Bool',
           )
         );
 
@@ -142,8 +143,8 @@ class Markdown
     private function taskList() {
         if (strpos($this->markdown, '[x]') !== false || strpos($this->markdown, '[ ]') !== false) {
             $this->markdown = str_replace(['[x]', '[ ]'], [
-                '<input type="checkbox" checked="true" name="task[]">',
-                '<input type="checkbox" name="task[]">',
+                '<input type="checkbox" name="task[]" disabled="true" checked="true">',
+                '<input type="checkbox" name="task[]" disabled="true">',
             ], $this->markdown);
         }
     }
