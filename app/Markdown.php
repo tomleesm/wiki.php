@@ -44,14 +44,14 @@ class Markdown
 
     // [[include:test]]: 內嵌條目 test 的 markdown 內容
     private function include() {
+        // 開頭是 include: 的 [[]]
         $this->markdown = preg_replace_callback('/\[\[include:([^\]]+)\]\]/', function($matches) {
             $title = 'include:' . $matches[1];
 
             $content = Article::where('title', $title)->value('content');
 
-            // url = /read/include:test
+            // url = /edit/include:test
             $editURL = sprintf('/edit/%s', urlEncode($title));
-            // <a href="/edit/test">test</a>
             // 如果</div> 和 $content 沒有空一行，會無法轉換 $content 爲 html
             return <<<LINK
 <div>
@@ -64,17 +64,23 @@ LINK;
     }
 
     private function markdownToHTMLNoTOC() {
-        $p = new \Parsedown();
+        // 支援 table rowspan 和 colspan
+        $p = new \ParsedownTablespan();
         $p->setSafeMode(false);
         $this->markdown = '<div id="body">' . $p->text($this->markdown) . '</div>';
     }
 
     // 產生內文並加上目錄
     private function createBodyAndTOC() {
-        $p = new \ParsedownToC();
+        // 支援 table rowspan 和 colspan
+        $p = new \ParsedownTablespan();
+        $p->setSafeMode(false);
+        $body = '<div id="body">' . $p->text($this->markdown) . '</div>';
 
-        $body = '<div id="body">' . $p->body($this->markdown) . '</div>';
-        $toc  = '<div id="toc">' . $p->contentsList() . '</div>';
+        $pForTOC = new \ParsedownToC();
+        $pForTOC->body($this->markdown);
+        $toc  = '<div id="toc">' . $pForTOC->contentsList() . '</div>';
+
         $this->markdown = $body . $toc;
     }
 
