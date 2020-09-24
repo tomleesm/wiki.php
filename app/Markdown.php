@@ -12,7 +12,7 @@ class Markdown
     }
 
     public function toHTML() {
-        // [[include:wiki]]
+        // [[include:test]]
         $this->include();
         // 把網址轉成內嵌 HTML
         // 只處理 markdown 只貼網址的部分
@@ -42,17 +42,17 @@ class Markdown
         return $this->markdown;
     }
 
-    // {{test}}: 內嵌條目 test 的 markdown 內容
+    // [[include:test]]: 內嵌條目 test 的 markdown 內容
     private function include() {
-        $this->markdown = preg_replace_callback('/\{\{([^\}]+)\}\}/', function($matches) {
-            // 抓取 {{test}} 之間的文字 test
+        $this->markdown = preg_replace_callback('/\[\[include:([^\]]+)\]\]/', function($matches) {
             $title = 'include:' . $matches[1];
 
             $content = Article::where('title', $title)->value('content');
 
-            // url = /read/test
+            // url = /read/include:test
             $editURL = sprintf('/edit/%s', urlEncode($title));
             // <a href="/edit/test">test</a>
+            // 如果</div> 和 $content 沒有空一行，會無法轉換 $content 爲 html
             return <<<LINK
 <div>
   <a href="{$editURL}">edit</a>
