@@ -2,6 +2,8 @@
 namespace App;
 
 use Mews\Purifier\Facades\Purifier;
+use App\TomParsedown;
+use App\TomParsedownToC;
 
 class Markdown
 {
@@ -65,7 +67,7 @@ LINK;
 
     private function markdownToHTMLNoTOC() {
         // 支援 table rowspan 和 colspan
-        $p = new \ParsedownTablespan();
+        $p = new TomParsedown();
         $p->setSafeMode(false);
         $this->markdown = '<div id="body">' . $p->text($this->markdown) . '</div>';
     }
@@ -73,9 +75,9 @@ LINK;
     // 產生內文並加上目錄
     private function createBodyAndTOC() {
         // 支援 table rowspan 和 colspan
-        $p = new \ParsedownTablespan();
+        $p = new TomParsedownToC();
         $p->setSafeMode(false);
-        $body = '<div id="body">' . $p->text($this->markdown) . '</div>';
+        $body = '<div id="body">' . $p->body($this->markdown) . '</div>';
 
         $pForTOC = new \ParsedownToC();
         $pForTOC->body($this->markdown);
