@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+    <div class="fixed-top">
+        <p class="text-right d-none uploading notification"><img src="/img/loading.svg"> uploading...</p>
+    </div>
     <div class="row">
         <div class="col-sm edit" draggable="true">
             <h3>{{ $article->title }}</h3>

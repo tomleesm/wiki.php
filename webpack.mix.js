@@ -18,3 +18,5 @@ mix.js('resources/js/edit.js', 'public/js').version();
 
 mix.copy('resources/js/prism.js', 'public/js/prism.js')
    .copy('resources/sass/prism.css', 'public/css/prism.css');
+
+mix.copyDirectory('resources/img', 'public/img');
