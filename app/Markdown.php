@@ -16,11 +16,6 @@ class Markdown
     public function toHTML() {
         // [[include:test]]
         $this->include();
-        // 把網址轉成內嵌 HTML
-        // 只處理 markdown 只貼網址的部分
-        // 不處理 [text](網址) 這種格式，所以先轉換 markdown
-        // 而不是轉換後的 <p><a href="網址">網址</a></p>
-        $this->urlToEmbedHTML();
 
         // 如果有 [notoc]
         if ($this->hasTagNotoc()) {
@@ -105,28 +100,6 @@ LINK;
 
     private function hasTagNotoc() {
         return strpos($this->markdown, '[notoc]') !== false;
-    }
-
-    private function urlToEmbedHTML() {
-        $markdown = $this->markdown;
-
-        $links = [];
-        // 只抓開頭和結尾是換行符號的網址
-        // 只用 \n 或 \r 代表換行，Read 和 Edit 預覽會不一致，用 \R 就可以了
-        $regex = '~\R\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/|_))\R~i';
-        if( preg_match_all($regex, $markdown, $matches) ) {
-            $links = array_filter($matches['0']);
-        }
-
-        $embera = new \Embera\Embera();
-        foreach($links as $link) {
-            // 轉換網址爲內嵌 HTML
-            $embedHTML = '<p>' . $embera->autoEmbed($link) . '</p>';
-            // 把網址取代爲內嵌 HTML
-            $markdown = str_replace($link, $embedHTML, $markdown);
-        }
-
-        $this->markdown = $markdown;
     }
 
     /**
