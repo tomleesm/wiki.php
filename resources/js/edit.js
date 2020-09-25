@@ -40,6 +40,8 @@ document.querySelector('.edit').addEventListener('drop', function(event) {
   event.stopPropagation();
   event.preventDefault();
 
+  // 顯示上傳通知
+  document.querySelector('.uploading.notification').classList.remove('d-none');
   var formData = new FormData();
   // 抓取要拖曳上傳的檔案
   // 一次只抓一個，所以是 files[0]
@@ -56,6 +58,8 @@ document.querySelector('.edit').addEventListener('drop', function(event) {
     }),
     body: formData
   }).then(function( response ) {
+    // 隱藏上傳通知
+    document.querySelector('.uploading.notification').classList.add('d-none');
     // 回傳 json 物件
      return response.json();
   }).then(function ( image ) {
