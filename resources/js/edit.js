@@ -99,3 +99,7 @@ function insertSyntax(sStartTag, sEndTag) {
       textarea.setSelectionRange(start, end);
       textarea.focus();
 }
+const editor = document.querySelector('#editArticleContent');
+new SimpleMDE({
+  element: editor
+});

@@ -8,6 +8,7 @@
         <title>{{ $article->title }}</title>
         <link rel="stylesheet" href="{{ asset('css/app.css')}}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/prism.css')}}" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     </head>
     <body class="line-numbers">
     <div class="container">
@@ -31,7 +32,6 @@
 
     </div>
     </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     @yield('javascript')
 </html>

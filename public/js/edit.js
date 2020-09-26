@@ -185,6 +185,11 @@ function insertSyntax(sStartTag, sEndTag) {
   textarea.focus();
 }
 
+var editor = document.querySelector('#editArticleContent');
+new SimpleMDE({
+  element: editor
+});
+
 /***/ }),
 
 /***/ 1:

@@ -27,5 +27,6 @@
 @endsection
 
 @section('javascript')
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <script src="{{ mix('js/edit.js')}}" defer></script>
 @endsection
