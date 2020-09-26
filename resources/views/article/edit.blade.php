@@ -6,7 +6,7 @@
         <p class="text-right d-none uploading notification"><img src="/img/loading.svg"> uploading...</p>
     </div>
     <div class="row">
-        <div class="col-sm edit" draggable="true">
+        <div class="col-sm edit">
             <h3>{{ $article->title }}</h3>
             <form action="{{ route('article.update', ['title' => $article->title]) }}" method="post">
                 @csrf
@@ -15,7 +15,7 @@
                 <input type="hidden" name="article[title]" value="{{ $article->title }}">
 
                 {{-- 如果 textarea 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
-                <textarea name="article[content]" id="editArticleContent" class="form-control" rows="25">{{ old('article.content', $article->content) }}</textarea>
+                <textarea name="article[content]" id="editArticleContent" class="form-control" draggable="true">{{ old('article.content', $article->content) }}</textarea>
 
                 <button class="btn btn-primary" dusk="edit-save-button">Save</button>
             </form>

@@ -93,16 +93,19 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // 載入頁面和輸入時，更新編輯預覽
-
-refreshPreview();
-document.getElementById('editArticleContent').addEventListener('keyup', function () {
-  refreshPreview();
+var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+var editor = document.querySelector('#editArticleContent');
+var simplemde = new SimpleMDE({
+  element: editor
 });
+simplemde.codemirror.on('keyup', function () {
+  refreshPreview(simplemde.value());
+}); // 載入頁面和輸入時，更新編輯預覽
 
-function refreshPreview() {
+refreshPreview(simplemde.value());
+
+function refreshPreview(markdown) {
   // 抓取編輯條目的 textarea 的值
-  var markdown = document.getElementById('editArticleContent').value;
   var formData = new FormData();
   formData.append('markdown', markdown);
   fetch('/render-markdown', {
@@ -123,13 +126,11 @@ function refreshPreview() {
   });
 }
 
-document.querySelector('.edit').addEventListener('dragstart', function (event) {
-  event.dataTransfer.setData('image/*');
-  event.stopPropagation();
-  event.preventDefault();
+window.addEventListener("drop", function (e) {
+  e = e || event;
+  e.preventDefault();
 });
-document.querySelector('.edit').addEventListener('drop', function (event) {
-  event.stopPropagation();
+simplemde.codemirror.on('drop', function (editor, event) {
   event.preventDefault(); // 顯示上傳通知
 
   document.querySelector('.uploading.notification').classList.remove('d-none');
@@ -158,15 +159,20 @@ document.querySelector('.edit').addEventListener('drop', function (event) {
     // 組成 markdown 圖片語法
     var mdString = '![' + image.originalName + '](/images/' + image.id + ')'; // 圖片語法新增到輸入區
 
-    insertSyntax(mdString); // 更新預覽
+    var cm = simplemde.codemirror;
+    var startPoint = cm.getCursor("start");
+    var endPoint = cm.getCursor("end");
+    console.log(startPoint);
+    console.log(endPoint); // insertSyntax(mdString);
+    // 更新預覽
 
-    refreshPreview();
+    refreshPreview(simplemde.value());
   });
 }); // 新增標籤或字串到輸入區，並選取之前選取的範圍或游標位置
 // 參考 https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement#Examples
 
 function insertSyntax(sStartTag, sEndTag) {
-  var textarea = document.querySelector('.edit textarea'); // 選取範圍的索引值開頭
+  var textarea = simplemde.getTextArea(); // 選取範圍的索引值開頭
 
   nSelStart = textarea.selectionStart, // 選取範圍的索引值結尾
   nSelEnd = textarea.selectionEnd, sOldText = textarea.value; // 從 textarea 內容的開頭，一直到目前選取範圍的開頭之前
@@ -184,11 +190,6 @@ function insertSyntax(sStartTag, sEndTag) {
   textarea.setSelectionRange(start, end);
   textarea.focus();
 }
-
-var editor = document.querySelector('#editArticleContent');
-new SimpleMDE({
-  element: editor
-});
 
 /***/ }),
 
