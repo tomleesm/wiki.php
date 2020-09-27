@@ -128,7 +128,7 @@ var simplemde = new SimpleMDE({
   ],
   promptURLs: true,
 });
-simplemde.codemirror.on('keypress', function() {
+simplemde.codemirror.on('change', function() {
     refreshPreview(simplemde.value());
 });
 // 載入頁面和輸入時，更新編輯預覽
