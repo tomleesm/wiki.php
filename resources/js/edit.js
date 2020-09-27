@@ -1,9 +1,134 @@
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const editor = document.querySelector('#editArticleContent');
 var simplemde = new SimpleMDE({
-  element: editor
+  element: editor,
+  shortcuts: {
+    // 取消預覽和 side by side 的快速鍵
+    "togglePreview": null,
+    "toggleSideBySide": null,
+  },
+  toolbar: [
+    {
+      name: "bold",
+      action: SimpleMDE.toggleBold,
+      className: "fa fa-bold",
+      title: "Bold",
+    },
+    {
+      name: "italic",
+      action: SimpleMDE.toggleItalic,
+      className: "fa fa-italic",
+      title: "Italic",
+    },
+    {
+      name: "strikethrough",
+      action: SimpleMDE.toggleStrikethrough,
+      className: "fa fa-strikethrough",
+      title: "Strikethrough",
+    },
+    "|",
+    {
+      name: "heading-1",
+      action: SimpleMDE.toggleHeading1,
+      className: "fa fa-header fa-header-x fa-header-1",
+      title: "Big Heading",
+    },
+    {
+      name: "heading-2",
+      action: SimpleMDE.toggleHeading2,
+      className: "fa fa-header fa-header-x fa-header-2",
+      title: "Medium Heading",
+    },
+    {
+      name: "heading-3",
+      action: SimpleMDE.toggleHeading3,
+      className: "fa fa-header fa-header-x fa-header-3",
+      title: "Small Heading",
+    },
+    {
+      name: "heading-smaller",
+      action: SimpleMDE.toggleHeadingSmaller,
+      className: "fa fa-header",
+      title: "Smaller Heading",
+    },
+    {
+      name: "heading-bigger",
+      action: SimpleMDE.toggleHeadingBigger,
+      className: "fa fa-lg fa-header",
+      title: "Bigger Heading",
+    },
+    "|",
+    {
+      name: "code",
+      action: SimpleMDE.toggleCodeBlock,
+      className: "fa fa-code",
+      title: "Code",
+    },
+    {
+      name: "quote",
+      action: SimpleMDE.toggleBlockquote,
+      className: "fa fa-quote-left",
+      title: "Quote",
+    },
+    {
+      name: "unordered-list",
+      action: SimpleMDE.toggleUnorderedList,
+      className: "fa fa-list-ul",
+      title: "Generic List",
+    },
+    {
+      name: "ordered-list",
+      action: SimpleMDE.toggleOrderedList,
+      className: "fa fa-list-ol",
+      title: "Numbered List",
+    },
+    {
+      name: "link",
+      action: SimpleMDE.drawLink,
+      className: "fa fa-link",
+      title: "Create Link",
+    },
+    {
+      name: "image",
+      action: SimpleMDE.drawImage,
+      className: "fa fa-picture-o",
+      title: "Insert Image",
+    },
+    {
+      name: "table",
+      action: SimpleMDE.drawTable,
+      className: "fa fa-table",
+      title: "Insert Table",
+    },
+    {
+      name: "horizontal-rule",
+      action: SimpleMDE.drawHorizontalRule,
+      className: "fa fa-minus",
+      title: "Insert Horizontal Line",
+    },
+    {
+      name: "clean-block",
+      action: SimpleMDE.cleanBlock,
+      className: "fa fa-eraser fa-clean-block",
+      title: "Clean block",
+    },
+    "|",
+    {
+      name: "fullscreen",
+      action: SimpleMDE.toggleFullScreen,
+      className: "fa fa-arrows-alt no-disable no-mobile",
+      title: "Toggle Fullscreen",
+    },
+    {
+      name: "guide",
+      action: "https://simplemde.com/markdown-guide",
+      className: "fa fa-question-circle",
+      title: "Markdown Guide",
+    },
+  ],
+  promptURLs: true,
 });
-simplemde.codemirror.on('keyup', function() {
+simplemde.codemirror.on('keypress', function() {
     refreshPreview(simplemde.value());
 });
 // 載入頁面和輸入時，更新編輯預覽
