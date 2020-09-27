@@ -103,6 +103,16 @@ var simplemde = new SimpleMDE({
     "toggleSideBySide": null
   },
   toolbar: [{
+    name: "undo",
+    action: SimpleMDE.undo,
+    className: "fa fa-undo no-disable",
+    title: "Undo"
+  }, {
+    name: "redo",
+    action: SimpleMDE.redo,
+    className: "fa fa-repeat no-disable",
+    title: "Redo"
+  }, "|", {
     name: "bold",
     action: SimpleMDE.toggleBold,
     className: "fa fa-bold",
