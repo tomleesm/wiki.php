@@ -157,38 +157,33 @@ simplemde.codemirror.on('drop', function (editor, event) {
     return response.json();
   }).then(function (image) {
     // 組成 markdown 圖片語法
-    var mdString = '![' + image.originalName + '](/images/' + image.id + ')'; // 圖片語法新增到輸入區
+    var imageSyntax = '![' + image.originalName + '](/images/' + image.id + ')'; // 圖片語法新增到輸入區
 
-    var cm = simplemde.codemirror;
-    var startPoint = cm.getCursor("start");
-    var endPoint = cm.getCursor("end");
-    console.log(startPoint);
-    console.log(endPoint); // insertSyntax(mdString);
-    // 更新預覽
+    insertSyntax(imageSyntax); // 更新預覽
 
     refreshPreview(simplemde.value());
   });
-}); // 新增標籤或字串到輸入區，並選取之前選取的範圍或游標位置
-// 參考 https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement#Examples
+}); // 新增字串到輸入區，並選取之前選取的範圍或游標位置
 
-function insertSyntax(sStartTag, sEndTag) {
-  var textarea = simplemde.getTextArea(); // 選取範圍的索引值開頭
+function insertSyntax(markdown) {
+  // 回傳 CodeMirror 物件，以下都是用 CodeMirror API
+  var cm = simplemde.codemirror; // 鍵盤游標選取的位置：json 物件 { line: 行的索引值, ch: 該行的字元索引值 }
 
-  nSelStart = textarea.selectionStart, // 選取範圍的索引值結尾
-  nSelEnd = textarea.selectionEnd, sOldText = textarea.value; // 從 textarea 內容的開頭，一直到目前選取範圍的開頭之前
+  var startPoint = cm.getCursor('start'); // 選取的開頭
 
-  textarea.value = sOldText.substring(0, nSelStart) + ( // 如果要新增的是成對標籤，則爲 <tag>目前選取範圍</tag>，如果是單一標籤，則爲 <tag>
-  arguments.length > 1 ? sStartTag + sOldText.substring(nSelStart, nSelEnd) + sEndTag : sStartTag) + // 從目前選取範圍的開頭，一直到 textarea 內容的結尾
-  sOldText.substring(nSelEnd); // 如果新增的是成對標籤或沒有選取範圍，則從目前的選取範圍開頭或游標位置加上第一個標籤的字串長度
-  // 如果新增的是單一標籤或有選取範圍，則爲選取範圍的開頭或目前游標位置
+  var endPoint = cm.getCursor('end'); // 選取的結尾
+  // replaceRange(要取代的文字, 選取的開頭位置, 選取的結尾位置): 取代選取範圍的文字
+  // 只有選取的開頭位置，則新增文字到該位置
+  // 在此設定爲新增文字到選取的結尾位置
 
-  var start = arguments.length > 1 || nSelStart === nSelEnd ? nSelStart + sStartTag.length : nSelStart,
-      // 如果新增的是成對標籤，則抓取選取範圍結尾，否則抓取選取範圍開頭
-  // 再加上第一個標籤的字串長度
-  end = (arguments.length > 1 ? nSelEnd : nSelStart) + sStartTag.length; // 修改選取範圍或游標位置
+  cm.replaceRange(markdown, {
+    line: endPoint.line,
+    ch: endPoint.ch
+  }); // 設定選取範圍
 
-  textarea.setSelectionRange(start, end);
-  textarea.focus();
+  cm.setSelection(startPoint, endPoint); // 聚焦輸入的 textarea
+
+  cm.focus();
 }
 
 /***/ }),
