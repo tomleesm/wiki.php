@@ -239,23 +239,25 @@ function refreshPreview(markdown) {
 } ////////////// 拖曳圖片以上傳 /////////////////
 
 
-window.addEventListener("drop", function (e) {
-  e = e || event;
-  e.preventDefault();
+window.addEventListener("drag", function (event) {
+  event.preventDefault();
 });
 simplemde.codemirror.on('drop', function (editor, event) {
   event.preventDefault(); // 抓取要拖曳上傳的檔案
-  // 一次只抓一個，所以是 files[0]
 
-  var file = event.dataTransfer.items[0].getAsFile();
-  uploadImage(file);
+  var fileList = event.dataTransfer.items;
+
+  for (var i = 0; i < fileList.length; i++) {
+    uploadImage(fileList[i].getAsFile());
+  }
 }); ////////////// 點選工具列圖示 insert image 上傳圖片 ///////////////
 
 var fileInput = document.querySelector('#fileDialog');
 fileInput.addEventListener('change', function () {
-  for (var i = 0; i < this.files.length; i++) {
-    var file = this.files[i];
-    uploadImage(file);
+  var fileList = this.files;
+
+  for (var i = 0; i < fileList.length; i++) {
+    uploadImage(fileList[i]);
   }
 });
 
@@ -284,7 +286,9 @@ function insertSyntax(markdown) {
   cm.setSelection(startPoint, endPoint); // 聚焦輸入的 textarea
 
   cm.focus();
-}
+} // 上傳圖片檔，新增圖片語法後，更新預覽
+// file 參數必須是 HTML API 的 File 物件，才能在 php 被 $request->file() 抓到
+
 
 function uploadImage(file) {
   var formData = new FormData();
