@@ -253,8 +253,10 @@ simplemde.codemirror.on('drop', function (editor, event) {
 
 var fileInput = document.querySelector('#fileDialog');
 fileInput.addEventListener('change', function () {
-  var file = this.files[0];
-  uploadImage(file);
+  for (var i = 0; i < this.files.length; i++) {
+    var file = this.files[i];
+    uploadImage(file);
+  }
 });
 
 function addImage() {

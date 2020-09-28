@@ -189,13 +189,17 @@ simplemde.codemirror.on('drop', function(editor, event) {
 ////////////// 點選工具列圖示 insert image 上傳圖片 ///////////////
 var fileInput = document.querySelector('#fileDialog');
 fileInput.addEventListener('change', function() {
-  var file = this.files[0];
-  uploadImage(file);
+  for(var i = 0; i < this.files.length; i++) {
+    var file = this.files[i];
+    uploadImage(file);
+  }
 });
+
 function addImage() {
   // 觸發檔案選取對話框
   fileInput.click();
 }
+
 // 新增字串到輸入區，並選取之前選取的範圍或游標位置
 function insertSyntax(markdown) {
   // 回傳 CodeMirror 物件，以下都是用 CodeMirror API
