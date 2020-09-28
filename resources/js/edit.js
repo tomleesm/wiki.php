@@ -103,7 +103,7 @@ var simplemde = new SimpleMDE({
     },
     {
       name: "image",
-      action: SimpleMDE.drawImage,
+      action: addImage,
       className: "fa fa-picture-o",
       title: "Insert Image",
     },
@@ -210,6 +210,36 @@ simplemde.codemirror.on('drop', function(editor, event) {
   });
 });
 
+var fileDialog = document.querySelector('#fileDialog');
+fileDialog.addEventListener('change', function() {
+  var file = this.files[0];
+  var formData = new FormData();
+  formData.append('image', file);
+
+  fetch('/upload/image', {
+    method: 'POST',
+    headers: new Headers({
+        'X-CSRF-TOKEN': token
+    }),
+    body: formData
+  }).then(function( response ) {
+    // 隱藏上傳通知
+    document.querySelector('.uploading.notification').classList.add('d-none');
+    // 回傳 json 物件
+     return response.json();
+  }).then(function ( image ) {
+    // 組成 markdown 圖片語法
+    const imageSyntax = '![' + image.originalName + '](/images/' + image.id + ')';
+    // 圖片語法新增到輸入區
+    insertSyntax(imageSyntax);
+    // 更新預覽
+    refreshPreview(simplemde.value());
+  });
+});
+function addImage() {
+  // 觸發檔案選取對話框
+  fileDialog.click();
+}
 // 新增字串到輸入區，並選取之前選取的範圍或游標位置
 function insertSyntax(markdown) {
   // 回傳 CodeMirror 物件，以下都是用 CodeMirror API
