@@ -209,11 +209,11 @@ var simplemde = new SimpleMDE({
     title: "Markdown Guide"
   }],
   promptURLs: true
-});
-simplemde.codemirror.on('change', function () {
-  refreshPreview(simplemde.value());
 }); // 載入頁面和輸入時，更新編輯預覽
 
+simplemde.codemirror.on('change', function () {
+  refreshPreview(simplemde.value());
+});
 refreshPreview(simplemde.value());
 
 function refreshPreview(markdown) {
@@ -236,49 +236,57 @@ function refreshPreview(markdown) {
     script.src = '/js/prism.js';
     document.body.appendChild(script);
   });
-}
+} ////////////// 拖曳圖片以上傳 /////////////////
+
 
 window.addEventListener("drop", function (e) {
   e = e || event;
   e.preventDefault();
 });
 simplemde.codemirror.on('drop', function (editor, event) {
-  event.preventDefault(); // 顯示上傳通知
-
-  document.querySelector('.uploading.notification').classList.remove('d-none');
-  var formData = new FormData(); // 抓取要拖曳上傳的檔案
+  event.preventDefault(); // 抓取要拖曳上傳的檔案
   // 一次只抓一個，所以是 files[0]
 
-  var image = event.dataTransfer.files[0]; // image 要包成 Blob 或 File 物件
-  // 後端 php 才能用 $request->file('image') 抓到檔案
+  var file = event.dataTransfer.items[0].getAsFile();
+  uploadImage(file);
+}); ////////////// 點選工具列圖示 insert image 上傳圖片 ///////////////
 
-  var file = new File([image], image.name, {
-    type: "image/*"
-  });
-  formData.append('image', file);
-  fetch('/upload/image', {
-    method: 'POST',
-    headers: new Headers({
-      'X-CSRF-TOKEN': token
-    }),
-    body: formData
-  }).then(function (response) {
-    // 隱藏上傳通知
-    document.querySelector('.uploading.notification').classList.add('d-none'); // 回傳 json 物件
-
-    return response.json();
-  }).then(function (image) {
-    // 組成 markdown 圖片語法
-    var imageSyntax = '![' + image.originalName + '](/images/' + image.id + ')'; // 圖片語法新增到輸入區
-
-    insertSyntax(imageSyntax); // 更新預覽
-
-    refreshPreview(simplemde.value());
-  });
+var fileInput = document.querySelector('#fileDialog');
+fileInput.addEventListener('change', function () {
+  for (var i = 0; i < this.files.length; i++) {
+    var file = this.files[i];
+    uploadImage(file);
+  }
 });
-var fileDialog = document.querySelector('#fileDialog');
-fileDialog.addEventListener('change', function () {
-  var file = this.files[0];
+
+function addImage() {
+  // 觸發檔案選取對話框
+  fileInput.click();
+} // 新增字串到輸入區，並選取之前選取的範圍或游標位置
+
+
+function insertSyntax(markdown) {
+  // 回傳 CodeMirror 物件，以下都是用 CodeMirror API
+  var cm = simplemde.codemirror; // 鍵盤游標選取的位置：json 物件 { line: 行的索引值, ch: 該行的字元索引值 }
+
+  var startPoint = cm.getCursor('start'); // 選取的開頭
+
+  var endPoint = cm.getCursor('end'); // 選取的結尾
+  // replaceRange(要取代的文字, 選取的開頭位置, 選取的結尾位置): 取代選取範圍的文字
+  // 只有選取的開頭位置，則新增文字到該位置
+  // 在此設定爲新增文字到選取的結尾位置
+
+  cm.replaceRange(markdown, {
+    line: endPoint.line,
+    ch: endPoint.ch
+  }); // 設定選取範圍
+
+  cm.setSelection(startPoint, endPoint); // 聚焦輸入的 textarea
+
+  cm.focus();
+}
+
+function uploadImage(file) {
   var formData = new FormData();
   formData.append('image', file); // 顯示上傳通知
 
@@ -302,33 +310,6 @@ fileDialog.addEventListener('change', function () {
 
     refreshPreview(simplemde.value());
   });
-});
-
-function addImage() {
-  // 觸發檔案選取對話框
-  fileDialog.click();
-} // 新增字串到輸入區，並選取之前選取的範圍或游標位置
-
-
-function insertSyntax(markdown) {
-  // 回傳 CodeMirror 物件，以下都是用 CodeMirror API
-  var cm = simplemde.codemirror; // 鍵盤游標選取的位置：json 物件 { line: 行的索引值, ch: 該行的字元索引值 }
-
-  var startPoint = cm.getCursor('start'); // 選取的開頭
-
-  var endPoint = cm.getCursor('end'); // 選取的結尾
-  // replaceRange(要取代的文字, 選取的開頭位置, 選取的結尾位置): 取代選取範圍的文字
-  // 只有選取的開頭位置，則新增文字到該位置
-  // 在此設定爲新增文字到選取的結尾位置
-
-  cm.replaceRange(markdown, {
-    line: endPoint.line,
-    ch: endPoint.ch
-  }); // 設定選取範圍
-
-  cm.setSelection(startPoint, endPoint); // 聚焦輸入的 textarea
-
-  cm.focus();
 }
 
 /***/ }),
