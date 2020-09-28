@@ -280,7 +280,9 @@ var fileDialog = document.querySelector('#fileDialog');
 fileDialog.addEventListener('change', function () {
   var file = this.files[0];
   var formData = new FormData();
-  formData.append('image', file);
+  formData.append('image', file); // 顯示上傳通知
+
+  document.querySelector('.uploading.notification').classList.remove('d-none');
   fetch('/upload/image', {
     method: 'POST',
     headers: new Headers({

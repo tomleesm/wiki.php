@@ -216,6 +216,9 @@ fileDialog.addEventListener('change', function() {
   var formData = new FormData();
   formData.append('image', file);
 
+  // 顯示上傳通知
+  document.querySelector('.uploading.notification').classList.remove('d-none');
+
   fetch('/upload/image', {
     method: 'POST',
     headers: new Headers({
