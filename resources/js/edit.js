@@ -242,7 +242,7 @@ function uploadImage(file) {
      return response.json();
   }).then(function ( image ) {
     // 組成 markdown 圖片語法
-    const imageSyntax = '![' + image.originalName + '](/images/' + image.id + ')';
+    const imageSyntax = '![' + image.originalName + '](/images/' + image.id + ')\n\n';
     // 圖片語法新增到輸入區
     insertSyntax(imageSyntax);
     // 更新預覽
