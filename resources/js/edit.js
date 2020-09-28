@@ -141,10 +141,11 @@ var simplemde = new SimpleMDE({
   ],
   promptURLs: true,
 });
+
+// 載入頁面和輸入時，更新編輯預覽
 simplemde.codemirror.on('change', function() {
     refreshPreview(simplemde.value());
 });
-// 載入頁面和輸入時，更新編輯預覽
 refreshPreview(simplemde.value());
 
 
@@ -171,6 +172,7 @@ function refreshPreview(markdown) {
   });
 }
 
+////////////// 拖曳圖片以上傳 /////////////////
 window.addEventListener("drop", function (e) {
   e = e || event;
   e.preventDefault();
@@ -178,70 +180,21 @@ window.addEventListener("drop", function (e) {
 simplemde.codemirror.on('drop', function(editor, event) {
   event.preventDefault();
 
-  // 顯示上傳通知
-  document.querySelector('.uploading.notification').classList.remove('d-none');
-  var formData = new FormData();
   // 抓取要拖曳上傳的檔案
   // 一次只抓一個，所以是 files[0]
-  const image = event.dataTransfer.files[0];
-  // image 要包成 Blob 或 File 物件
-  // 後端 php 才能用 $request->file('image') 抓到檔案
-  const file = new File([ image ], image.name, { type: "image/*" });
-  formData.append('image', file);
-
-  fetch('/upload/image', {
-    method: 'POST',
-    headers: new Headers({
-        'X-CSRF-TOKEN': token
-    }),
-    body: formData
-  }).then(function( response ) {
-    // 隱藏上傳通知
-    document.querySelector('.uploading.notification').classList.add('d-none');
-    // 回傳 json 物件
-     return response.json();
-  }).then(function ( image ) {
-    // 組成 markdown 圖片語法
-    const imageSyntax = '![' + image.originalName + '](/images/' + image.id + ')';
-    // 圖片語法新增到輸入區
-    insertSyntax(imageSyntax);
-    // 更新預覽
-    refreshPreview(simplemde.value());
-  });
+  const file = event.dataTransfer.items[0].getAsFile();
+  uploadImage(file);
 });
 
-var fileDialog = document.querySelector('#fileDialog');
-fileDialog.addEventListener('change', function() {
+////////////// 點選工具列圖示 insert image 上傳圖片 ///////////////
+var fileInput = document.querySelector('#fileDialog');
+fileInput.addEventListener('change', function() {
   var file = this.files[0];
-  var formData = new FormData();
-  formData.append('image', file);
-
-  // 顯示上傳通知
-  document.querySelector('.uploading.notification').classList.remove('d-none');
-
-  fetch('/upload/image', {
-    method: 'POST',
-    headers: new Headers({
-        'X-CSRF-TOKEN': token
-    }),
-    body: formData
-  }).then(function( response ) {
-    // 隱藏上傳通知
-    document.querySelector('.uploading.notification').classList.add('d-none');
-    // 回傳 json 物件
-     return response.json();
-  }).then(function ( image ) {
-    // 組成 markdown 圖片語法
-    const imageSyntax = '![' + image.originalName + '](/images/' + image.id + ')';
-    // 圖片語法新增到輸入區
-    insertSyntax(imageSyntax);
-    // 更新預覽
-    refreshPreview(simplemde.value());
-  });
+  uploadImage(file);
 });
 function addImage() {
   // 觸發檔案選取對話框
-  fileDialog.click();
+  fileInput.click();
 }
 // 新增字串到輸入區，並選取之前選取的範圍或游標位置
 function insertSyntax(markdown) {
@@ -263,4 +216,32 @@ function insertSyntax(markdown) {
   cm.setSelection(startPoint, endPoint);
   // 聚焦輸入的 textarea
   cm.focus();
+}
+
+function uploadImage(file) {
+  var formData = new FormData();
+  formData.append('image', file);
+
+  // 顯示上傳通知
+  document.querySelector('.uploading.notification').classList.remove('d-none');
+
+  fetch('/upload/image', {
+    method: 'POST',
+    headers: new Headers({
+        'X-CSRF-TOKEN': token
+    }),
+    body: formData
+  }).then(function( response ) {
+    // 隱藏上傳通知
+    document.querySelector('.uploading.notification').classList.add('d-none');
+    // 回傳 json 物件
+     return response.json();
+  }).then(function ( image ) {
+    // 組成 markdown 圖片語法
+    const imageSyntax = '![' + image.originalName + '](/images/' + image.id + ')';
+    // 圖片語法新增到輸入區
+    insertSyntax(imageSyntax);
+    // 更新預覽
+    refreshPreview(simplemde.value());
+  });
 }
