@@ -93,16 +93,131 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // 載入頁面和輸入時，更新編輯預覽
-
-refreshPreview();
-document.getElementById('editArticleContent').addEventListener('keyup', function () {
-  refreshPreview();
+var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+var editor = document.querySelector('#editArticleContent');
+var simplemde = new SimpleMDE({
+  element: editor,
+  shortcuts: {
+    // 取消預覽和 side by side 的快速鍵
+    "togglePreview": null,
+    "toggleSideBySide": null
+  },
+  toolbar: [{
+    name: "undo",
+    action: SimpleMDE.undo,
+    className: "fa fa-undo no-disable",
+    title: "Undo"
+  }, {
+    name: "redo",
+    action: SimpleMDE.redo,
+    className: "fa fa-repeat no-disable",
+    title: "Redo"
+  }, "|", {
+    name: "bold",
+    action: SimpleMDE.toggleBold,
+    className: "fa fa-bold",
+    title: "Bold"
+  }, {
+    name: "italic",
+    action: SimpleMDE.toggleItalic,
+    className: "fa fa-italic",
+    title: "Italic"
+  }, {
+    name: "strikethrough",
+    action: SimpleMDE.toggleStrikethrough,
+    className: "fa fa-strikethrough",
+    title: "Strikethrough"
+  }, "|", {
+    name: "heading-1",
+    action: SimpleMDE.toggleHeading1,
+    className: "fa fa-header fa-header-x fa-header-1",
+    title: "Big Heading"
+  }, {
+    name: "heading-2",
+    action: SimpleMDE.toggleHeading2,
+    className: "fa fa-header fa-header-x fa-header-2",
+    title: "Medium Heading"
+  }, {
+    name: "heading-3",
+    action: SimpleMDE.toggleHeading3,
+    className: "fa fa-header fa-header-x fa-header-3",
+    title: "Small Heading"
+  }, {
+    name: "heading-smaller",
+    action: SimpleMDE.toggleHeadingSmaller,
+    className: "fa fa-header",
+    title: "Smaller Heading"
+  }, {
+    name: "heading-bigger",
+    action: SimpleMDE.toggleHeadingBigger,
+    className: "fa fa-lg fa-header",
+    title: "Bigger Heading"
+  }, "|", {
+    name: "code",
+    action: SimpleMDE.toggleCodeBlock,
+    className: "fa fa-code",
+    title: "Code"
+  }, {
+    name: "quote",
+    action: SimpleMDE.toggleBlockquote,
+    className: "fa fa-quote-left",
+    title: "Quote"
+  }, {
+    name: "unordered-list",
+    action: SimpleMDE.toggleUnorderedList,
+    className: "fa fa-list-ul",
+    title: "Generic List"
+  }, {
+    name: "ordered-list",
+    action: SimpleMDE.toggleOrderedList,
+    className: "fa fa-list-ol",
+    title: "Numbered List"
+  }, {
+    name: "link",
+    action: SimpleMDE.drawLink,
+    className: "fa fa-link",
+    title: "Create Link"
+  }, {
+    name: "image",
+    action: addImage,
+    className: "fa fa-picture-o",
+    title: "Insert Image"
+  }, {
+    name: "table",
+    action: SimpleMDE.drawTable,
+    className: "fa fa-table",
+    title: "Insert Table"
+  }, {
+    name: "horizontal-rule",
+    action: SimpleMDE.drawHorizontalRule,
+    className: "fa fa-minus",
+    title: "Insert Horizontal Line"
+  }, {
+    name: "clean-block",
+    action: SimpleMDE.cleanBlock,
+    className: "fa fa-eraser fa-clean-block",
+    title: "Clean block"
+  }, "|", {
+    name: "fullscreen",
+    action: SimpleMDE.toggleFullScreen,
+    className: "fa fa-arrows-alt no-disable no-mobile",
+    title: "Toggle Fullscreen"
+  }, {
+    name: "guide",
+    action: "https://simplemde.com/markdown-guide",
+    className: "fa fa-question-circle",
+    title: "Markdown Guide"
+  }],
+  promptURLs: true
 });
+simplemde.codemirror.on('change', function () {
+  refreshPreview(simplemde.value());
+}); // 載入頁面和輸入時，更新編輯預覽
 
-function refreshPreview() {
+refreshPreview(simplemde.value());
+
+function refreshPreview(markdown) {
   // 抓取編輯條目的 textarea 的值
-  var markdown = document.getElementById('editArticleContent').value;
   var formData = new FormData();
   formData.append('markdown', markdown);
   fetch('/render-markdown', {
@@ -123,13 +238,11 @@ function refreshPreview() {
   });
 }
 
-document.querySelector('.edit').addEventListener('dragstart', function (event) {
-  event.dataTransfer.setData('image/*');
-  event.stopPropagation();
-  event.preventDefault();
+window.addEventListener("drop", function (e) {
+  e = e || event;
+  e.preventDefault();
 });
-document.querySelector('.edit').addEventListener('drop', function (event) {
-  event.stopPropagation();
+simplemde.codemirror.on('drop', function (editor, event) {
   event.preventDefault(); // 顯示上傳通知
 
   document.querySelector('.uploading.notification').classList.remove('d-none');
@@ -156,33 +269,64 @@ document.querySelector('.edit').addEventListener('drop', function (event) {
     return response.json();
   }).then(function (image) {
     // 組成 markdown 圖片語法
-    var mdString = '![' + image.originalName + '](/images/' + image.id + ')'; // 圖片語法新增到輸入區
+    var imageSyntax = '![' + image.originalName + '](/images/' + image.id + ')'; // 圖片語法新增到輸入區
 
-    insertSyntax(mdString); // 更新預覽
+    insertSyntax(imageSyntax); // 更新預覽
 
-    refreshPreview();
+    refreshPreview(simplemde.value());
   });
-}); // 新增標籤或字串到輸入區，並選取之前選取的範圍或游標位置
-// 參考 https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement#Examples
+});
+var fileDialog = document.querySelector('#fileDialog');
+fileDialog.addEventListener('change', function () {
+  var file = this.files[0];
+  var formData = new FormData();
+  formData.append('image', file);
+  fetch('/upload/image', {
+    method: 'POST',
+    headers: new Headers({
+      'X-CSRF-TOKEN': token
+    }),
+    body: formData
+  }).then(function (response) {
+    // 隱藏上傳通知
+    document.querySelector('.uploading.notification').classList.add('d-none'); // 回傳 json 物件
 
-function insertSyntax(sStartTag, sEndTag) {
-  var textarea = document.querySelector('.edit textarea'); // 選取範圍的索引值開頭
+    return response.json();
+  }).then(function (image) {
+    // 組成 markdown 圖片語法
+    var imageSyntax = '![' + image.originalName + '](/images/' + image.id + ')'; // 圖片語法新增到輸入區
 
-  nSelStart = textarea.selectionStart, // 選取範圍的索引值結尾
-  nSelEnd = textarea.selectionEnd, sOldText = textarea.value; // 從 textarea 內容的開頭，一直到目前選取範圍的開頭之前
+    insertSyntax(imageSyntax); // 更新預覽
 
-  textarea.value = sOldText.substring(0, nSelStart) + ( // 如果要新增的是成對標籤，則爲 <tag>目前選取範圍</tag>，如果是單一標籤，則爲 <tag>
-  arguments.length > 1 ? sStartTag + sOldText.substring(nSelStart, nSelEnd) + sEndTag : sStartTag) + // 從目前選取範圍的開頭，一直到 textarea 內容的結尾
-  sOldText.substring(nSelEnd); // 如果新增的是成對標籤或沒有選取範圍，則從目前的選取範圍開頭或游標位置加上第一個標籤的字串長度
-  // 如果新增的是單一標籤或有選取範圍，則爲選取範圍的開頭或目前游標位置
+    refreshPreview(simplemde.value());
+  });
+});
 
-  var start = arguments.length > 1 || nSelStart === nSelEnd ? nSelStart + sStartTag.length : nSelStart,
-      // 如果新增的是成對標籤，則抓取選取範圍結尾，否則抓取選取範圍開頭
-  // 再加上第一個標籤的字串長度
-  end = (arguments.length > 1 ? nSelEnd : nSelStart) + sStartTag.length; // 修改選取範圍或游標位置
+function addImage() {
+  // 觸發檔案選取對話框
+  fileDialog.click();
+} // 新增字串到輸入區，並選取之前選取的範圍或游標位置
 
-  textarea.setSelectionRange(start, end);
-  textarea.focus();
+
+function insertSyntax(markdown) {
+  // 回傳 CodeMirror 物件，以下都是用 CodeMirror API
+  var cm = simplemde.codemirror; // 鍵盤游標選取的位置：json 物件 { line: 行的索引值, ch: 該行的字元索引值 }
+
+  var startPoint = cm.getCursor('start'); // 選取的開頭
+
+  var endPoint = cm.getCursor('end'); // 選取的結尾
+  // replaceRange(要取代的文字, 選取的開頭位置, 選取的結尾位置): 取代選取範圍的文字
+  // 只有選取的開頭位置，則新增文字到該位置
+  // 在此設定爲新增文字到選取的結尾位置
+
+  cm.replaceRange(markdown, {
+    line: endPoint.line,
+    ch: endPoint.ch
+  }); // 設定選取範圍
+
+  cm.setSelection(startPoint, endPoint); // 聚焦輸入的 textarea
+
+  cm.focus();
 }
 
 /***/ }),
