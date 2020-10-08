@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Markdown;
 
 // https://github.com/KENNYSOFT/parsedown-tablespan/blob/master/ParsedownTablespan.php
 trait TableSpan
