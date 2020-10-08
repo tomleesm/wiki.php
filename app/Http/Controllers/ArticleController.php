@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
-use App\Markdown;
+use App\Markdown\Markdown;
 use App\Image;;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -37,8 +37,7 @@ class ArticleController extends Controller
         }
 
         // 把 markdown 語法轉成 HTML
-        $markdown = new Markdown($article->content);
-        $article->content = $markdown->toHTML();
+        $article->content = Markdown::toHTML($article->content);
 
         return view('article.show')->with('article', $article);
     }
@@ -100,8 +99,7 @@ class ArticleController extends Controller
      * 產生編輯條目的預覽結果
      */
     public function renderMarkdown(Request $request) {
-        $markdown = new Markdown($request->post('markdown'));
-        return $markdown->toHTML();
+        return Markdown::toHTML($request->post('markdown'));
     }
 
     /**

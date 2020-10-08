@@ -1,19 +1,17 @@
 <?php
-namespace App;
+namespace App\Markdown;
 
 use Mews\Purifier\Facades\Purifier;
-use App\TomParsedown;
-use App\TomParsedownToC;
+use App\Markdown\TomParsedown;
+use App\Markdown\TomParsedownToC;
 
-class Markdown
+class MarkdownService
 {
     private $markdown = '';
 
-    public function __construct($markdown) {
+    public function toHTML($markdown) {
         $this->markdown = $markdown;
-    }
 
-    public function toHTML() {
         // [[include:test]]
         $this->include();
 
