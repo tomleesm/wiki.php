@@ -9,7 +9,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "bensampo/laravel-enum": "1.*",
         "doctrine/dbal": "^2.10",
         "elvanto/litemoji": "^2.0",
         "erusev/parsedown": "^1.7",
@@ -25,7 +24,6 @@
     "require-dev": {
         "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.9.1",
-        "laravel/dusk": "^6.1",
         "laravel/ui": "^1.0",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
