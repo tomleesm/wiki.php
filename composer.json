@@ -9,7 +9,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "bensampo/laravel-enum": "1.*",
         "doctrine/dbal": "^2.10",
         "elvanto/litemoji": "^2.0",
         "erusev/parsedown": "^1.7",
