@@ -4,6 +4,7 @@ namespace App\Markdown;
 use Mews\Purifier\Facades\Purifier;
 use App\Markdown\TomParsedown;
 use App\Markdown\TomParsedownToC;
+use App\Article;
 
 class MarkdownService
 {
