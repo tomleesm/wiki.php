@@ -16,15 +16,9 @@ class MarkdownService
         // [[include:test]]
         $this->include();
 
-        // 如果有 [notoc]
-        if ($this->hasTagNotoc()) {
-            // 只轉內文，不產生目錄
-            $this->markdownToHTMLNoTOC();
-            $this->removeTagNotoc();
-        } else {
-            // 產生內文並加上目錄
-            $this->createBodyAndTOC();
-        }
+        // 只轉內文，不產生目錄
+        $this->markdownToHTMLNoTOC();
+        $this->removeTagNotoc();
 
         // wiki link [[wiki]]
         $this->wikiLink();
@@ -61,23 +55,24 @@ LINK;
 
     private function markdownToHTMLNoTOC() {
         // 支援 table rowspan 和 colspan
-        $p = new TomParsedown();
-        $p->setSafeMode(false);
-        $this->markdown = $p->text($this->markdown);
+        if($this->hasTagNotoc($this->markdown)) {
+            $p = new TomParsedown();
+            $p->setSafeMode(false);
+            $this->markdown = $p->text($this->markdown);
+        } else {
+            $p = new TomParsedownToC();
+            $p->setSafeMode(false);
+            $this->markdown = $p->body($this->markdown);
+        }
     }
 
-    // 產生內文並加上目錄
-    private function createBodyAndTOC() {
-        // 支援 table rowspan 和 colspan
-        $p = new TomParsedownToC();
-        $p->setSafeMode(false);
-        $body = $p->body($this->markdown);
+    // 產生目錄
+    public function toTOC($markdown) {
+        if( $this->hasTagNotoc($markdown) ) return '';
 
-        $pForTOC = new \ParsedownToC();
-        $pForTOC->body($this->markdown);
-        $toc  = '<div id="toc">' . $pForTOC->contentsList() . '</div>';
-
-        $this->markdown = $body . $toc;
+        $p= new \ParsedownToC();
+        $p->body($markdown);
+        return $p->contentsList();
     }
 
     // 轉換 [[]] 爲 wiki link
@@ -97,8 +92,8 @@ LINK;
         $this->markdown = str_replace('<p>[notoc]</p>', '', $this->markdown);
     }
 
-    private function hasTagNotoc() {
-        return strpos($this->markdown, '[notoc]') !== false;
+    private function hasTagNotoc($markdown) {
+        return strpos($markdown, '[notoc]') !== false;
     }
 
     /**
