@@ -94,4 +94,57 @@ class MarkdownTest extends TestCase
              ["57. foo\n1. bar", "<ol start=\"57\">\n<li>foo</li>\n<li>bar</li>\n</ol>"],
         ];
     }
+
+    /**
+     * 程式碼
+     *
+     * @return void
+     */
+    public function testCode() {
+        // 行內 `程式碼`
+        $this->assertEquals('<p>行內 <code>程式碼</code></p>', Markdown::toHTML('行內 `程式碼`'));
+        // 縮排程式碼
+        $markdown = <<<CODE
+
+    // Some comments
+    line 1 of code
+    line 2 of code
+    line 3 of code
+CODE;
+        $html = <<<HTML
+<pre><code>// Some comments
+line 1 of code
+line 2 of code
+line 3 of code</code></pre>
+HTML;
+        $this->assertEquals($html, Markdown::toHTML($markdown));
+        // 程式碼區塊
+        $markdown = <<<CODE
+```
+Sample text here...
+```
+CODE;
+        $html = <<<HTML
+<pre><code>Sample text here...</code></pre>
+HTML;
+        $this->assertEquals($html, Markdown::toHTML($markdown));
+        // 語法標色
+        $markdown = <<<CODE
+```javascript
+var foo = function (bar) {
+  return bar++;
+};
+
+console.log(foo(5));
+```
+CODE;
+        $html = <<<HTML
+<pre><code class="language-javascript">var foo = function (bar) {
+  return bar++;
+};
+
+console.log(foo(5));</code></pre>
+HTML;
+        $this->assertEquals($html, Markdown::toHTML($markdown));
+    }
 }
