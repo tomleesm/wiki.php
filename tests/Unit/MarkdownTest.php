@@ -86,6 +86,9 @@ class MarkdownTest extends TestCase
             ['~~刪除文字~~', '<p><del>刪除文字</del></p>'],
             // 引用區塊
             ["> 引用區塊也可以是巢狀的喔\n>> 可以多層次的使用\n> > > 或是用空白隔開", "<blockquote>\n<p>引用區塊也可以是巢狀的喔</p>\n<blockquote>\n<p>可以多層次的使用</p>\n<blockquote>\n<p>或是用空白隔開</p>\n</blockquote>\n</blockquote>\n</blockquote>"],
+            // 無序清單
+            ["+ 在行開頭使用 `+` `-` 或是 `*` 來建立清單\n  + 空兩個空白就可以產生子清單",
+             "<ul>\n<li>在行開頭使用 <code>+</code> <code>-</code> 或是 <code>*</code> 來建立清單\n<ul>\n<li>空兩個空白就可以產生子清單</li>\n</ul></li>\n</ul>"],
         ];
     }
 }
