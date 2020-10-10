@@ -14,7 +14,7 @@ class MarkdownTest extends TestCase
      * @return void
      */
     public function testHeadings($html, $markdown) {
-        $this->assertSame($html, Markdown::toHTML($markdown));
+        $this->assertEquals($html, Markdown::toHTML($markdown));
         $this->assertEmpty(Markdown::toTOC($markdown));
     }
 
@@ -36,8 +36,8 @@ class MarkdownTest extends TestCase
      * @return void
      */
     public function testTOC($markdown, $bodyHTML, $tocHTML) {
-        $this->assertSame($bodyHTML, Markdown::toHTML($markdown));
-        $this->assertSame($tocHTML, Markdown::toTOC($markdown));
+        $this->assertEquals($bodyHTML, Markdown::toHTML($markdown));
+        $this->assertEquals($tocHTML, Markdown::toTOC($markdown));
     }
 
     public function TOCProvider() {
