@@ -27,4 +27,38 @@ class MarkdownTest extends TestCase
             ["\n<h6>h6 標題</h6>", "[notoc]\n###### h6 標題"],
         ];
     }
+
+    /**
+     * 目錄
+     *
+     * @dataProvider TOCProvider
+     * @return void
+     */
+    public function testTOC($markdown, $bodyHTML, $tocHTML) {
+        $this->assertSame($bodyHTML, Markdown::toHTML($markdown));
+        $this->assertSame($tocHTML, Markdown::toTOC($markdown));
+    }
+
+    public function TOCProvider() {
+        return [
+            [ "# h1 標題",
+              '<h1 id="' . urlencode('h1 標題') . '">h1 標題</h1>',
+              "<ul>\n" . '<li><a href="#' . urlencode('h1 標題') . '">h1 標題</a></li>' . "\n</ul>"],
+            [ "## h2 標題",
+              '<h2 id="' . urlencode('h2 標題') . '">h2 標題</h2>',
+              "<ul>\n" . '<li><a href="#' . urlencode('h2 標題') . '">h2 標題</a></li>' . "\n</ul>"],
+            [ "### h3 標題",
+              '<h3 id="' . urlencode('h3 標題') . '">h3 標題</h3>',
+              "<ul>\n" . '<li><a href="#' . urlencode('h3 標題') . '">h3 標題</a></li>' . "\n</ul>"],
+            [ "#### h4 標題",
+              '<h4 id="' . urlencode('h4 標題') . '">h4 標題</h4>',
+              "<ul>\n" . '<li><a href="#' . urlencode('h4 標題') . '">h4 標題</a></li>' . "\n</ul>"],
+            [ "##### h5 標題",
+              '<h5 id="' . urlencode('h5 標題') . '">h5 標題</h5>',
+              "<ul>\n" . '<li><a href="#' . urlencode('h5 標題') . '">h5 標題</a></li>' . "\n</ul>"],
+            [ "###### h6 標題",
+              '<h6 id="' . urlencode('h6 標題') . '">h6 標題</h6>',
+              "<ul>\n" . '<li><a href="#' . urlencode('h6 標題') . '">h6 標題</a></li>' . "\n</ul>"],
+        ];
+    }
 }
