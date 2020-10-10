@@ -164,4 +164,71 @@ BLOCKQUOTE;
 HTML;
         $this->assertEquals($html, Markdown::toHTML($markdown));
     }
+
+    /**
+     * 表格
+     *
+     * @return void
+     */
+    public function testTable() {
+        // 預設
+        $markdown = <<<TABLE
+| column 1 | column 2 |
+| ------ | ----------- |
+| A   | B |
+| 中文 | 測試 |
+TABLE;
+        $html = <<<HTML
+<table>
+
+<tbody><tr>
+<th>column 1</th>
+<th>column 2</th>
+</tr>
+
+</tbody><tbody>
+<tr>
+<td>A</td>
+<td>B</td>
+</tr>
+<tr>
+<td>中文</td>
+<td>測試</td>
+</tr>
+</tbody>
+</table>
+HTML;
+        $this->assertEquals($html, Markdown::toHTML($markdown));
+        // 靠左、靠右、置中對齊
+        $markdown = <<<TABLE
+| column 1 | column 2 | column 3 |
+| :------ | -----------: | :----------: |
+| A   | B | C |
+| 測試 | 測試 | 測試 |
+TABLE;
+        $html = <<<HTML
+<table>
+
+<tbody><tr>
+<th style="text-align:left;">column 1</th>
+<th style="text-align:right;">column 2</th>
+<th style="text-align:center;">column 3</th>
+</tr>
+
+</tbody><tbody>
+<tr>
+<td style="text-align:left;">A</td>
+<td style="text-align:right;">B</td>
+<td style="text-align:center;">C</td>
+</tr>
+<tr>
+<td style="text-align:left;">測試</td>
+<td style="text-align:right;">測試</td>
+<td style="text-align:center;">測試</td>
+</tr>
+</tbody>
+</table>
+HTML;
+        $this->assertEquals($html, Markdown::toHTML($markdown));
+    }
 }
