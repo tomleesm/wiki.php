@@ -10,15 +10,21 @@ class MarkdownTest extends TestCase
     /**
      * h1 to h6
      *
+     * @dataProvider headingsProvider
      * @return void
      */
-    public function testHeadings()
-    {
-        $this->assertSame("\n<h1>this is h1</h1>", Markdown::toHTML("[notoc]\n# this is h1"));
-        $this->assertSame("\n<h2>this is h2</h2>", Markdown::toHTML("[notoc]\n## this is h2"));
-        $this->assertSame("\n<h3>this is h3</h3>", Markdown::toHTML("[notoc]\n### this is h3"));
-        $this->assertSame("\n<h4>this is h4</h4>", Markdown::toHTML("[notoc]\n#### this is h4"));
-        $this->assertSame("\n<h5>this is h5</h5>", Markdown::toHTML("[notoc]\n##### this is h5"));
-        $this->assertSame("\n<h6>this is h6</h6>", Markdown::toHTML("[notoc]\n###### this is h6"));
+    public function testHeadings($html, $markdown) {
+        $this->assertSame($html, Markdown::toHTML($markdown));
+    }
+
+    public function headingsProvider() {
+        return [
+            ["\n<h1>h1 標題</h1>", "[notoc]\n# h1 標題"],
+            ["\n<h2>h2 標題</h2>", "[notoc]\n## h2 標題"],
+            ["\n<h3>h3 標題</h3>", "[notoc]\n### h3 標題"],
+            ["\n<h4>h4 標題</h4>", "[notoc]\n#### h4 標題"],
+            ["\n<h5>h5 標題</h5>", "[notoc]\n##### h5 標題"],
+            ["\n<h6>h6 標題</h6>", "[notoc]\n###### h6 標題"],
+        ];
     }
 }
