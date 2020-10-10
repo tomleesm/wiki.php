@@ -63,7 +63,7 @@ LINK;
         // 支援 table rowspan 和 colspan
         $p = new TomParsedown();
         $p->setSafeMode(false);
-        $this->markdown = '<div id="body">' . $p->text($this->markdown) . '</div>';
+        $this->markdown = $p->text($this->markdown);
     }
 
     // 產生內文並加上目錄
@@ -71,7 +71,7 @@ LINK;
         // 支援 table rowspan 和 colspan
         $p = new TomParsedownToC();
         $p->setSafeMode(false);
-        $body = '<div id="body">' . $p->body($this->markdown) . '</div>';
+        $body = $p->body($this->markdown);
 
         $pForTOC = new \ParsedownToC();
         $pForTOC->body($this->markdown);

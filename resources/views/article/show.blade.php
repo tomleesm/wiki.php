@@ -9,8 +9,10 @@
 <h1>{{ $article->title }}</h1>
 
 <div id="readArticleContent" class="article content markdown-body">
+    <div id="body">
 {{-- 如果 $article->content 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
 {!! $article->content !!}
+    </div>
 </div>
 @endempty
 @endsection
