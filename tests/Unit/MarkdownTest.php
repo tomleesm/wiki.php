@@ -84,6 +84,8 @@ class MarkdownTest extends TestCase
             ['*斜體文字*', '<p><em>斜體文字</em></p>'],
             ['_斜體文字_', '<p><em>斜體文字</em></p>'],
             ['~~刪除文字~~', '<p><del>刪除文字</del></p>'],
+            // 引用區塊
+            ["> 引用區塊也可以是巢狀的喔\n>> 可以多層次的使用\n> > > 或是用空白隔開", "<blockquote>\n<p>引用區塊也可以是巢狀的喔</p>\n<blockquote>\n<p>可以多層次的使用</p>\n<blockquote>\n<p>或是用空白隔開</p>\n</blockquote>\n</blockquote>\n</blockquote>"],
         ];
     }
 }
