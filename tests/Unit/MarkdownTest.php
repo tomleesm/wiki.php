@@ -84,14 +84,6 @@ class MarkdownTest extends TestCase
             ['*斜體文字*', '<p><em>斜體文字</em></p>'],
             ['_斜體文字_', '<p><em>斜體文字</em></p>'],
             ['~~刪除文字~~', '<p><del>刪除文字</del></p>'],
-            // 引用區塊
-            ["> 引用區塊也可以是巢狀的喔\n>> 可以多層次的使用\n> > > 或是用空白隔開", "<blockquote>\n<p>引用區塊也可以是巢狀的喔</p>\n<blockquote>\n<p>可以多層次的使用</p>\n<blockquote>\n<p>或是用空白隔開</p>\n</blockquote>\n</blockquote>\n</blockquote>"],
-            // 無序清單
-            ["+ 在行開頭使用 `+` `-` 或是 `*` 來建立清單\n  + 空兩個空白就可以產生子清單",
-             "<ul>\n<li>在行開頭使用 <code>+</code> <code>-</code> 或是 <code>*</code> 來建立清單\n<ul>\n<li>空兩個空白就可以產生子清單</li>\n</ul></li>\n</ul>"],
-             // 有序清單
-             ["1. 開頭是數字 1\n1. 開頭也是數字 1", "<ol>\n<li>開頭是數字 1</li>\n<li>開頭也是數字 1</li>\n</ol>"],
-             ["57. foo\n1. bar", "<ol start=\"57\">\n<li>foo</li>\n<li>bar</li>\n</ol>"],
         ];
     }
 
@@ -144,6 +136,31 @@ CODE;
 };
 
 console.log(foo(5));</code></pre>
+HTML;
+        $this->assertEquals($html, Markdown::toHTML($markdown));
+    }
+
+    /**
+     * 引用區塊
+     *
+     * @return void
+     */
+    public function testBlockquote() {
+        $markdown = <<<BLOCKQUOTE
+> 引用區塊也可以是巢狀的喔...
+>> ...可以多層次的使用...
+> > > ...或是用空白隔開
+BLOCKQUOTE;
+        $html = <<<HTML
+<blockquote>
+<p>引用區塊也可以是巢狀的喔...</p>
+<blockquote>
+<p>...可以多層次的使用...</p>
+<blockquote>
+<p>...或是用空白隔開</p>
+</blockquote>
+</blockquote>
+</blockquote>
 HTML;
         $this->assertEquals($html, Markdown::toHTML($markdown));
     }
