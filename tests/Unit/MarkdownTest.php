@@ -62,4 +62,21 @@ class MarkdownTest extends TestCase
               "<ul>\n" . '<li><a href="#' . urlencode('h6 標題') . '">h6 標題</a></li>' . "\n</ul>"],
         ];
     }
+
+    /**
+     *
+     * @dataProvider markdownProvider
+     * @return void
+     */
+    public function testMarkdown($markdown, $html) {
+        $this->assertEquals($html, Markdown::toHTML($markdown));
+    }
+
+    public function markdownProvider() {
+        return [
+            '水平分隔線 1' => ['___', '<hr />'],
+            '水平分隔線 2' => ['---', '<hr />'],
+            '水平分隔線 3' => ['***', '<hr />'],
+        ];
+    }
 }
