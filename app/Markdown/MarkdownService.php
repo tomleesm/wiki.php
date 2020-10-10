@@ -45,7 +45,7 @@ class MarkdownService
             // 如果</div> 和 $content 沒有空一行，會無法轉換 $content 爲 html
             return <<<LINK
 <div>
-  <a href="{$editURL}">edit</a>
+  <a href="{$editURL}" title="{$title}">edit</a>
 </div>
 
 $content
