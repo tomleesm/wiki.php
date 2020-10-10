@@ -164,4 +164,15 @@ BLOCKQUOTE;
 HTML;
         $this->assertEquals($html, Markdown::toHTML($markdown));
     }
+
+    /**
+     * wiki 連結
+     *
+     * @return void
+     */
+    public function testWikiLink() {
+        $markdown = '[[測試]]';
+        $html = '<p><a href="/read/' . urlencode('測試') . '">測試</a></p>';
+        $this->assertEquals($html, Markdown::toHTML($markdown));
+    }
 }
