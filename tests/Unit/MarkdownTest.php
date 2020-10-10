@@ -15,6 +15,7 @@ class MarkdownTest extends TestCase
      */
     public function testHeadings($html, $markdown) {
         $this->assertSame($html, Markdown::toHTML($markdown));
+        $this->assertEmpty(Markdown::toTOC($markdown));
     }
 
     public function headingsProvider() {
