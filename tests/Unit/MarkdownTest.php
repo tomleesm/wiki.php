@@ -89,6 +89,9 @@ class MarkdownTest extends TestCase
             // 無序清單
             ["+ 在行開頭使用 `+` `-` 或是 `*` 來建立清單\n  + 空兩個空白就可以產生子清單",
              "<ul>\n<li>在行開頭使用 <code>+</code> <code>-</code> 或是 <code>*</code> 來建立清單\n<ul>\n<li>空兩個空白就可以產生子清單</li>\n</ul></li>\n</ul>"],
+             // 有序清單
+             ["1. 開頭是數字 1\n1. 開頭也是數字 1", "<ol>\n<li>開頭是數字 1</li>\n<li>開頭也是數字 1</li>\n</ol>"],
+             ["57. foo\n1. bar", "<ol start=\"57\">\n<li>foo</li>\n<li>bar</li>\n</ol>"],
         ];
     }
 }
