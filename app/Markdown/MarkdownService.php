@@ -115,7 +115,7 @@ LINK;
         $config->set('HTML.SafeIframe', true);
         $config->set('URI.SafeIframeRegexp', '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%');
         // 有列在$allowTags 的標籤才能使用，否則標籤會直接拿掉
-        $allowTags = explode(',', 'div,b,strong,i,em,u,a,ul,ol,li,p,hr,br,span,img,iframe,code,pre,h1,h2,h3,h4,h5,h6,del,table,tbody,th,tr,td,input');
+        $allowTags = explode(',', 'div,blockquote,b,strong,i,em,u,a,ul,ol,li,p,hr,br,span,img,iframe,code,pre,h1,h2,h3,h4,h5,h6,del,table,tbody,th,tr,td,input');
         $config->set('HTML.AllowedElements', $allowTags);
         $def = $config->getHTMLDefinition(true);
         $def->addAttribute('iframe', 'allowfullscreen', 'Bool');
