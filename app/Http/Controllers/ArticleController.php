@@ -37,7 +37,8 @@ class ArticleController extends Controller
         }
 
         // 把 markdown 語法轉成 HTML
-        $article->content = Markdown::toHTML($article->content);
+        $article->body = Markdown::toHTML($article->content);
+        $article->toc = Markdown::toTOC($article->content);
 
         return view('article.show')->with('article', $article);
     }

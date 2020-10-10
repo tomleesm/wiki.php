@@ -10,8 +10,11 @@
 
 <div id="readArticleContent" class="article content markdown-body">
     <div id="body">
-{{-- 如果 $article->content 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
-{!! $article->content !!}
+{{-- 如果 $article->body 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
+{!! $article->body !!}
+    </div>
+    <div id="toc">
+{!! $article->toc !!}
     </div>
 </div>
 @endempty
