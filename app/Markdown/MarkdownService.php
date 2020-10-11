@@ -80,10 +80,20 @@ LINK;
         $this->markdown = preg_replace_callback('/\[\[([^\]]+)\]\]/', function($matches) {
             // 抓取 [[test]] 之間的文字
             $linkText = $matches[1];
-            // url = /read/test
-            $URL = sprintf('/read/%s', urlEncode($linkText));
+            // 尋找 實際條目|顯示文字 的分隔線 | 索引值
+            $index = strpos($linkText, '|');
+            // wiki 條目是 [A] 的形式
+            if ( $index === false) {
+                $actualLink = $linkText;
+                $showText = $actualLink;
+            // wiki 條目是 [A|B] 的形式
+            } else {
+                $actualLink = substr($linkText, 0, $index);
+                $showText = substr($linkText, $index + 1);
+            }
+            $URL = sprintf('/read/%s', urlEncode($actualLink));
             // 回傳 <a href="/read/test">test</a>
-            return sprintf('<a href="%s">%s</a>', $URL, $linkText);
+            return sprintf('<a href="%s">%s</a>', $URL, $showText);
         }, $this->markdown);
     }
 
