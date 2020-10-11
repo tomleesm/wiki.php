@@ -168,11 +168,19 @@ HTML;
     /**
      * wiki 連結
      *
+     * @dataProvider wikiProvider
      * @return void
      */
-    public function testWikiLink() {
-        $markdown = '[[測試]]';
-        $html = '<p><a href="/read/' . urlencode('測試') . '">測試</a></p>';
+    public function testWikiLink($markdown, $html) {
         $this->assertEquals($html, Markdown::toHTML($markdown));
+    }
+
+    public function wikiProvider() {
+        return [
+            ['[[A]]', '<p><a href="/read/A">A</a></p>'],
+            ['[[測試]]', '<p><a href="/read/' . urlencode('測試') . '">測試</a></p>'],
+            ['[[A|B]]', '<p><a href="/read/A">B</a></p>'],
+            ['[[實際條目|顯示文字]]', '<p><a href="/read/' . urlencode('實際條目') . '">顯示文字</a></p>'],
+        ];
     }
 }
