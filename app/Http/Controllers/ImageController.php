@@ -39,8 +39,8 @@ class ImageController extends Controller
         // 如果上傳失敗，回傳錯誤訊息
         if( ! $requestImage->isValid()) {
             return  response()->json([
-                'status' => 'upload file fails',
-                'error_code' => $requestImage->getError(),
+                'status'        => 'upload file fails',
+                'error_code'    => $requestImage->getError(),
                 'error_message' => $requestImage->getErrorMessage(),
             ]);
         }
@@ -49,9 +49,9 @@ class ImageController extends Controller
         $id = Image::store($requestImage);
 
         return response()->json([
-            'status' => 'upload file successfully',
+            'status'       => 'upload file successfully',
             'originalName' => $requestImage->getClientOriginalName(),
-            'id' => $id, // UUID
+            'id'           => $id, // UUID
         ]);
     }
 }

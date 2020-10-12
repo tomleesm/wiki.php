@@ -17,14 +17,15 @@ class ArticleController extends Controller
         $article = null;
         // 有這個條目
         if (Article::exist($title)) {
-            $article = Article::where('title', $title)->first();
+            $article        = Article::where('title', $title)->first();
             $article->exist = true;
         // 沒有這個條目
         } else {
-            $article = new \stdClass();
-            $article->title = $title;
+            $article          = new \stdClass();
+            $article->title   = $title;
             $article->content = '';
-            $article->exist = false;
+            $article->exist   = false;
+
             // 在 新增條目頁面 讀取 $title
             // 因爲路由是 GET /articles/create
             session()->put('articleTitle', $title);
@@ -32,7 +33,7 @@ class ArticleController extends Controller
 
         // 把 markdown 語法轉成 HTML
         $article->body = Markdown::toHTML($article->content);
-        $article->toc = Markdown::toTOC($article->content);
+        $article->toc  = Markdown::toTOC($article->content);
 
         return view('articles.show')->with('article', $article);
     }
@@ -42,7 +43,7 @@ class ArticleController extends Controller
      */
     public function edit($title)
     {
-        $article = Article::where('title', $title)->first();
+        $article        = Article::where('title', $title)->first();
         $article->exist = true;
 
         // 顯示條目編輯頁面
@@ -53,7 +54,7 @@ class ArticleController extends Controller
      * 新增條目頁面
      */
     public function create() {
-        $article = new \stdClass();
+        $article        = new \stdClass();
         $article->title = session('articleTitle');
         // 上方分頁顯示 Create
         $article->exist = false;
