@@ -40,23 +40,12 @@ class ArticleController extends Controller
     }
 
     /**
-     * 顯示條目編輯頁面
+     * 編輯條目頁面
      */
     public function edit($title)
     {
-        $article = null;
-        // 有這個條目
-        if(Article::exist($title)) {
-            $article = Article::where('title', $title)->first();
-            $article->exist = true;
-        // 如果沒有這個條目
-        } else {
-            // 新增一個空的條目，並設定標題
-            $article = new \stdClass();
-            $article->title = $title;
-            $article->content = '';
-            $article->exist = false;
-        }
+        $article = Article::where('title', $title)->first();
+        $article->exist = true;
 
         // 顯示條目編輯頁面
         return view('articles.edit')->with('article', $article);
@@ -90,31 +79,18 @@ class ArticleController extends Controller
                                  ['title' => $request->input('article.title')]);
     }
     /**
-     * 儲存條目
+     * 更新條目
      */
     public function update($title, Request $request)
     {
         // 條目標題和內容
         $title = $request->input('article.title');
-        $content = $request->input('article.content');
 
-        // 用標題檢查條目是否存在，沒有的話先新增條目，有的話就更新內容
-        $article = Article::where('title', $title)->get();
-
-        // 沒有這個條目
-        if(empty($article->all())) {
-            // 新增條目
-            $newArticle = new Article();
-            $newArticle->title = $title;
-            $newArticle->save();
-        }
-
-        // 更新條目內容、作者id、麵包屑上一層
-        $article = Article::where('title', $title)->first();
-        $article->content = $content;
+        $article          = Article::where('title', $title)->first();
+        $article->content = $request->input('article.content');
         $article->save();
 
-        // 跳轉到顯示條目
+        // 跳轉到 檢示條目
         return redirect()->route('articles.show', ['title' => $title]);
     }
 
