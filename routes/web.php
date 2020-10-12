@@ -10,12 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/read/{title}', 'ArticleController@show')->name('article.show');
-Route::get('/edit/{title}', 'ArticleController@edit')->name('article.edit');
-Route::match(['put', 'patch'], '/update/{title}', 'ArticleController@update')->name('article.update');
-Route::post('/render-markdown', 'ArticleController@renderMarkdown');
-Route::post('/upload/image', 'ArticleController@uploadImage');
-Route::get('/images/{image}', 'ArticleController@showImage');
+Route::get('/articles/create', 'ArticleController@create')->name('articles.create');
+Route::post('/articles', 'ArticleController@store')->name('articles.store');
+Route::get('/articles/{title}', 'ArticleController@show')->name('articles.show');
+Route::get('/articles/{title}/edit', 'ArticleController@edit')->name('articles.edit');
+Route::match(['put', 'patch'], '/articles/{title}', 'ArticleController@update')->name('articles.update');
+Route::post('/preview', 'ArticleController@preview');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/images/{image}', 'ImageController@show')->name('images.show');
+Route::post('images', 'ImageController@store')->name('images.store');
+
 Route::get('/', 'HomeController@index');

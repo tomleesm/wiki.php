@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        return redirect()->route('article.show', ['title' => 'home']);
+        return redirect()->route('articles.show', ['title' => 'home']);
     }
 }

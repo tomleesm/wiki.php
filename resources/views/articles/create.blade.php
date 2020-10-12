@@ -8,15 +8,14 @@
     <div class="row">
         <div class="col-sm edit">
             <h3>{{ $article->title }}</h3>
-            <form action="{{ route('article.update', ['title' => $article->title]) }}" method="post">
+            <form method="post" action="{{ route('articles.store') }}">
                 @csrf
-                @method('put')
 
                 <input type="hidden" name="article[title]" value="{{ $article->title }}">
                 <input type="file" multiple id="fileDialog" style="visibility:hidden">
 
                 {{-- 如果 textarea 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
-                <textarea name="article[content]" id="editArticleContent" class="form-control" draggable="true">{{ old('article.content', $article->content) }}</textarea>
+                <textarea name="article[content]" id="editArticleContent" class="form-control" draggable="true"></textarea>
 
                 <button class="btn btn-primary" dusk="edit-save-button">Save</button>
             </form>

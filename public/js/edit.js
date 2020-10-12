@@ -112,7 +112,8 @@ var simplemde = new SimpleMDE({
     action: SimpleMDE.redo,
     className: "fa fa-repeat no-disable",
     title: "Redo"
-  }, "|", {
+  }, "|", // 分隔線
+  {
     name: "bold",
     action: SimpleMDE.toggleBold,
     className: "fa fa-bold",
@@ -127,7 +128,8 @@ var simplemde = new SimpleMDE({
     action: SimpleMDE.toggleStrikethrough,
     className: "fa fa-strikethrough",
     title: "Strikethrough"
-  }, "|", {
+  }, "|", // 分隔線
+  {
     name: "heading-1",
     action: SimpleMDE.toggleHeading1,
     className: "fa fa-header fa-header-x fa-header-1",
@@ -152,7 +154,8 @@ var simplemde = new SimpleMDE({
     action: SimpleMDE.toggleHeadingBigger,
     className: "fa fa-lg fa-header",
     title: "Bigger Heading"
-  }, "|", {
+  }, "|", // 分隔線
+  {
     name: "code",
     action: SimpleMDE.toggleCodeBlock,
     className: "fa fa-code",
@@ -197,7 +200,8 @@ var simplemde = new SimpleMDE({
     action: SimpleMDE.cleanBlock,
     className: "fa fa-eraser fa-clean-block",
     title: "Clean block"
-  }, "|", {
+  }, "|", // 分隔線
+  {
     name: "fullscreen",
     action: SimpleMDE.toggleFullScreen,
     className: "fa fa-arrows-alt no-disable no-mobile",
@@ -220,7 +224,7 @@ function refreshPreview(markdown) {
   // 抓取編輯條目的 textarea 的值
   var formData = new FormData();
   formData.append('markdown', markdown);
-  fetch('/render-markdown', {
+  fetch('/preview', {
     method: 'POST',
     headers: new Headers({
       'X-CSRF-TOKEN': token
@@ -295,7 +299,7 @@ function uploadImage(file) {
   formData.append('image', file); // 顯示上傳通知
 
   document.querySelector('.uploading.notification').classList.remove('d-none');
-  fetch('/upload/image', {
+  fetch('/images', {
     method: 'POST',
     headers: new Headers({
       'X-CSRF-TOKEN': token

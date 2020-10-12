@@ -5,139 +5,139 @@ var simplemde = new SimpleMDE({
   element: editor,
   shortcuts: {
     // 取消預覽和 side by side 的快速鍵
-    "togglePreview": null,
+    "togglePreview":    null,
     "toggleSideBySide": null,
   },
   toolbar: [
     {
-      name: "undo",
-      action: SimpleMDE.undo,
+      name:      "undo",
+      action:    SimpleMDE.undo,
       className: "fa fa-undo no-disable",
-      title: "Undo"
+      title:     "Undo"
     },
     {
-      name: "redo",
-      action: SimpleMDE.redo,
+      name:      "redo",
+      action:    SimpleMDE.redo,
       className: "fa fa-repeat no-disable",
-      title: "Redo"
+      title:     "Redo"
     },
-    "|",
+    "|", // 分隔線
     {
-      name: "bold",
-      action: SimpleMDE.toggleBold,
+      name:      "bold",
+      action:    SimpleMDE.toggleBold,
       className: "fa fa-bold",
-      title: "Bold",
+      title:     "Bold",
     },
     {
-      name: "italic",
-      action: SimpleMDE.toggleItalic,
+      name:      "italic",
+      action:    SimpleMDE.toggleItalic,
       className: "fa fa-italic",
-      title: "Italic",
+      title:     "Italic",
     },
     {
-      name: "strikethrough",
-      action: SimpleMDE.toggleStrikethrough,
+      name:      "strikethrough",
+      action:    SimpleMDE.toggleStrikethrough,
       className: "fa fa-strikethrough",
-      title: "Strikethrough",
+      title:     "Strikethrough",
     },
-    "|",
+    "|", // 分隔線
     {
-      name: "heading-1",
-      action: SimpleMDE.toggleHeading1,
+      name:      "heading-1",
+      action:    SimpleMDE.toggleHeading1,
       className: "fa fa-header fa-header-x fa-header-1",
-      title: "Big Heading",
+      title:     "Big Heading",
     },
     {
-      name: "heading-2",
-      action: SimpleMDE.toggleHeading2,
+      name:      "heading-2",
+      action:    SimpleMDE.toggleHeading2,
       className: "fa fa-header fa-header-x fa-header-2",
-      title: "Medium Heading",
+      title:     "Medium Heading",
     },
     {
-      name: "heading-3",
-      action: SimpleMDE.toggleHeading3,
+      name:      "heading-3",
+      action:    SimpleMDE.toggleHeading3,
       className: "fa fa-header fa-header-x fa-header-3",
-      title: "Small Heading",
+      title:     "Small Heading",
     },
     {
-      name: "heading-smaller",
-      action: SimpleMDE.toggleHeadingSmaller,
+      name:      "heading-smaller",
+      action:    SimpleMDE.toggleHeadingSmaller,
       className: "fa fa-header",
-      title: "Smaller Heading",
+      title:     "Smaller Heading",
     },
     {
-      name: "heading-bigger",
-      action: SimpleMDE.toggleHeadingBigger,
+      name:      "heading-bigger",
+      action:    SimpleMDE.toggleHeadingBigger,
       className: "fa fa-lg fa-header",
-      title: "Bigger Heading",
+      title:     "Bigger Heading",
     },
-    "|",
+    "|", // 分隔線
     {
-      name: "code",
-      action: SimpleMDE.toggleCodeBlock,
+      name:      "code",
+      action:    SimpleMDE.toggleCodeBlock,
       className: "fa fa-code",
-      title: "Code",
+      title:     "Code",
     },
     {
-      name: "quote",
-      action: SimpleMDE.toggleBlockquote,
+      name:      "quote",
+      action:    SimpleMDE.toggleBlockquote,
       className: "fa fa-quote-left",
-      title: "Quote",
+      title:     "Quote",
     },
     {
-      name: "unordered-list",
-      action: SimpleMDE.toggleUnorderedList,
+      name:      "unordered-list",
+      action:    SimpleMDE.toggleUnorderedList,
       className: "fa fa-list-ul",
-      title: "Generic List",
+      title:     "Generic List",
     },
     {
-      name: "ordered-list",
-      action: SimpleMDE.toggleOrderedList,
+      name:      "ordered-list",
+      action:    SimpleMDE.toggleOrderedList,
       className: "fa fa-list-ol",
-      title: "Numbered List",
+      title:     "Numbered List",
     },
     {
-      name: "link",
-      action: SimpleMDE.drawLink,
+      name:      "link",
+      action:    SimpleMDE.drawLink,
       className: "fa fa-link",
-      title: "Create Link",
+      title:     "Create Link",
     },
     {
-      name: "image",
-      action: addImage,
+      name:      "image",
+      action:    addImage,
       className: "fa fa-picture-o",
-      title: "Insert Image",
+      title:     "Insert Image",
     },
     {
-      name: "table",
-      action: SimpleMDE.drawTable,
+      name:      "table",
+      action:    SimpleMDE.drawTable,
       className: "fa fa-table",
-      title: "Insert Table",
+      title:     "Insert Table",
     },
     {
-      name: "horizontal-rule",
-      action: SimpleMDE.drawHorizontalRule,
+      name:      "horizontal-rule",
+      action:    SimpleMDE.drawHorizontalRule,
       className: "fa fa-minus",
-      title: "Insert Horizontal Line",
+      title:     "Insert Horizontal Line",
     },
     {
-      name: "clean-block",
-      action: SimpleMDE.cleanBlock,
+      name:      "clean-block",
+      action:    SimpleMDE.cleanBlock,
       className: "fa fa-eraser fa-clean-block",
-      title: "Clean block",
+      title:     "Clean block",
     },
-    "|",
+    "|", // 分隔線
     {
-      name: "fullscreen",
-      action: SimpleMDE.toggleFullScreen,
+      name:      "fullscreen",
+      action:    SimpleMDE.toggleFullScreen,
       className: "fa fa-arrows-alt no-disable no-mobile",
-      title: "Toggle Fullscreen",
+      title:     "Toggle Fullscreen",
     },
     {
-      name: "guide",
-      action: "https://simplemde.com/markdown-guide",
+      name:      "guide",
+      action:    "https://simplemde.com/markdown-guide",
       className: "fa fa-question-circle",
-      title: "Markdown Guide",
+      title:     "Markdown Guide",
     },
   ],
   promptURLs: true,
@@ -155,7 +155,7 @@ function refreshPreview(markdown) {
   var formData = new FormData();
   formData.append('markdown', markdown);
 
-  fetch('/render-markdown', {
+  fetch('/preview', {
     method: 'POST',
     headers: new Headers({
         'X-CSRF-TOKEN': token
@@ -204,17 +204,17 @@ function addImage() {
 // 新增字串到輸入區，並選取之前選取的範圍或游標位置
 function insertSyntax(markdown) {
   // 回傳 CodeMirror 物件，以下都是用 CodeMirror API
-  var cm = simplemde.codemirror;
+  var cm         = simplemde.codemirror;
   // 鍵盤游標選取的位置：json 物件 { line: 行的索引值, ch: 該行的字元索引值 }
   var startPoint = cm.getCursor('start'); // 選取的開頭
-  var endPoint = cm.getCursor('end'); // 選取的結尾
+  var endPoint   = cm.getCursor('end'); // 選取的結尾
 
   // replaceRange(要取代的文字, 選取的開頭位置, 選取的結尾位置): 取代選取範圍的文字
   // 只有選取的開頭位置，則新增文字到該位置
   // 在此設定爲新增文字到選取的結尾位置
   cm.replaceRange(markdown, {
     line: endPoint.line,
-    ch: endPoint.ch
+    ch:   endPoint.ch
   });
 
   // 設定選取範圍
@@ -232,7 +232,7 @@ function uploadImage(file) {
   // 顯示上傳通知
   document.querySelector('.uploading.notification').classList.remove('d-none');
 
-  fetch('/upload/image', {
+  fetch('/images', {
     method: 'POST',
     headers: new Headers({
         'X-CSRF-TOKEN': token
