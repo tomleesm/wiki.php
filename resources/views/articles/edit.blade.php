@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-sm edit">
             <h3>{{ $article->title }}</h3>
-            <form action="{{ route('article.update', ['title' => $article->title]) }}" method="post">
+            <form action="{{ route('articles.update', ['title' => $article->title]) }}" method="post">
                 @csrf
                 @method('put')
 

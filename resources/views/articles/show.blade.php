@@ -3,7 +3,7 @@
 @section('content')
 @if( empty($article->content) && $article->title == 'home' )
     <p>Welcome to Wiki.</p>
-    <p><a href="{{ route('article.edit', ['title' => 'home']) }}">Start to write something.</a></p>
+    <p><a href="{{ route('articles.edit', ['title' => 'home']) }}">Start to write something.</a></p>
 @else
 
 <h1>{{ $article->title }}</h1>

@@ -35,7 +35,7 @@ class ArticleController extends Controller
         $article->body = Markdown::toHTML($article->content);
         $article->toc = Markdown::toTOC($article->content);
 
-        return view('article.show')->with('article', $article);
+        return view('articles.show')->with('article', $article);
     }
 
     /**
@@ -59,7 +59,7 @@ class ArticleController extends Controller
         }
 
         // 顯示條目編輯頁面
-        return view('article.edit')->with('article', $article);
+        return view('articles.edit')->with('article', $article);
     }
 
     /**
@@ -88,7 +88,7 @@ class ArticleController extends Controller
         $article->save();
 
         // 跳轉到顯示條目
-        return redirect()->route('article.show', ['title' => $title]);
+        return redirect()->route('articles.show', ['title' => $title]);
     }
 
     /**
