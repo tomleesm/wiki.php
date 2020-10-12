@@ -17,7 +17,7 @@ Route::get('/articles/{title}/edit', 'ArticleController@edit')->name('articles.e
 Route::match(['put', 'patch'], '/articles/{title}', 'ArticleController@update')->name('articles.update');
 Route::post('/preview', 'ArticleController@preview');
 
+Route::get('/images/{image}', 'ImageController@show')->name('images.show');
 Route::post('/upload/image', 'ArticleController@uploadImage');
-Route::get('/images/{image}', 'ArticleController@showImage');
 
 Route::get('/', 'HomeController@index');
