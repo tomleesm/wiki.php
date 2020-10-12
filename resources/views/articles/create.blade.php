@@ -8,9 +8,8 @@
     <div class="row">
         <div class="col-sm edit">
             <h3>{{ $article->title }}</h3>
-            <form action="{{ route('articles.update', ['title' => $article->title]) }}" method="post">
+            <form method="post" action="{{ route('articles.store') }}">
                 @csrf
-                @method('put')
 
                 <input type="hidden" name="article[title]" value="{{ $article->title }}">
                 <input type="file" multiple id="fileDialog" style="visibility:hidden">

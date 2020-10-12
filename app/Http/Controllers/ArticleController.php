@@ -66,14 +66,29 @@ class ArticleController extends Controller
      * 新增條目頁面
      */
     public function create() {
-        // 新增一個空的條目，並設定標題
         $article = new \stdClass();
         $article->title = session('articleTitle');
+        // 上方分頁顯示 Create
         $article->exist = false;
 
         return view('articles.create')->with('article', $article);
     }
 
+    /**
+     * 新增條目
+     */
+    public function store(Request $request) {
+        $article          = new Article();
+        $article->title   = $request->input('article.title');
+        $article->content = $request->input('article.content');
+        $article->save();
+
+        // 刪除 新增條目頁面 的 session articleTitle
+        session()->forget('articleTitle');
+
+        return redirect()->route('articles.show',
+                                 ['title' => $request->input('article.title')]);
+    }
     /**
      * 儲存條目
      */
@@ -98,9 +113,6 @@ class ArticleController extends Controller
         $article = Article::where('title', $title)->first();
         $article->content = $content;
         $article->save();
-
-        // 刪除 新增條目頁面 的 session articleTitle
-        session()->forget('articleTitle');
 
         // 跳轉到顯示條目
         return redirect()->route('articles.show', ['title' => $title]);
