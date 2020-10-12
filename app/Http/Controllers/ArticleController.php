@@ -16,19 +16,20 @@ class ArticleController extends Controller
      */
     public function show($title)
     {
-        // 檢查是否有這個條目
-        $count = Article::where('title', $title)->count();
-
         $article = null;
+        // 有這個條目
+        if (Article::exist($title)) {
+            $article = Article::where('title', $title)->first();
+            $article->exist = true;
         // 沒有這個條目
-        if ($count === 0) {
+        } else {
             $article = new \stdClass();
             $article->title = $title;
             $article->content = '';
-        // 有這個條目
-        } else if ($count !== 0) {
-            // 產生條目
-            $article = Article::where('title', $title)->first();
+            $article->exist = false;
+            // 在 新增條目頁面 讀取 $title
+            // 因爲路由是 GET /articles/create
+            session()->put('articleTitle', $title);
         }
 
         // 把 markdown 語法轉成 HTML
@@ -41,25 +42,36 @@ class ArticleController extends Controller
     /**
      * 顯示條目編輯頁面
      */
-    public function edit($title, Request $request)
+    public function edit($title)
     {
-        // 檢查是否有這個條目
-        $count = Article::where('title', $title)->count();
-
         $article = null;
+        // 有這個條目
+        if(Article::exist($title)) {
+            $article = Article::where('title', $title)->first();
+            $article->exist = true;
         // 如果沒有這個條目
-        if($count === 0) {
+        } else {
             // 新增一個空的條目，並設定標題
             $article = new \stdClass();
             $article->title = $title;
             $article->content = '';
-        } else {
-            // 抓取條目
-            $article = Article::where('title', $title)->first();
+            $article->exist = false;
         }
 
         // 顯示條目編輯頁面
         return view('articles.edit')->with('article', $article);
+    }
+
+    /**
+     * 新增條目頁面
+     */
+    public function create() {
+        // 新增一個空的條目，並設定標題
+        $article = new \stdClass();
+        $article->title = session('articleTitle');
+        $article->exist = false;
+
+        return view('articles.create')->with('article', $article);
     }
 
     /**
@@ -86,6 +98,9 @@ class ArticleController extends Controller
         $article = Article::where('title', $title)->first();
         $article->content = $content;
         $article->save();
+
+        // 刪除 新增條目頁面 的 session articleTitle
+        session()->forget('articleTitle');
 
         // 跳轉到顯示條目
         return redirect()->route('articles.show', ['title' => $title]);

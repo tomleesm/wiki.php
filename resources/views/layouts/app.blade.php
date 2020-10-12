@@ -21,7 +21,11 @@
                         <a class="nav-link @if (request()->routeIs('articles.show')) active @endif" href="{{ route('articles.show', [ 'title' => $article->title ]) }}">Read</a>
                     </li>
                     <li class="nav-item">
+                    @if($article->exist)
                         <a class="nav-link @if (request()->routeIs('articles.edit')) active @endif" href="{{ route('articles.edit', [ 'title' => $article->title ]) }}">Edit</a>
+                    @else
+                        <a class="nav-link @if (request()->routeIs('articles.create')) active @endif" href="{{ route('articles.create') }}">Create</a>
+                    @endif
                     </li>
                 </ul>
 
