@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/read/{title}', 'ArticleController@show')->name('article.show');
+Route::get('/articles/{title}', 'ArticleController@show')->name('article.show');
 Route::get('/edit/{title}', 'ArticleController@edit')->name('article.edit');
 Route::match(['put', 'patch'], '/update/{title}', 'ArticleController@update')->name('article.update');
 Route::post('/render-markdown', 'ArticleController@renderMarkdown');

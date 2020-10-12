@@ -12,24 +12,19 @@ use Illuminate\Support\Str;
 class ArticleController extends Controller
 {
     /**
-     * 顯示條目
+     * 檢視條目
      */
-    public function show($title, Request $request)
+    public function show($title)
     {
         // 檢查是否有這個條目
         $count = Article::where('title', $title)->count();
 
         $article = null;
-        // 沒有這個條目，而且條目爲 home
-        if ($count === 0 && $title == 'home') {
-            // 顯示預設歡迎訊息
+        // 沒有這個條目
+        if ($count === 0) {
             $article = new \stdClass();
-            $article->title = 'home';
+            $article->title = $title;
             $article->content = '';
-        // 沒有這個條目，而且條目不是 home
-        } else if ($count === 0 && $title != 'home') {
-            // 跳轉到編輯頁面
-            return redirect()->route('article.edit', ['title' => $title]);
         // 有這個條目
         } else if ($count !== 0) {
             // 產生條目
@@ -54,7 +49,7 @@ class ArticleController extends Controller
         $article = null;
         // 如果沒有這個條目
         if($count === 0) {
-            // 新增一個空的條目，並設定標題和上層麵包屑
+            // 新增一個空的條目，並設定標題
             $article = new \stdClass();
             $article->title = $title;
             $article->content = '';
