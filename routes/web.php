@@ -15,7 +15,8 @@ Route::post('/articles', 'ArticleController@store')->name('articles.store');
 Route::get('/articles/{title}', 'ArticleController@show')->name('articles.show');
 Route::get('/articles/{title}/edit', 'ArticleController@edit')->name('articles.edit');
 Route::match(['put', 'patch'], '/articles/{title}', 'ArticleController@update')->name('articles.update');
-Route::post('/render-markdown', 'ArticleController@renderMarkdown');
+Route::post('/preview', 'ArticleController@preview');
+
 Route::post('/upload/image', 'ArticleController@uploadImage');
 Route::get('/images/{image}', 'ArticleController@showImage');
 

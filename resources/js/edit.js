@@ -155,7 +155,7 @@ function refreshPreview(markdown) {
   var formData = new FormData();
   formData.append('markdown', markdown);
 
-  fetch('/render-markdown', {
+  fetch('/preview', {
     method: 'POST',
     headers: new Headers({
         'X-CSRF-TOKEN': token

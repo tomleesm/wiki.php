@@ -95,9 +95,9 @@ class ArticleController extends Controller
     }
 
     /**
-     * 產生編輯條目的預覽結果
+     * 預覽條目
      */
-    public function renderMarkdown(Request $request) {
+    public function preview(Request $request) {
         return Markdown::toHTML($request->post('markdown'));
     }
 
