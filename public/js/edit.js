@@ -295,7 +295,7 @@ function uploadImage(file) {
   formData.append('image', file); // 顯示上傳通知
 
   document.querySelector('.uploading.notification').classList.remove('d-none');
-  fetch('/upload/image', {
+  fetch('/images', {
     method: 'POST',
     headers: new Headers({
       'X-CSRF-TOKEN': token

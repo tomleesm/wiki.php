@@ -18,6 +18,6 @@ Route::match(['put', 'patch'], '/articles/{title}', 'ArticleController@update')-
 Route::post('/preview', 'ArticleController@preview');
 
 Route::get('/images/{image}', 'ImageController@show')->name('images.show');
-Route::post('/upload/image', 'ArticleController@uploadImage');
+Route::post('images', 'ImageController@store')->name('images.store');
 
 Route::get('/', 'HomeController@index');

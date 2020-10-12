@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
 use App\Markdown\Markdown;
-use App\Image;;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
@@ -98,35 +97,5 @@ class ArticleController extends Controller
      */
     public function preview(Request $request) {
         return Markdown::toHTML($request->post('markdown'));
-    }
-
-    /**
-     * 上傳圖片
-     *
-     * @param Request $request
-     *
-     * @return json
-     */
-
-    public function uploadImage(Request $request) {
-        $requestImage = $request->file('image');
-
-        // 如果上傳失敗，回傳錯誤訊息
-        if( ! $requestImage->isValid()) {
-            return  response()->json([
-                'status' => 'upload file fails',
-                'error_code' => $requestImage->getError(),
-                'error_message' => $requestImage->getErrorMessage(),
-            ]);
-        }
-
-        // 儲存檔案到資料庫，回傳 id
-        $id = Image::store($requestImage);
-
-        return response()->json([
-            'status' => 'upload file successfully',
-            'originalName' => $requestImage->getClientOriginalName(),
-            'id' => $id, // UUID
-        ]);
     }
 }
