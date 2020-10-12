@@ -19,5 +19,4 @@ Route::post('/render-markdown', 'ArticleController@renderMarkdown');
 Route::post('/upload/image', 'ArticleController@uploadImage');
 Route::get('/images/{image}', 'ArticleController@showImage');
 
-Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index');
