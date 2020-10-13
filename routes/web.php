@@ -20,4 +20,7 @@ Route::post('/preview', 'ArticleController@preview');
 Route::get('/images/{image}', 'ImageController@show')->name('images.show');
 Route::post('images', 'ImageController@store')->name('images.store');
 
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+
 Route::get('/', 'HomeController@index');
