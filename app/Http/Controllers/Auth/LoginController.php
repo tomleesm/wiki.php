@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\Rules\OnlyOneEmail;
-use Illuminate\Validation\ValidationException;
+use Socialite;
+use App\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -40,83 +42,61 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        // 設定跳轉回之前記住的 url
-        $this->redirectTo = session('backUrl');
     }
 
     /**
-     * show form to fill username
+     * Redirect the user to the provider authentication page.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function showInputUsernameForm()
+    public function redirectToProvider($provider)
     {
-        return view('auth.inputUsername');
+        $this->checkProvider($provider);
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
-     * show form to fill password
+     * Obtain the user information from provider.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function showInputPasswordForm()
+    public function handleProviderCallback($provider)
     {
-        return view('auth.inputPassword');
+        $this->checkProvider($provider);
+        $oauthUser = Socialite::driver($provider)->user();
+
+        // 抓取之前新增的使用者，沒有的話新增一個
+        $user = User::where('oauth_id', $oauthUser->getId())
+                    ->where('provider', $provider)
+                    ->first();
+
+        if(empty($user)) {
+            $user                    = new User();
+            $user->name              = $oauthUser->getName();
+            $user->email             = $oauthUser->getEmail();
+            $user->email_verified_at = now();
+            $user->password          = Hash::make($oauthUser->token);
+            $user->remember_token    = Str::random(10);
+            $user->oauth_id          = $oauthUser->getId();
+            $user->provider          = $provider;
+            $user->save();
+        }
+
+        // Login and "remember" the given user
+        Auth::login($user, true);
+
+        return back();
+
     }
 
     /**
-     * validate username
-     *
-     * @return void
+     * 檢查是否爲開放可用的 OAuth providers
      */
-    public function validateUsername(Request $request)
-    {
-        $request->validate([
-            'email' => [
-                'required',
-                'email',
-                // 在表格 users 中已有這個使用者，而且只有一個
-                new OnlyOneEmail
-            ]
-        ], [
-            'email.required' => 'Please type E-mail.',
-            'email.email' => 'Input is not E-mail. Please type again.',
-        ]);
+    private function checkProvider($provider) {
+        $providers = ['google'];
 
-        session(['email' => $request->email]);
-        return redirect('/input/password');
-    }
-
-    /**
-     * Validate the user login request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    protected function validateLogin(Request $request)
-    {
-        $request->validate([
-            $this->username() => 'required|string',
-            'password' => 'required|string',
-        ], [
-            'password.required' => 'Please type password.'
-        ]);
-    }
-
-    /**
-     * Get the failed login response instance.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    protected function sendFailedLoginResponse(Request $request)
-    {
-        throw ValidationException::withMessages([
-            'password' => [trans('auth.failed')],
-        ]);
+        if( ! in_array($provider, $providers) ) {
+            throw new Exception('wrong provider');
+        }
     }
 }
