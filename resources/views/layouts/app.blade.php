@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width" />
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ $article->title }}</title>
+        <title>{{ $article->title }} - {{ env('APP_NAME', 'wiki.php') }}</title>
         <link rel="stylesheet" href="{{ asset('css/app.css')}}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/prism.css')}}" type="text/css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
