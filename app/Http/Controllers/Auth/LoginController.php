@@ -96,7 +96,7 @@ class LoginController extends Controller
         $providers = ['google'];
 
         if( ! in_array($provider, $providers) ) {
-            throw new Exception('wrong provider');
+            abort(403, 'Unauthorized OAuth provider: ' . $provider);
         }
     }
 }
