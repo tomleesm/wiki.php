@@ -63,7 +63,10 @@ class LoginController extends Controller
     public function handleProviderCallback($provider)
     {
         $this->checkProvider($provider);
-        $oauthUser = Socialite::driver($provider)->user();
+
+        // GitHub 需要 stateless 才不會丟出 InvalidStateException
+        // 所以一律使用 stateless()
+        $oauthUser = Socialite::driver($provider)->stateless()->user();
 
         // 抓取之前新增的使用者，沒有的話新增一個
         $user = User::where('oauth_id', $oauthUser->getId())
@@ -71,14 +74,15 @@ class LoginController extends Controller
                     ->first();
 
         if(empty($user)) {
-            $user                    = new User();
-            $user->name              = $oauthUser->getName();
-            $user->email             = $oauthUser->getEmail();
-            $user->email_verified_at = now();
-            $user->password          = Hash::make($oauthUser->token);
-            $user->remember_token    = Str::random(10);
-            $user->oauth_id          = $oauthUser->getId();
-            $user->provider          = $provider;
+            $user                 = new User();
+            $user->name           = $oauthUser->getName();
+            $user->oauth_id       = $oauthUser->getId();
+            $user->provider       = $provider;
+            $user->remember_token = Str::random(10);
+            $user->save();
+        } else if($oauthUser->getName() != $user->name) {
+            // 如果修改了第三方網站的使用者名稱，則 wiki.php 也要跟著改
+            $user->name = $oauthUser->getName();
             $user->save();
         }
 
@@ -93,10 +97,10 @@ class LoginController extends Controller
      * 檢查是否爲開放可用的 OAuth providers
      */
     private function checkProvider($provider) {
-        $providers = ['google'];
+        $providers = ['google', 'github'];
 
         if( ! in_array($provider, $providers) ) {
-            throw new Exception('wrong provider');
+            abort(403, 'Unauthorized OAuth provider: ' . $provider);
         }
     }
 }
