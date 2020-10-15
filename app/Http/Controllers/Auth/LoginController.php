@@ -74,14 +74,11 @@ class LoginController extends Controller
                     ->first();
 
         if(empty($user)) {
-            $user                    = new User();
-            $user->name              = $oauthUser->getName();
-            $user->email             = $oauthUser->getEmail();
-            $user->email_verified_at = now();
-            $user->password          = Hash::make($oauthUser->token);
-            $user->remember_token    = Str::random(10);
-            $user->oauth_id          = $oauthUser->getId();
-            $user->provider          = $provider;
+            $user                 = new User();
+            $user->name           = $oauthUser->getName();
+            $user->oauth_id       = $oauthUser->getId();
+            $user->provider       = $provider;
+            $user->remember_token = Str::random(10);
             $user->save();
         }
 
