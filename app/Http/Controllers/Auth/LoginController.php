@@ -63,7 +63,10 @@ class LoginController extends Controller
     public function handleProviderCallback($provider)
     {
         $this->checkProvider($provider);
-        $oauthUser = Socialite::driver($provider)->user();
+
+        // GitHub 需要 stateless 才不會丟出 InvalidStateException
+        // 所以一律使用 stateless()
+        $oauthUser = Socialite::driver($provider)->stateless()->user();
 
         // 抓取之前新增的使用者，沒有的話新增一個
         $user = User::where('oauth_id', $oauthUser->getId())
@@ -93,7 +96,7 @@ class LoginController extends Controller
      * 檢查是否爲開放可用的 OAuth providers
      */
     private function checkProvider($provider) {
-        $providers = ['google'];
+        $providers = ['google', 'github'];
 
         if( ! in_array($provider, $providers) ) {
             abort(403, 'Unauthorized OAuth provider: ' . $provider);
