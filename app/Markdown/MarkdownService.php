@@ -91,7 +91,7 @@ LINK;
                 $actualLink = substr($linkText, 0, $index);
                 $showText = substr($linkText, $index + 1);
             }
-            $URL = sprintf('/articles/%s', urlEncode($actualLink));
+            $URL = sprintf('/articles/%s', rawurlencode($actualLink));
             // 回傳 <a href="/read/test">test</a>
             return sprintf('<a href="%s">%s</a>', $URL, $showText);
         }, $this->markdown);
