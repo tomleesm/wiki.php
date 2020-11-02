@@ -17,7 +17,7 @@ class Authenticate extends Middleware
         if (! $request->expectsJson()) {
             // 先記住目前的 url，登入成功後跳回
             $request->session()->put('backUrl', url()->current());
-            return '/input/username';
+            return route('login');
         }
     }
 }
