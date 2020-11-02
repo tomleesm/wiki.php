@@ -12,8 +12,9 @@ class ArticleController extends Controller
     /**
      * 檢視條目
      */
-    public function show($title)
+    public function show($titleEncoded)
     {
+        $title = rawurldecode($titleEncoded);
         $article = null;
         // 有這個條目
         if (Article::exist($title)) {
@@ -41,8 +42,9 @@ class ArticleController extends Controller
     /**
      * 編輯條目頁面
      */
-    public function edit($title)
+    public function edit($titleEncoded)
     {
+        $title = rawurldecode($titleEncoded);
         $article        = Article::where('title', $title)->first();
         $article->exist = true;
 
