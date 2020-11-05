@@ -177,10 +177,11 @@ HTML;
 
     public function wikiProvider() {
         return [
-            ['[[A]]', '<p><a href="/read/A">A</a></p>'],
-            ['[[測試]]', '<p><a href="/read/' . urlencode('測試') . '">測試</a></p>'],
-            ['[[A|B]]', '<p><a href="/read/A">B</a></p>'],
-            ['[[實際條目|顯示文字]]', '<p><a href="/read/' . urlencode('實際條目') . '">顯示文字</a></p>'],
+            ['[[A]]', '<p><a href="/articles/A">A</a></p>'],
+            ['[[測試]]', '<p><a href="/articles/' . urlencode('測試') . '">測試</a></p>'],
+            ['[[A|B]]', '<p><a href="/articles/A">B</a></p>'],
+            ['[[實際條目|顯示文字]]', '<p><a href="/articles/' . rawurlencode('實際條目') . '">顯示文字</a></p>'],
+            ['[[測試 ABC]]', '<p><a href="/articles/' . rawurlencode('測試 ABC') . '">測試 ABC</a></p>'],
         ];
     }
 }

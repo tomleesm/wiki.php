@@ -41,7 +41,7 @@ class MarkdownService
             $content = Article::where('title', $title)->value('content');
 
             // url = /edit/include:test
-            $editURL = sprintf('/edit/%s', urlEncode($title));
+            $editURL = sprintf('/articles/%s', rawurlencode($title));
             // 如果</div> 和 $content 沒有空一行，會無法轉換 $content 爲 html
             return <<<LINK
 <div>
@@ -91,7 +91,7 @@ LINK;
                 $actualLink = substr($linkText, 0, $index);
                 $showText = substr($linkText, $index + 1);
             }
-            $URL = sprintf('/read/%s', urlEncode($actualLink));
+            $URL = sprintf('/articles/%s', rawurlencode($actualLink));
             // 回傳 <a href="/read/test">test</a>
             return sprintf('<a href="%s">%s</a>', $URL, $showText);
         }, $this->markdown);
