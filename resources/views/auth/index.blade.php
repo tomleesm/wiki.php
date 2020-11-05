@@ -41,7 +41,6 @@
                     </fieldset>
                 </td>
                 <td class="align-middle">
-                    <button class="btn btn-danger" type="button">Block</button>
                 </td>
             </tr>
             <tr>
