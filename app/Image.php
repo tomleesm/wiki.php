@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 class Image
 {
     /**
+     * 可接受的檔案類型
+     */
+    public const ACCEPTED_MINE_TYPES = ['image/apng', 'image/bmp', 'image/gif', 'image/x-icon', 'image/jpeg', 'image/png', 'image/svg+xml', 'image/tiff', 'image/webp'];
+
+    /**
      * Eloquent 用 PDO 存檔時，都是用 PDO::PARAM_STR 儲存
      * 但是存二進位檔案需要改用 PDO::PARAM_LOB，所以使用底層的 PDO
      * 雖然有元件 https://packagist.org/packages/ooxif/laravel-query-param

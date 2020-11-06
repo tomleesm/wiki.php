@@ -58,7 +58,6 @@ class ArticleController extends Controller
     public function create() {
         $article        = new \stdClass();
         $article->title = session('articleTitle');
-        // 上方分頁顯示 Create
         $article->exist = false;
 
         return view('articles.create')->with('article', $article);

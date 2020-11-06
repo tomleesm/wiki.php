@@ -11,8 +11,8 @@
             <form method="post" action="{{ route('articles.store') }}">
                 @csrf
 
-                <input type="hidden" name="article[title]" value="{{ $article->title }}">
-                <input type="file" multiple id="fileDialog" style="visibility:hidden">
+                @include('layouts.hiddenArticleTitle', ['article' => $article])
+                @include('layouts.fileDialog')
 
                 {{-- 如果 textarea 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
                 <textarea name="article[content]" id="editArticleContent" class="form-control" draggable="true"></textarea>
