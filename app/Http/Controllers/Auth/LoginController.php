@@ -78,6 +78,7 @@ class LoginController extends Controller
             $user->name           = $oauthUser->getName();
             $user->oauth_id       = $oauthUser->getId();
             $user->provider       = $provider;
+            $user->email          = $oauthUser->getEmail();
             $user->save();
         } else if($oauthUser->getName() != $user->name) {
             // 如果修改了第三方網站的使用者名稱，則 wiki.php 也要跟著改
