@@ -12,8 +12,8 @@
                 @csrf
                 @method('put')
 
-                <input type="hidden" name="article[title]" value="{{ $article->title }}">
-                <input type="file" id="fileDialog" style="display:none" multiple accept="image/apng,image/bmp,image/gif,image/x-icon,image/jpeg,image/png,image/svg+xml,image/tiff,image/webp">
+                @include('layouts.hiddenArticleTitle', ['article' => $article])
+                @include('layouts.fileDialog');
 
                 {{-- 如果 textarea 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
                 <textarea name="article[content]" id="editArticleContent" class="form-control" draggable="true">{{ old('article.content', $article->content) }}</textarea>
