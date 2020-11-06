@@ -6,7 +6,7 @@
 - 聽說 [Gollum](https://github.com/gollum/gollum) 很不錯，但你知道它對中文的支援很差嗎？
 - 找到 [Wiki.js](https://wiki.js.org/) ，但用過之後覺得不像是 wiki？
 
-要不要試試 Tom wiki ？
+要不要試試 wiki.php ？
 
 - 支援 Markdown 格式
 - 編輯時自動預覽
@@ -27,12 +27,12 @@
 問: 我覺得 Wiki.js 超讚的，你怎麼會覺得它不好呢？   
 答: Wiki.js 功能強大，但是它比較類似 Google 文件，不像 wiki 那樣直接輸入 `[[條目]]` 連結到其他頁面。
 
-問: Tom wiki 支援 markdown 到什麼程度呢？   
+問: wiki.php 支援 markdown 到什麼程度呢？   
 答: 除了基本的 markdown，還支援 GitHub Flavored Markdown
 
 ### 客戶經驗談
 
-John 是一個記性不太好的工程師，所以他平常有在 GitHub wiki 寫筆記的習慣，把專案中遇到的問題、解決方案和常見模式都記下來。做了幾個專案後，他發現常常要去之前的專案找筆記，所以想要找一個 wiki 程式集中管理，最好是用 markdown，這樣就不用轉換語法了。有一天他找到了 Tom wiki，除了支援基本的 markdown 語法，每一頁的麵包屑讓他不至於在查筆記時迷路，必須回到首頁從頭開始找起。
+John 是一個記性不太好的工程師，所以他平常有在 GitHub wiki 寫筆記的習慣，把專案中遇到的問題、解決方案和常見模式都記下來。做了幾個專案後，他發現常常要去之前的專案找筆記，所以想要找一個 wiki 程式集中管理，最好是用 markdown，這樣就不用轉換語法了。有一天他找到了 wiki.php，除了支援基本的 markdown 語法，編輯時自動更新預覽，讓他可以立刻知道會有什麼效果，還能用 `[[include:條目]]` 這樣的語法內嵌其他條目，這樣就能做到類似目錄選單的功能
 
 ### 使用手冊
 
