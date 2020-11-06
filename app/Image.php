@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Image
 {
@@ -37,7 +38,7 @@ class Image
         $id = (string) Str::orderedUuid();
         // 客戶端原始檔名
         $originalName = $image->getClientOriginalName();
-        // bindParam() 只能放變數
+        // bindParam() 只能放變數作爲參數，所以不要 inline temp
         $now = now();
 
         $stmt->bindParam(1, $id); // 主鍵
@@ -46,9 +47,15 @@ class Image
         $stmt->bindParam(4, $now); // 新增時間
         $stmt->bindParam(5, $now); // 更新時間
 
-        $pdo->beginTransaction();
-        $stmt->execute();
-        $pdo->commit();
+        try {
+            $pdo->beginTransaction();
+            $stmt->execute();
+            $pdo->commit();
+        } catch(\Exception $e) {
+            Log::critical('unable to save image into database !');
+            Log::critical($e->getMessage());
+            $pdo->rollBack();
+        }
 
         return $id;
     }
