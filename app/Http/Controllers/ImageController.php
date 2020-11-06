@@ -36,6 +36,15 @@ class ImageController extends Controller
     public function store(Request $request) {
         $requestImage = $request->file('image');
 
+        // 檢查檔案類型是否爲圖片
+        if( ! in_array($requestImage->getMimeType(), \App\Image::ACCEPTED_MINE_TYPES) ) {
+            return  response()->json([
+                'status'        => 'upload file fails',
+                'error_code'    => $requestImage->getError(),
+                'error_message' => 'uploaded file is not an image.',
+            ]);
+        }
+
         // 如果上傳失敗，回傳錯誤訊息
         if( ! $requestImage->isValid()) {
             return  response()->json([
