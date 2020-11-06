@@ -78,7 +78,6 @@ class LoginController extends Controller
             $user->name           = $oauthUser->getName();
             $user->oauth_id       = $oauthUser->getId();
             $user->provider       = $provider;
-            $user->remember_token = Str::random(10);
             $user->save();
         } else if($oauthUser->getName() != $user->name) {
             // 如果修改了第三方網站的使用者名稱，則 wiki.php 也要跟著改
@@ -86,11 +85,10 @@ class LoginController extends Controller
             $user->save();
         }
 
-        // Login and "remember" the given user
+        // 登入並記住使用者
         Auth::login($user, true);
 
         return back();
-
     }
 
     /**
