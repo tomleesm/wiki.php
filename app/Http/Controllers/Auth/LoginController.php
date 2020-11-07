@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Socialite;
 use App\User;
+use App\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -79,6 +80,7 @@ class LoginController extends Controller
             $user->oauth_id       = $oauthUser->getId();
             $user->provider       = $provider;
             $user->email          = $oauthUser->getEmail();
+            $user->role_id        = Role::LOGIN_USER;
             $user->save();
         } else if( $oauthUser->getName() != $user->name || $oauthUser->getEmail() != $user->email ) {
             // 如果修改了第三方網站的使用者名稱或Email，則這裡也要跟著改
