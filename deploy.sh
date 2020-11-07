@@ -10,3 +10,5 @@ git commit -m 'deploy to heroku'
 git push heroku heroku:master
 # 資料庫 migration and seeding
 heroku run php artisan migrate --seed
+# 備份到 GitHub
+git push origin heroku
