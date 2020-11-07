@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Socialite;
 use App\User;
+use App\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -68,19 +69,9 @@ class LoginController extends Controller
         // 所以一律使用 stateless()
         $oauthUser = Socialite::driver($provider)->stateless()->user();
 
-        // 抓取之前新增的使用者，沒有的話新增一個
-        $user = User::where('oauth_id', $oauthUser->getId())
-                    ->where('provider', $provider)
-                    ->first();
+        $user = $this->getUser($oauthUser, $provider);
 
-        if(empty($user)) {
-            $user                 = new User();
-            $user->name           = $oauthUser->getName();
-            $user->oauth_id       = $oauthUser->getId();
-            $user->provider       = $provider;
-            $user->email          = $oauthUser->getEmail();
-            $user->save();
-        } else if( $oauthUser->getName() != $user->name || $oauthUser->getEmail() != $user->email ) {
+        if( $oauthUser->getName() != $user->name || $oauthUser->getEmail() != $user->email ) {
             // 如果修改了第三方網站的使用者名稱或Email，則這裡也要跟著改
             $user->name = $oauthUser->getName();
             $user->email = $oauthUser->getEmail();
@@ -103,4 +94,45 @@ class LoginController extends Controller
             abort(403, 'Unauthorized OAuth provider: ' . $provider);
         }
     }
+
+    /**
+     * 抓取之前新增的使用者，沒有的話新增一個
+     *
+     * @param \App\User $oauthUser
+     * @param string $provider
+     *
+     * @return \App\User
+     */
+
+    private function getUser($oauthUser, $provider) {
+        // 沒有任何使用者，則新增一個 administrator
+        if(User::count() === 0) {
+            return $this->createUser($oauthUser, Role::ADMINISTRATOR, $provider);
+        }
+
+        // 檢查之前是否登入過
+        $user = User::where('oauth_id', $oauthUser->getId())
+                    ->where('provider', $provider)
+                    ->first();
+
+        // 沒有的話，新增一個 Login user
+        if(empty($user)) {
+            return $this->createUser($oauthUser, Role::LOGIN_USER, $provider);
+        }
+
+        return $user;
+    }
+
+    private function createUser($oauthUser, $role_id, $provider) {
+        $user           = new User();
+        $user->name     = $oauthUser->getName();
+        $user->oauth_id = $oauthUser->getId();
+        $user->provider = $provider;
+        $user->email    = $oauthUser->getEmail();
+        $user->role_id  = $role_id;
+        $user->save();
+
+        return $user;
+    }
+
 }
