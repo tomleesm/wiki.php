@@ -25,6 +25,6 @@ Route::post('logout',                   'Auth\LoginController@logout')->name('lo
 Route::get('login/{provider}',          'Auth\LoginController@redirectToProvider');
 Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::get('auth',                      'AuthController@index')->name('auth.index');
+Route::get('user/auth',                 'UserController@auth')->name('user.auth');
 
 Route::get('/',                         'HomeController@index');
