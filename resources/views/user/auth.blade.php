@@ -42,9 +42,11 @@
                         Administrator
                         @else
                         <select class="form-control">
-                            <option value="login_user">Login user</option>
-                            <option value="editor" selected>Editor</option>
-                            <option value="administrator">Administrator</option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}"{{ $user->role->name == $role->name ? 'selected' : ''}}>
+                                    {{ $role->name }}
+                                </option>
+                            @endforeach
                         </select>
                         @endif
                     </fieldset>

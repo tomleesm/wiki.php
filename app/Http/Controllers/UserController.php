@@ -10,10 +10,12 @@ class UserController extends Controller
 {
     public function auth() {
         $users = User::all();
+        $roles = Role::all();
         $onlyOneAdmin = Role::where('name', 'Administrator')->first()->users()->count() === 1;
 
         return view('user.auth', [
                     'users' => $users,
+                    'roles' => $roles,
                     'onlyOneAdmin' => $onlyOneAdmin,
                ]);
     }
