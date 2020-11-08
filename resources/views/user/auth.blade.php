@@ -38,10 +38,22 @@
                 <td class="align-middle">{{ $user->email }}</td>
                 <td class="align-middle">
                     <fieldset>
-                        {{ $user->role_id === 3 ? 'Administrator' : $user->role_id }}
+                        @if($user->role->name == 'Administrator' && $onlyOneAdmin)
+                        Administrator
+                        @else
+                        <select class="form-control">
+                            <option value="login_user">Login user</option>
+                            <option value="editor" selected>Editor</option>
+                            <option value="administrator">Administrator</option>
+                        </select>
+                        @endif
                     </fieldset>
                 </td>
                 <td class="align-middle">
+                    @if($user->role->name == 'Administrator' && $onlyOneAdmin)
+                    @else
+                    <button class="btn btn-danger" type="button">Block</button>
+                    @endif
                 </td>
             </tr>
             @endforeach
