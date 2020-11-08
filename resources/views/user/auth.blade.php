@@ -31,6 +31,48 @@
             </tr>
         </thead>
         <tbody>
+            @foreach($users as $user)
+            <tr>
+                <td class="align-middle">{{ $user->name }}</td>
+                <td class="align-middle">{{ $user->provider }}</td>
+                <td class="align-middle">{{ $user->email }}</td>
+                <td class="align-middle">
+                    <fieldset>
+                        @if($user->role->name == 'Administrator' && $onlyOneAdmin)
+                        Administrator
+                        @else
+                        <select class="form-control">
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}"{{ $user->role->name == $role->name ? 'selected' : ''}}>
+                                    {{ $role->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @endif
+                    </fieldset>
+                </td>
+                <td class="align-middle">
+                    @if($user->role->name == 'Administrator' && $onlyOneAdmin)
+                    @else
+                    <button class="btn btn-danger" type="button">Block</button>
+                    @endif
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>login from</th>
+                <th>E-mail</th>
+                <th>role</th>
+                <th>block</th>
+            </tr>
+        </thead>
+        <tbody>
             <tr>
                 <td class="align-middle">A</td>
                 <td class="align-middle">google</td>

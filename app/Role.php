@@ -9,4 +9,8 @@ class Role extends Model
     const LOGIN_USER = 1;
     const EDITOR = 2;
     const ADMINISTRATOR = 3;
+
+    public function users() {
+        return $this->hasMany('App\User');
+    }
 }
