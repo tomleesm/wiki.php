@@ -31,6 +31,34 @@
             </tr>
         </thead>
         <tbody>
+            @foreach($users as $user)
+            <tr>
+                <td class="align-middle">{{ $user->name }}</td>
+                <td class="align-middle">{{ $user->provider }}</td>
+                <td class="align-middle">{{ $user->email }}</td>
+                <td class="align-middle">
+                    <fieldset>
+                        {{ $user->role_id === 3 ? 'Administrator' : $user->role_id }}
+                    </fieldset>
+                </td>
+                <td class="align-middle">
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>login from</th>
+                <th>E-mail</th>
+                <th>role</th>
+                <th>block</th>
+            </tr>
+        </thead>
+        <tbody>
             <tr>
                 <td class="align-middle">A</td>
                 <td class="align-middle">google</td>
