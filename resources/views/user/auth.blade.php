@@ -2,6 +2,7 @@
 
 @section('content')
     @include('partials.change-role-modal')
+    @include('partials.block-modal')
 
     <h3>Authorization</h3>
     <div class="form-inline">
@@ -34,7 +35,7 @@
         </thead>
         <tbody>
             @foreach($users as $user)
-            <tr>
+            <tr data-user-id="{{ $user->id }}">
                 <td class="align-middle">{{ $user->name }}</td>
                 <td class="align-middle">{{ $user->provider }}</td>
                 <td class="align-middle">{{ $user->email }}</td>
@@ -56,7 +57,7 @@
                 <td class="align-middle">
                     @if($user->role->name == 'Administrator' && $onlyOneAdmin)
                     @else
-                    <button class="btn btn-danger" type="button">Block</button>
+                    <button class="btn btn-danger block" type="button">Block</button>
                     @endif
                 </td>
             </tr>
@@ -101,7 +102,7 @@
                     </fieldset>
                 </td>
                 <td class="align-middle">
-                    <button class="btn btn-danger" type="button">Block</button>
+                    <button class="btn btn-danger block" type="button">Block</button>
                 </td>
             </tr>
             <tr>
@@ -118,7 +119,7 @@
                     </fieldset>
                 </td>
                 <td class="align-middle">
-                    <button class="btn btn-danger" type="button">Block</button>
+                    <button class="btn btn-danger block" type="button">Block</button>
                 </td>
             </tr>
             <tr>
@@ -135,7 +136,7 @@
                     </fieldset>
                 </td>
                 <td class="align-middle">
-                    <button class="btn btn-success" type="button">Unblock</button>
+                    <button class="btn btn-success unblock" type="button">Unblock</button>
                 </td>
             </tr>
         </tbody>

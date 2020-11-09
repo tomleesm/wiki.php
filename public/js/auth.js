@@ -114,7 +114,7 @@ document.querySelector('.role.option').addEventListener('change', function (even
   var roleValue = event.target.value;
   var modalBody = 'Change role of ' + name + ' (' + loginFrom + ') ' + email + ' to ' + roleName + ' ?'; // 設定 modal 內容
 
-  document.querySelector('.modal-body > p').innerText = modalBody; // 顯示 modal
+  document.querySelector('#change-role-modal .modal-body > p').innerText = modalBody; // 顯示 modal
 
   changeRoleModal.show();
 }); // 如果點選 modal 的 No 、 按鈕 x ，選單 <option> 切換回之前的選擇
@@ -129,6 +129,27 @@ document.querySelector('button.no').addEventListener('click', function () {
 function changePreviousOption() {
   document.querySelector('.role.option').value = previousOption;
 }
+
+var blockModal = new BSN.Modal('#block-modal'); // 點選按鈕 Block，顯示 modal
+
+document.querySelector('.block').addEventListener('click', function (event) {
+  // 選取按鈕 Block 所在的那一列
+  var row = this.parentElement.parentElement; // 那一列的所有 <td>
+
+  var tds = row.getElementsByTagName('td'); // 選取 <td> 包含的文字
+
+  var name = tds[0].innerText;
+  var loginFrom = tds[1].innerText;
+  var email = tds[2].innerText;
+  var modalBody = 'Block user ' + name + ' (' + loginFrom + ') ' + email + ' ?'; // 設定 modal 內容
+
+  document.querySelector('#block-modal .modal-body > p').innerText = modalBody; // 顯示 modal
+
+  blockModal.show(); // <tr data-user-id="123"> 在 javascript dataset 的 key 是 camelCase 的 userId
+  // https://developer.mozilla.org/zh-TW/docs/Web/API/HTMLElement/dataset
+
+  console.log(row.dataset.userId);
+});
 
 /***/ }),
 
