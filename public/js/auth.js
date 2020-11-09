@@ -96,7 +96,21 @@
 var changeRoleModal = new BSN.Modal('#change-role-modal'); // 切換 role 選單時
 
 document.querySelector('.role.option').addEventListener('change', function (event) {
-  // 顯示 modal
+  // 選擇角色選單所在的那一列
+  var row = this.parentElement.parentElement.parentElement; // 那一列的所有 <td>
+
+  var tds = row.getElementsByTagName('td'); // 選取 <td> 包含的文字
+
+  var name = tds[0].innerText;
+  var loginFrom = tds[1].innerText;
+  var email = tds[2].innerText; // 選取的 <option> 文字(Editor)和 value(2)
+
+  var roleName = event.target.selectedOptions[0].label;
+  var roleValue = event.target.selectedOptions[0].value;
+  var modalBody = 'Change role of ' + name + ' (' + loginFrom + ') ' + email + ' to ' + roleName + ' ?'; // 設定 modal 內容
+
+  document.querySelector('.modal-body > p').innerText = modalBody; // 顯示 modal
+
   changeRoleModal.show();
 });
 
