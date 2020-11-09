@@ -23,6 +23,6 @@ class UserPolicy
      * 權限控制
      */
     public function auth(User $user) {
-        return $user->role_id === \App\Role::ADMINISTRATOR;
+        return $user->role->name == 'Administrator';
     }
 }
