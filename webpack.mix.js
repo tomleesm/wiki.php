@@ -15,6 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
 
 mix.js('resources/js/edit.js', 'public/js').version();
+mix.js('resources/js/auth.js', 'public/js').version();
 
 mix.copy('resources/js/prism.js', 'public/js/prism.js')
    .copy('resources/sass/prism.css', 'public/css/prism.css');
