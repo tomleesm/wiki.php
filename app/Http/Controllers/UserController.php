@@ -8,6 +8,9 @@ use App\Role;
 
 class UserController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
     public function auth() {
         $users = User::all();
         $roles = Role::all();
