@@ -1,4 +1,8 @@
-const changeRoleModal = new BSN.Modal('#change-role-modal');
+const changeRoleModal = new BSN.Modal('#change-role-modal',
+    {
+        backdrop: 'static', // 點選 modal 周圍灰色區域不會關閉 modal
+        keyboard: false // 按鍵 Esc 不會關閉 modal
+    });
 
 // 記住切換 role 之前選擇的 role
 var previousOption;

@@ -1,1 +1,173 @@
-!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="/",n(n.s=2)}({2:function(e,t,n){e.exports=n("j0+K")},"j0+K":function(e,t){var n,r=new BSN.Modal("#change-role-modal");function o(){document.querySelector(".role.option").value=n}document.querySelector(".role.option").addEventListener("focus",(function(e){n=e.target.value})),document.querySelector(".role.option").addEventListener("change",(function(e){var t=this.parentElement.parentElement.parentElement.getElementsByTagName("td"),n=t[0].innerText,o=t[1].innerText,l=t[2].innerText,u=e.target[e.target.selectedIndex].text,c=(e.target.value,"Change role of "+n+" ("+o+") "+l+" to "+u+" ?");document.querySelector("#change-role-modal .modal-body > p").innerText=c,r.show()})),document.querySelector("button.cancel").addEventListener("click",(function(){o()})),document.querySelector("button.no").addEventListener("click",(function(){o()}));var l=new BSN.Modal("#block-modal");document.querySelector(".block").addEventListener("click",(function(e){var t=this.parentElement.parentElement,n=t.getElementsByTagName("td"),r="Block user "+n[0].innerText+" ("+n[1].innerText+") "+n[2].innerText+" ?";document.querySelector("#block-modal .modal-body > p").innerText=r,l.show(),console.log(t.dataset.userId)}))}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./resources/js/auth.js":
+/*!******************************!*\
+  !*** ./resources/js/auth.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var changeRoleModal = new BSN.Modal('#change-role-modal', {
+  backdrop: 'static',
+  // 點選 modal 周圍灰色區域不會關閉 modal
+  keyboard: false // 按鍵 Esc 不會關閉 modal
+
+}); // 記住切換 role 之前選擇的 role
+
+var previousOption;
+document.querySelector('.role.option').addEventListener('focus', function (event) {
+  previousOption = event.target.value;
+}); // 切換 role 選單時
+
+document.querySelector('.role.option').addEventListener('change', function (event) {
+  // 選擇角色選單所在的那一列
+  var row = this.parentElement.parentElement.parentElement; // 那一列的所有 <td>
+
+  var tds = row.getElementsByTagName('td'); // 選取 <td> 包含的文字
+
+  var name = tds[0].innerText;
+  var loginFrom = tds[1].innerText;
+  var email = tds[2].innerText; // 選取的 <option> 文字(Editor)和 value(2)
+
+  var roleName = event.target[event.target.selectedIndex].text;
+  var roleValue = event.target.value;
+  var modalBody = 'Change role of ' + name + ' (' + loginFrom + ') ' + email + ' to ' + roleName + ' ?'; // 設定 modal 內容
+
+  document.querySelector('#change-role-modal .modal-body > p').innerText = modalBody; // 顯示 modal
+
+  changeRoleModal.show();
+}); // 如果點選 modal 的 No 、 按鈕 x ，選單 <option> 切換回之前的選擇
+
+document.querySelector('button.cancel').addEventListener('click', function () {
+  changePreviousOption();
+});
+document.querySelector('button.no').addEventListener('click', function () {
+  changePreviousOption();
+});
+
+function changePreviousOption() {
+  document.querySelector('.role.option').value = previousOption;
+}
+
+var blockModal = new BSN.Modal('#block-modal'); // 點選按鈕 Block，顯示 modal
+
+document.querySelector('.block').addEventListener('click', function (event) {
+  // 選取按鈕 Block 所在的那一列
+  var row = this.parentElement.parentElement; // 那一列的所有 <td>
+
+  var tds = row.getElementsByTagName('td'); // 選取 <td> 包含的文字
+
+  var name = tds[0].innerText;
+  var loginFrom = tds[1].innerText;
+  var email = tds[2].innerText;
+  var modalBody = 'Block user ' + name + ' (' + loginFrom + ') ' + email + ' ?'; // 設定 modal 內容
+
+  document.querySelector('#block-modal .modal-body > p').innerText = modalBody; // 顯示 modal
+
+  blockModal.show(); // <tr data-user-id="123"> 在 javascript dataset 的 key 是 camelCase 的 userId
+  // https://developer.mozilla.org/zh-TW/docs/Web/API/HTMLElement/dataset
+
+  console.log(row.dataset.userId);
+});
+
+/***/ }),
+
+/***/ 2:
+/*!************************************!*\
+  !*** multi ./resources/js/auth.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /home/tom/apps/wiki.php/resources/js/auth.js */"./resources/js/auth.js");
+
+
+/***/ })
+
+/******/ });
