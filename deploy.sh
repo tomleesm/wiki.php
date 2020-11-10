@@ -7,6 +7,6 @@ git commit -m 'deploy to heroku'
 # push 本機的 master 分支到遠端 heroku
 git push heroku master
 # 資料庫 migration and seeding
-heroku run php artisan migrate --seed
+heroku run php artisan migrate:fresh --seed
 # 備份到 GitHub
 git push origin master
