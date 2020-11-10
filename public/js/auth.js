@@ -93,6 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 var changeRoleModal = new BSN.Modal('#change-role-modal', {
   backdrop: 'static',
   // 點選 modal 周圍灰色區域不會關閉 modal
@@ -116,13 +117,50 @@ document.querySelector('.role.option').addEventListener('change', function (even
   var email = tds[2].innerText; // 選取的 <option> 文字(Editor)和 value(2)
 
   var roleName = event.target[event.target.selectedIndex].text;
-  var roleValue = event.target.value;
   var modalBody = 'Change role of ' + name + ' (' + loginFrom + ') ' + email + ' to ' + roleName + ' ?'; // 設定 modal 內容
 
-  document.querySelector('#change-role-modal .modal-body > p').innerText = modalBody; // 顯示 modal
+  document.querySelector('#change-role-modal .modal-body > p').innerText = modalBody; // 把 user id 和 role id 加到 modal 中，方便之後存取
+
+  document.querySelector('#change-role-modal button.yes').dataset.userId = row.dataset.userId;
+  document.querySelector('#change-role-modal button.yes').dataset.roleId = event.target.value; // 顯示 modal
 
   changeRoleModal.show();
-}); // 如果點選 modal 的 No 、 按鈕 x ，選單 <option> 切換回之前的選擇
+}); // 修改使用者角色
+
+document.querySelector('button.yes').addEventListener('click', function () {
+  // 抓取 user id 和 role id
+  var userId = this.dataset.userId;
+  var roleId = this.dataset.roleId;
+  changeRole(userId, roleId);
+});
+
+function changeRole(userId, roleId) {
+  // 修改使用者角色
+  // 注意：PUT 加上 formData 物件，用 AJAX 傳送，後端 $request->input() 是抓不到的
+  // 這是 Laravel(其實是 Symfony) 的 bug
+  // 所以如果都是文字資料，改傳入 json，如下所示
+  // 如果是二進位檔案，改用 POST method
+  fetch('/user/auth/' + userId, {
+    method: 'PUT',
+    headers: new Headers({
+      "X-CSRF-TOKEN": token,
+      "Content-Type": "application/json; charset=utf-8"
+    }),
+    body: JSON.stringify({
+      roleId: roleId
+    })
+  }).then(function (response) {
+    return response.json();
+  }).then(function (result) {
+    // 關閉 modal
+    changeRoleModal.hide(); // 顯示結果訊息
+    // 設定 alert 是綠色的成功訊息
+
+    document.querySelector('.alert').classList.add('alert-success');
+    document.querySelector('.alert').innerText = result.message;
+  });
+} // 如果點選 modal 的 No 、 按鈕 x ，選單 <option> 切換回之前的選擇
+
 
 document.querySelector('button.cancel').addEventListener('click', function () {
   changePreviousOption();

@@ -12,7 +12,7 @@
           <p></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Yes</button>
+        <button type="button" class="btn btn-primary yes">Yes</button>
         <button type="button" class="btn btn-secondary no" data-dismiss="modal">No</button>
       </div>
     </div>

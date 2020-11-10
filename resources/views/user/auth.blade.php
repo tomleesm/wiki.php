@@ -3,6 +3,7 @@
 @section('content')
     @include('partials.change-role-modal')
     @include('partials.block-modal')
+    @include('partials.alert')
 
     <h3>Authorization</h3>
     <div class="form-inline">

@@ -26,5 +26,6 @@ Route::get('login/{provider}',          'Auth\LoginController@redirectToProvider
 Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('user/auth',                 'UserController@auth')->name('user.auth');
+Route::put('user/auth/{user}',          'UserController@changeRole');
 
 Route::get('/',                         'HomeController@index');
