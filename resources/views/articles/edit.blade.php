@@ -31,7 +31,7 @@
                     <div class="form-group ml-auto">
                         <select class="form-control" id="article-auth">
                             @foreach($options as $option)
-                                <option value="{{ $option['id'] }}" {{ $article->role_id == $option['id'] ? 'selected' : '' }}>
+                                <option value="{{ $option['id'] }}"{{ $option['selected'] ?? '' }}>
                                 {{ $option['name'] }}
                             </option>
                             @endforeach

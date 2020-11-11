@@ -64,6 +64,12 @@ class ArticleController extends Controller
         // 再把表格 roles 的選項加進來
         $options = array_merge($option, Role::get()->toArray());
 
+        // 決定 option selected
+        if($article->is_restricted === false) {
+            $options[0]['selected'] = 'selected';
+        } else {
+            $options[$article->role_id]['selected'] = 'selected';
+        }
         // 顯示條目編輯頁面
         return view('articles.edit', [
             'article' => $article,
