@@ -392,8 +392,11 @@ function changeArticleAuth(articleId, roleId) {
   }).then(function (result) {
     // 顯示結果訊息
     // 設定 alert 是綠色的成功訊息
-    document.querySelector('.alert').classList.add('alert-success');
-    document.querySelector('.alert').innerText = result.message;
+    var alert = document.querySelector('.alert');
+    alert.innerText = result.message;
+    alert.classList.add('alert-success'); // show alert
+
+    alert.classList.remove('d-none');
   });
 }
 
