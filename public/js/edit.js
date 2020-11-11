@@ -360,6 +360,41 @@ function changePreviousOption() {
   var triggerSelect = document.querySelector('#article-auth');
   triggerSelect.value = triggerSelect.dataset.previousOption;
   delete triggerSelect.dataset.previousOption;
+} // 修改條目權限
+
+
+document.querySelector('button.yes').addEventListener('click', function () {
+  // 抓取 article id 和 role id
+  var articleId = this.dataset.articleId;
+  var roleId = this.dataset.roleId; // 關閉 modal
+
+  articleAuthConfirmModal.hide();
+  changeArticleAuth(articleId, roleId);
+});
+
+function changeArticleAuth(articleId, roleId) {
+  // 修改條目權限
+  // 注意：PUT, PATCH 加上 formData 物件，用 AJAX 傳送，後端 $request->input() 是抓不到的
+  // 這是 Laravel(其實是 Symfony) 的 bug
+  // 所以如果都是文字資料，改傳入 json，如下所示
+  // 如果是二進位檔案，改用 POST method
+  fetch('/articles/auth/' + articleId, {
+    method: 'PATCH',
+    headers: new Headers({
+      "X-CSRF-TOKEN": token,
+      "Content-Type": "application/json; charset=utf-8"
+    }),
+    body: JSON.stringify({
+      roleId: roleId
+    })
+  }).then(function (response) {
+    return response.json();
+  }).then(function (result) {
+    // 顯示結果訊息
+    // 設定 alert 是綠色的成功訊息
+    document.querySelector('.alert').classList.add('alert-success');
+    document.querySelector('.alert').innerText = result.message;
+  });
 }
 
 /***/ }),
