@@ -45,6 +45,9 @@ document.querySelector('button.yes').addEventListener('click', function() {
     const userId = this.dataset.userId;
     const roleId = this.dataset.roleId;
 
+    // 關閉 modal
+    changeRoleModal.hide();
+
     changeRole(userId, roleId);
 });
 
@@ -64,12 +67,13 @@ function changeRole(userId, roleId) {
   }).then(function( response ) {
      return response.json();
   }).then(function ( result ) {
-      // 關閉 modal
-      changeRoleModal.hide();
       // 顯示結果訊息
       // 設定 alert 是綠色的成功訊息
-      document.querySelector('.alert').classList.add('alert-success');
-      document.querySelector('.alert').innerText = result.message;
+      const alert = document.querySelector('.alert');
+      alert.innerText = result.message;
+      alert.classList.add('alert-success');
+      // show alert
+      alert.classList.remove('d-none');
   });
 }
 // 如果點選 modal 的 No 、 按鈕 x ，選單 <option> 切換回之前的選擇
