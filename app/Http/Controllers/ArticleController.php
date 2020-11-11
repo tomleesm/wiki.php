@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use App\Role;
 use App\Markdown\Markdown;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -53,8 +54,27 @@ class ArticleController extends Controller
         $article        = Article::where('title', $title)->first();
         $article->exist = true;
 
+        // 合併 collection 和 eloquent collection 不容易
+        // 直接用陣列比較簡單
+        // 選項 anyone
+        $option = [[
+          'id' => 'anyone',
+          'name' => 'Anyone',
+        ]];
+        // 再把表格 roles 的選項加進來
+        $options = array_merge($option, Role::get()->toArray());
+
+        // 決定 option selected
+        if($article->is_restricted === false) {
+            $options[0]['selected'] = 'selected';
+        } else {
+            $options[$article->role_id]['selected'] = 'selected';
+        }
         // 顯示條目編輯頁面
-        return view('articles.edit')->with('article', $article);
+        return view('articles.edit', [
+            'article' => $article,
+            'options' => $options,
+        ]);
     }
 
     /**
