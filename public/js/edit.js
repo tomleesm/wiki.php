@@ -338,12 +338,29 @@ document.querySelector('#article-auth').addEventListener('change', function (eve
 
   var optionName = event.target[event.target.selectedIndex].text;
   var articleName = document.querySelector('.edit h3').innerText;
-  var modalBody = optionName + 'can update the article "' + articleName + '" ?'; // 設定 modal 內容
+  var modalBody = optionName + ' can update the article "' + articleName + '" ?'; // 設定 modal 內容
 
   document.querySelector('#article-auth-confirm-modal .modal-body > p').innerText = modalBody; // 顯示 modal
 
   articleAuthConfirmModal.show();
+}); // 記住切換之前的選擇
+
+document.querySelector('#article-auth').addEventListener('focus', function (event) {
+  this.dataset.previousOption = event.target.value;
+}); // 如果點選 modal 的 No 、 按鈕 x ，選單 <option> 切換回之前的選擇
+
+document.querySelector('button.cancel').addEventListener('click', function () {
+  changePreviousOption();
 });
+document.querySelector('button.no').addEventListener('click', function () {
+  changePreviousOption();
+});
+
+function changePreviousOption() {
+  var triggerSelect = document.querySelector('#article-auth');
+  triggerSelect.value = triggerSelect.dataset.previousOption;
+  delete triggerSelect.dataset.previousOption;
+}
 
 /***/ }),
 
