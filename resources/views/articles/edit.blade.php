@@ -20,6 +20,8 @@
 
                 <div class="form-inline">
                     <button class="btn btn-primary">Save</button>
+                    @auth
+                    @if(Auth::user()->role->name == 'Administrator')
                     <div class="form-group ml-auto">
                         <select class="form-control" id="article-auth">
                             <option value="anyone" selected>Anyone</option>
@@ -29,6 +31,8 @@
                         </select>
                         <label for="article-auth" class="ml-2">can update</label>
                     </div>
+                    @endif
+                    @endauth
                 </div>
             </form>
         </div>
