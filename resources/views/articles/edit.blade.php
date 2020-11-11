@@ -25,7 +25,10 @@
                 <textarea name="article[content]" id="editArticleContent" class="form-control" draggable="true">{{ old('article.content', $article->content) }}</textarea>
 
                 <div class="form-inline">
+                    @can('update', $article)
                     <button class="btn btn-primary">Save</button>
+                    @endcan
+
                     @auth
                     @if(Auth::user()->role->name == 'Administrator')
                     <div class="form-group ml-auto">

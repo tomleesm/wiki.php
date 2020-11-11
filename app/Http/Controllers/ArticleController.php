@@ -112,6 +112,9 @@ class ArticleController extends Controller
         $title = $request->input('article.title');
 
         $article          = Article::where('title', $title)->first();
+
+        $this->authorize('update', $article);
+
         $article->content = $request->input('article.content');
         $article->save();
 
