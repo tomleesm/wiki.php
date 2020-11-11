@@ -101,30 +101,35 @@ var changeRoleModal = new BSN.Modal('#change-role-modal', {
 
 }); // 記住切換 role 之前選擇的 role
 
-var previousOption;
-document.querySelector('.role.option').addEventListener('focus', function (event) {
-  previousOption = event.target.value;
+document.querySelectorAll('.role.option').forEach(function (option) {
+  option.addEventListener('focus', function (event) {
+    this.dataset.previousOption = event.target.value;
+  });
 }); // 切換 role 選單時
 
-document.querySelector('.role.option').addEventListener('change', function (event) {
-  // 選擇角色選單所在的那一列
-  var row = this.parentElement.parentElement.parentElement; // 那一列的所有 <td>
+document.querySelectorAll('.role.option').forEach(function (option) {
+  option.addEventListener('change', function (event) {
+    // 選擇角色選單所在的那一列
+    var row = this.parentElement.parentElement.parentElement; // 那一列的所有 <td>
 
-  var tds = row.getElementsByTagName('td'); // 選取 <td> 包含的文字
+    var tds = row.getElementsByTagName('td'); // 選取 <td> 包含的文字
 
-  var name = tds[0].innerText;
-  var loginFrom = tds[1].innerText;
-  var email = tds[2].innerText; // 選取的 <option> 文字(Editor)和 value(2)
+    var name = tds[0].innerText;
+    var loginFrom = tds[1].innerText;
+    var email = tds[2].innerText; // 選取的 <option> 文字(Editor)和 value(2)
 
-  var roleName = event.target[event.target.selectedIndex].text;
-  var modalBody = 'Change role of ' + name + ' (' + loginFrom + ') ' + email + ' to ' + roleName + ' ?'; // 設定 modal 內容
+    var roleName = event.target[event.target.selectedIndex].text;
+    var modalBody = 'Change role of ' + name + ' (' + loginFrom + ') ' + email + ' to ' + roleName + ' ?'; // 設定 modal 內容
 
-  document.querySelector('#change-role-modal .modal-body > p').innerText = modalBody; // 把 user id 和 role id 加到 modal 中，方便之後存取
+    document.querySelector('#change-role-modal .modal-body > p').innerText = modalBody; // 把 user id 和 role id 加到 modal 中，方便之後存取
 
-  document.querySelector('#change-role-modal button.yes').dataset.userId = row.dataset.userId;
-  document.querySelector('#change-role-modal button.yes').dataset.roleId = event.target.value; // 顯示 modal
+    document.querySelector('#change-role-modal button.yes').dataset.userId = row.dataset.userId;
+    document.querySelector('#change-role-modal button.yes').dataset.roleId = event.target.value; // 顯示 modal
 
-  changeRoleModal.show();
+    changeRoleModal.show(); // 標示觸發 change role modal 的是哪個 <select> 選單
+
+    this.dataset.triggerModal = "true";
+  });
 }); // 修改使用者角色
 
 document.querySelector('button.yes').addEventListener('click', function () {
@@ -170,29 +175,11 @@ document.querySelector('button.no').addEventListener('click', function () {
 });
 
 function changePreviousOption() {
-  document.querySelector('.role.option').value = previousOption;
+  var triggerSelect = document.querySelector('select[data-trigger-modal]');
+  triggerSelect.value = triggerSelect.dataset.previousOption;
+  delete triggerSelect.dataset.triggerModal;
+  delete triggerSelect.dataset.previousOption;
 }
-
-var blockModal = new BSN.Modal('#block-modal'); // 點選按鈕 Block，顯示 modal
-
-document.querySelector('.block').addEventListener('click', function (event) {
-  // 選取按鈕 Block 所在的那一列
-  var row = this.parentElement.parentElement; // 那一列的所有 <td>
-
-  var tds = row.getElementsByTagName('td'); // 選取 <td> 包含的文字
-
-  var name = tds[0].innerText;
-  var loginFrom = tds[1].innerText;
-  var email = tds[2].innerText;
-  var modalBody = 'Block user ' + name + ' (' + loginFrom + ') ' + email + ' ?'; // 設定 modal 內容
-
-  document.querySelector('#block-modal .modal-body > p').innerText = modalBody; // 顯示 modal
-
-  blockModal.show(); // <tr data-user-id="123"> 在 javascript dataset 的 key 是 camelCase 的 userId
-  // https://developer.mozilla.org/zh-TW/docs/Web/API/HTMLElement/dataset
-
-  console.log(row.dataset.userId);
-});
 
 /***/ }),
 

@@ -19,7 +19,6 @@
                 <option value="all_users" selected>All users</option>
                 <option value="editors">Editors</option>
                 <option value="administrators">Administrators</option>
-                <option value="blocked_users">Blocked users</option>
             </select>
         </div>
     </div>
@@ -31,7 +30,6 @@
                 <th>login from</th>
                 <th>E-mail</th>
                 <th>role</th>
-                <th>block</th>
             </tr>
         </thead>
         <tbody>
@@ -55,91 +53,8 @@
                         @endif
                     </fieldset>
                 </td>
-                <td class="align-middle">
-                    @if($user->role->name == 'Administrator' && $onlyOneAdmin)
-                    @else
-                    <button class="btn btn-danger block" type="button">Block</button>
-                    @endif
-                </td>
             </tr>
             @endforeach
-        </tbody>
-    </table>
-
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>name</th>
-                <th>login from</th>
-                <th>E-mail</th>
-                <th>role</th>
-                <th>block</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="align-middle">A</td>
-                <td class="align-middle">google</td>
-                <td class="align-middle">a@email.com</td>
-                <td class="align-middle">
-                    <fieldset>
-                    Administrator
-                    </fieldset>
-                </td>
-                <td class="align-middle">
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle">B</td>
-                <td class="align-middle">google</td>
-                <td class="align-middle">b@email.com</td>
-                <td class="align-middle">
-                    <fieldset>
-                        <select class="form-control role option">
-                            <option value="login_user">Login user</option>
-                            <option value="editor" selected>Editor</option>
-                            <option value="administrator">Administrator</option>
-                        </select>
-                    </fieldset>
-                </td>
-                <td class="align-middle">
-                    <button class="btn btn-danger block" type="button">Block</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle">C</td>
-                <td class="align-middle">google</td>
-                <td class="align-middle">c@email.com</td>
-                <td class="align-middle">
-                    <fieldset>
-                        <select class="form-control role option">
-                            <option value="login_user" selected>Login user</option>
-                            <option value="editor">Editor</option>
-                            <option value="administrator">Administrator</option>
-                        </select>
-                    </fieldset>
-                </td>
-                <td class="align-middle">
-                    <button class="btn btn-danger block" type="button">Block</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle">D</td>
-                <td class="align-middle">google</td>
-                <td class="align-middle">d@email.com</td>
-                <td class="align-middle">
-                    <fieldset disabled>
-                        <select class="form-control role option">
-                            <option value="login_user">Login user</option>
-                            <option value="editor">Editor</option>
-                            <option value="administrator">Administrator</option>
-                        </select>
-                    </fieldset>
-                </td>
-                <td class="align-middle">
-                    <button class="btn btn-success unblock" type="button">Unblock</button>
-                </td>
-            </tr>
         </tbody>
     </table>
 
