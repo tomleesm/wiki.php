@@ -17,8 +17,8 @@ class UserController extends Controller
     public function auth() {
         $this->authorize('auth', Auth::user());
 
-        $users = User::all();
-        $roles = Role::all();
+        $users = User::paginate(25);
+        $roles = Role::get();
         $onlyOneAdmin = Role::where('name', 'Administrator')->first()->users()->count() === 1;
 
         return view('user.auth', [
