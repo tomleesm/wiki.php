@@ -30,10 +30,11 @@
                     @if(Auth::user()->role->name == 'Administrator')
                     <div class="form-group ml-auto">
                         <select class="form-control" id="article-auth">
-                            <option value="anyone" selected>Anyone</option>
-                            <option value="1">Login user</option>
-                            <option value="2">Editors</option>
-                            <option value="3">Administrators</option>
+                            @foreach($options as $option)
+                                <option value="{{ $option['id'] }}" {{ $article->role_id == $option['id'] ? 'selected' : '' }}>
+                                {{ $option['name'] }}
+                            </option>
+                            @endforeach
                         </select>
                         <label for="article-auth" class="ml-2">can update</label>
                     </div>
