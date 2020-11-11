@@ -252,3 +252,28 @@ function uploadImage(file) {
     refreshPreview(simplemde.value());
   });
 }
+
+// 條目權限確認 modal
+const articleAuthConfirmModal = new BSN.Modal('#article-auth-confirm-modal',
+    {
+        backdrop: 'static', // 點選 modal 周圍灰色區域不會關閉 modal
+        keyboard: false // 按鍵 Esc 不會關閉 modal
+    });
+// 切換權限選單後，顯示確認 modal
+document.querySelector('#article-auth').addEventListener('change', function(event) {
+  // 抓取 article id 和 role id，加到按鈕 Yes 的 data
+  const articleId = document.querySelector("input[name='article[id]']").value;
+  const roleId = event.target.value;
+  const buttonYes = document.querySelector('#article-auth-confirm-modal button.yes');
+  buttonYes.dataset.articleId = articleId;
+  buttonYes.dataset.roleId = roleId;
+
+  // 下拉選單的文字
+  const optionName = event.target[event.target.selectedIndex].text;
+  const articleName = document.querySelector('.edit h3').innerText;
+  const modalBody = optionName + 'can update the article "' + articleName + '" ?';
+  // 設定 modal 內容
+  document.querySelector('#article-auth-confirm-modal .modal-body > p').innerText = modalBody;
+  // 顯示 modal
+  articleAuthConfirmModal.show();
+});

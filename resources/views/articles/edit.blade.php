@@ -5,12 +5,17 @@
     <div class="fixed-top">
         <p class="text-right d-none uploading notification"><img src="/img/loading.svg"> uploading...</p>
     </div>
+
+    @include('partials.articles.auth-confirm-modal')
+
     <div class="row">
         <div class="col-sm edit">
             <h3>{{ $article->title }}</h3>
             <form action="{{ route('articles.update', ['title' => $article->title]) }}" method="post">
                 @csrf
                 @method('put')
+
+                <input type="hidden" name="article[id]" value="{{ $article->id }}">
 
                 @include('layouts.hiddenArticleTitle', ['article' => $article])
                 @include('layouts.fileDialog')
@@ -44,5 +49,6 @@
 
 @section('javascript')
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/3.0.0/bootstrap-native.min.js" defer></script>
     <script src="{{ mix('js/edit.js')}}" defer></script>
 @endsection
