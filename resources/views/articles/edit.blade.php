@@ -18,7 +18,22 @@
                 {{-- 如果 textarea 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
                 <textarea name="article[content]" id="editArticleContent" class="form-control" draggable="true">{{ old('article.content', $article->content) }}</textarea>
 
-                <button class="btn btn-primary" dusk="edit-save-button">Save</button>
+                <div class="form-inline">
+                    <button class="btn btn-primary">Save</button>
+                    @auth
+                    @if(Auth::user()->role->name == 'Administrator')
+                    <div class="form-group ml-auto">
+                        <select class="form-control" id="article-auth">
+                            <option value="anyone" selected>Anyone</option>
+                            <option value="1">Login user</option>
+                            <option value="2">Editors</option>
+                            <option value="3">Administrators</option>
+                        </select>
+                        <label for="article-auth" class="ml-2">can update</label>
+                    </div>
+                    @endif
+                    @endauth
+                </div>
             </form>
         </div>
         <div class="col-sm preview markdown-body">
