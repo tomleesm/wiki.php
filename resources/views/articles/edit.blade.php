@@ -7,6 +7,7 @@
     </div>
 
     @include('partials.articles.auth-confirm-modal')
+    @include('partials.alert')
 
     <div class="row">
         <div class="col-sm edit">

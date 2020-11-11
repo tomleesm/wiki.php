@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 use App\Article;
 use App\Markdown\Markdown;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth')->only(['auth']);
+    }
+
     /**
      * 檢視條目
      */
@@ -99,5 +104,32 @@ class ArticleController extends Controller
      */
     public function preview(Request $request) {
         return Markdown::toHTML($request->post('markdown'));
+    }
+
+    /**
+     * 條目權限
+     */
+    public function auth($articleId, Request $request) {
+        $this->authorize('auth', Auth::user());
+
+        DB::transaction(function () use ($articleId, $request) {
+            $roleId = $request->input('roleId');
+            $article = Article::findOrFail($articleId);
+
+            if($roleId == 'anyone') {
+                $article->is_restricted = false;
+            } else {
+                $article->is_restricted = true;
+                $article->role_id = $roleId;
+            }
+
+            $article->save();
+        });
+
+        // 成功修改，回傳成功訊息
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Change role successfully',
+        ]);
     }
 }
