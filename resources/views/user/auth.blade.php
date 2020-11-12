@@ -1,5 +1,7 @@
 @extends('layouts.auth')
 
+@section('title', 'Authorization')
+
 @section('back-link')
 <a class="nav-link" href="{{ route('home') }}">Back to home page</a>
 @endsection
