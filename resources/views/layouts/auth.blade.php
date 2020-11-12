@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav mr-auto">
                     <li class="nav-item">
-                      <a class="nav-link" href="{{ url()->previous() }}">Back</a>
+                      @yield('back-link')
                     </li>
                 </ul>
             </div>

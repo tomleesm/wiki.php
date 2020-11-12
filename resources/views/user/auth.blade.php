@@ -1,5 +1,9 @@
 @extends('layouts.auth')
 
+@section('back-link')
+<a class="nav-link" href="{{ route('home') }}">Back to home page</a>
+@endsection
+
 @section('content')
     @include('partials.change-role-modal')
     @include('partials.block-modal')
