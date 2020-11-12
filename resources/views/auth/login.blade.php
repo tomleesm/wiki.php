@@ -1,5 +1,7 @@
 @extends('layouts.auth')
 
+@section('title', 'Login')
+
 @section('back-link')
 <a class="nav-link" href="{{ url()->previous() }}">Back to previous page</a>
 @endsection
