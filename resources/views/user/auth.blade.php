@@ -6,20 +6,12 @@
     @include('partials.alert')
 
     <h3>Authorization</h3>
+
     <div class="form-inline">
         <div class="form-group mb-2 mr-2">
             <label class="sr-only" for="search-user">search user</label>
             <input type="text" name="search_user" placeholder="Search User" id="search-user" class="form-control mr-2">
             <button class="btn btn-primary">Search</button>
-        </div>
-
-        <div class="form-group ml-auto mb-2">
-            <label for="filter-users" class="mr-2">show:</label>
-            <select class="form-control" id="filter-users">
-                <option value="all_users" selected>All users</option>
-                <option value="editors">Editors</option>
-                <option value="administrators">Administrators</option>
-            </select>
         </div>
     </div>
 
