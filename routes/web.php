@@ -29,4 +29,4 @@ Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCall
 Route::get('user/auth',                 'UserController@auth')->name('user.auth');
 Route::put('user/auth/{user}',          'UserController@changeRole');
 
-Route::get('/',                         'HomeController@index');
+Route::get('/',                         'HomeController@index')->name('home');
