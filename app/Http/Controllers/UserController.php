@@ -14,17 +14,29 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function auth() {
+    public function auth(Request $request) {
         $this->authorize('auth', Auth::user());
 
-        $users = User::paginate(25);
         $roles = Role::get();
         $onlyOneAdmin = Role::where('name', 'Administrator')->first()->users()->count() === 1;
+        $keyword = $request->query('keyword');
+
+        // 搜尋使用者
+        if( ! empty($keyword) ) {
+            $users = User::where('name',       'LIKE', "%$keyword%")
+                         ->orWhere('provider', 'LIKE', "%$keyword%")
+                         ->orWhere('email',    'LIKE', "%$keyword%")
+                         ->orderBy('name', 'ASC')
+                         ->paginate(25);
+        } else {
+            $users = User::orderBy('name', 'ASC')->paginate(25);
+        }
 
         return view('user.auth', [
                     'users' => $users,
                     'roles' => $roles,
                     'onlyOneAdmin' => $onlyOneAdmin,
+                    'keyword' => $keyword,
                ]);
     }
 
