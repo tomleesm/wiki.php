@@ -8,6 +8,8 @@
 
 .env
 .env.backup
+# 個人 wiki 設定
+.env.person
 .phpunit.result.cache
 
 Homestead.json
