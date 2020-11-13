@@ -123,11 +123,11 @@ ___
 - 上傳時螢幕右上方會有 uploading... 的提示
 - 上傳後會新增語法例如
 
-`![20190705_DD.jpg](/images/91ff6f18-00b1-4db4-a313-59619278aca6)`
+`![Markdown-mark.png](/images/91ffa9b4-7872-4231-9e73-6066b7af09ca)`
 
-![20190705_DD.jpg](/images/91ff6f18-00b1-4db4-a313-59619278aca6)
+![Markdown-mark.png](/images/91ffa9b4-7872-4231-9e73-6066b7af09ca)
 
-如果執行網址 http://你的網址/images/91ff6f18-00b1-4db4-a313-59619278aca6 ，會顯示圖片
+如果執行網址 [http://你的網址/images/91ffa9b4-7872-4231-9e73-6066b7af09ca](/images/91ffa9b4-7872-4231-9e73-6066b7af09ca) ，會顯示圖片
 
 ### 引用區塊
 
@@ -166,3 +166,4 @@ console.log('hello world');
 ### 內嵌 YouTube
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/NSTte2gLBl4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
