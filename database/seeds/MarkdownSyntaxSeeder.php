@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Article;
+use App\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -20,6 +21,8 @@ class MarkdownSyntaxSeeder extends Seeder
         $article          = new Article();
         $article->title   = 'Markdown Syntax';
         $article->content = file_get_contents($path);
+        $article->is_restricted = true;
+        $article->role_id = Role::ADMINISTRATOR;
         $article->save();
 
         // 新增條目 include:中高運量鐵路系統
@@ -28,6 +31,8 @@ class MarkdownSyntaxSeeder extends Seeder
         $article          = new Article();
         $article->title   = 'include:中高運量鐵路系統';
         $article->content = file_get_contents($path);
+        $article->is_restricted = true;
+        $article->role_id = Role::ADMINISTRATOR;
         $article->save();
 
         // 新增內含的圖片
