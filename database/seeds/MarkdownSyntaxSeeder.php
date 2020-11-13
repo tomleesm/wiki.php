@@ -14,10 +14,19 @@ class MarkdownSyntaxSeeder extends Seeder
      */
     public function run()
     {
+        // 新增條目 Markdown Syntax
         $path = __DIR__ . '/markdown-syntax.md';
 
         $article          = new Article();
         $article->title   = 'Markdown Syntax';
+        $article->content = file_get_contents($path);
+        $article->save();
+
+        // 新增條目 include:中高運量鐵路系統
+        $path = __DIR__ . '/include.md';
+
+        $article          = new Article();
+        $article->title   = 'include:中高運量鐵路系統';
         $article->content = file_get_contents($path);
         $article->save();
 
