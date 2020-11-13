@@ -137,10 +137,12 @@ var simplemde = new SimpleMDE({
       name:      "guide",
       action:    "/articles/Markdown%20Syntax",
       className: "fa fa-question-circle",
-      title:     "Markdown Guide",
+      title:     "Markdown Syntax",
     },
   ],
   promptURLs: true,
+  // 取消拼字檢查，因爲輸入中文會一片粉紅
+  spellChecker: false,
 });
 
 // 載入頁面和輸入時，更新編輯預覽
