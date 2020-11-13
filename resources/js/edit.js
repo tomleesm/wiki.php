@@ -135,7 +135,7 @@ var simplemde = new SimpleMDE({
     },
     {
       name:      "guide",
-      action:    "https://simplemde.com/markdown-guide",
+      action:    "/articles/Markdown%20Syntax",
       className: "fa fa-question-circle",
       title:     "Markdown Guide",
     },
