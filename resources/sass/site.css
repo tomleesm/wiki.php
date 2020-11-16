@@ -10,6 +10,15 @@
   }
 }
 
+/* 設定 nline code 是深灰色背景，白色字 */
+.markdown-body code {
+  background-color: #343a40;
+}
+
+code {
+  color: #ffffff;
+}
+
 /* 隱藏目錄 ul 和 li 預設的圓點 */
 nav.table-of-contents ul,
 nav.table-of-contents li {
