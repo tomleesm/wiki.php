@@ -27,6 +27,9 @@
                 <div class="form-inline">
                     @can('update', $article)
                     <button class="btn btn-primary">Save</button>
+                    <a class="btn" href="{{ route('articles.show', ['title' => $article->title]) }}">Cancel</a>
+                    @else
+                    <a href="{{ route('articles.show', ['title' => $article->title]) }}">back to {{ $article->title }}</a>
                     @endcan
 
                     @auth
