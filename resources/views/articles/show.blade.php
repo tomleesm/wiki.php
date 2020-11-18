@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+<h1>{{ $article->title }}</h1>
+
 @if( ! $article->exist && $article->title == 'home' )
     <p>Welcome to Wiki.</p>
     <p><a href="{{ route('articles.create') }}">Start to write something.</a></p>
 @else
-
-<h1>{{ $article->title }}</h1>
 
 <div id="readArticleContent" class="article content markdown-body">
     <div id="body">
