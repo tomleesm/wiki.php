@@ -1,7 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>{{ $article->title }}</h1>
+<div class="d-flex flex-column flex-md-row">
+    <h1>{{ $article->title }}</h1>
+
+    <div class="ml-auto mt-2">
+    @if($article->exist)
+        <a class="btn btn-success" href="{{ route('articles.edit', [ 'title' => $article->title ]) }}" role="button">Edit</a>
+    @else
+        <a class="btn btn-success" href="{{ route('articles.create') }}" role="button">Create</a>
+    @endif
+    </div>
+</div>
 
 @if( ! $article->exist && $article->title == 'home' )
     <p>Welcome to Wiki.</p>
