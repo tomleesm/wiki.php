@@ -12,7 +12,7 @@
     </head>
     <body class="line-numbers">
     <div class="container">
-        <nav class="navbar navbar-expand-md">
+        <nav class="navbar navbar-dark bg-dark navbar-expand-md">
             <a class="navbar-brand" href="{{ route('home') }}">Wiki.php</a>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
