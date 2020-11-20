@@ -13,6 +13,8 @@
     <body class="line-numbers">
     <div class="container">
         <nav class="navbar navbar-expand-md">
+            <a class="navbar-brand" href="{{ route('home') }}">Wiki.php</a>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Authentication Links -->
                 <ul class="navbar-nav ml-auto">
