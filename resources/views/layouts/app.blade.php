@@ -20,6 +20,23 @@
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
 
+            <!-- Search or jump to -->
+            <div id="search-jump-to" class="card d-none">
+                <div class="card-header">
+                    <form class="form-inline my-2 my-lg-0">
+                      <input class="form-control mr-sm-2" type="search" placeholder="Search or jump to ..." aria-label="Search or jump to">
+                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="#" class="list-group-item list-group-item-action">Cras justo odio</a>
+                    <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+                    <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+                    <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
+                </div>
+            </div>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Authentication Links -->
                 <ul class="navbar-nav ml-auto">
