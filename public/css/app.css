@@ -11975,3 +11975,12 @@ nav.table-of-contents li {
   color: #99979c;
 }
 
+/* Search or jump to 在 navbar 上方 */
+
+#search-jump-to {
+  position: absolute;
+  top: 0;
+  left: 100px;
+  z-index: 100;
+}
+
