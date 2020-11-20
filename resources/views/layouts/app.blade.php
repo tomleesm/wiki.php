@@ -11,7 +11,6 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     </head>
     <body class="line-numbers">
-    <div class="container">
         <nav class="navbar navbar-dark bg-dark navbar-expand-md">
             <a class="navbar-brand" href="{{ route('home') }}">Wiki.php</a>
 
@@ -50,10 +49,9 @@
 
             </div>
         </nav>
-
-        @yield('content')
-
-    </div>
+        <div class="container">
+            @yield('content')
+        </div>
     </body>
     <script src="{{ asset('js/app.js') }}" defer></script>
     @yield('javascript')
