@@ -1,5 +1,7 @@
 @extends('layouts.editor')
 
+@section('tab-label', 'Edit')
+
 @section('modal-alert')
     {{-- 權限控制確認對話框 --}}
     @include('partials.articles.auth-confirm-modal')
