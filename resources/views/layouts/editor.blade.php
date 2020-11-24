@@ -9,9 +9,20 @@
 
     @yield('modal-alert', '')
 
-    <div class="row">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="true">Edit</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="preview-tab" data-toggle="tab" href="#preview" role="tab" aria-controls="preview" aria-selected="false">Preview</a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
         {{-- 輸入 div --}}
-        <div class="col-sm edit">
+        <div class="tab-pane edit active" id="edit" role="tabpanel" aria-labelledby="edit-tab">
             {{-- 條目標題 --}}
             <h3>{{ $article->title }}</h3>
             @yield('form')
@@ -33,7 +44,10 @@
             </form>
         </div>
         {{-- 預覽 div --}}
-        <div class="col-sm preview markdown-body">
+        <div class="tab-pane" id="preview" role="tabpanel" aria-labelledby="preview-tab">
+            <h3>{{ $article->title }}</h3>
+            <div class="preview markdown-body">
+            </div>
         </div>
     </div>
 </div>
