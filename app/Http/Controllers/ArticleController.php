@@ -65,7 +65,9 @@ class ArticleController extends Controller
         $options = array_merge($option, Role::get()->toArray());
 
         // 決定 option selected
-        if($article->is_restricted === false) {
+        // SQLite 使用整數 1 和 0 表示 true/false
+        // 所以不用 === false，而是 == false
+        if($article->is_restricted == false) {
             $options[0]['selected'] = 'selected';
         } else {
             $options[$article->role_id]['selected'] = 'selected';
