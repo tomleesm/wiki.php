@@ -36,12 +36,6 @@
 
                 {{-- 如果 textarea 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
                 <textarea name="article[content]" id="editArticleContent" class="form-control" draggable="true">@yield('textarea-old-value', '')</textarea>
-
-                @section('btn-save-cancel')
-                <button class="btn btn-primary">Save</button>
-                <a class="btn" href="{{ route('articles.show', ['title' => $article->title]) }}">Cancel</a>
-                @show
-            </form>
         </div>
         {{-- 預覽 div --}}
         <div class="tab-pane" id="preview" role="tabpanel" aria-labelledby="preview-tab">
@@ -49,6 +43,12 @@
             <div class="preview markdown-body">
             </div>
         </div>
+
+            @section('btn-save-cancel')
+            <button class="btn btn-primary">Save</button>
+            <a class="btn" href="{{ route('articles.show', ['title' => $article->title]) }}">Cancel</a>
+            @show
+        </form>
     </div>
 </div>
 @endsection
