@@ -75,7 +75,7 @@ nav.table-of-contents li {
 
   /* 爲使 overflow 有效，區塊容器要有 height 或 max-height */
   /* 設定放在 $toc 會讓sticky 失效，所以放在這裡 */
-  max-height: 500px;
+  max-height: 90vh;
   overflow-x: hidden;
   overflow-y: auto;
 }
