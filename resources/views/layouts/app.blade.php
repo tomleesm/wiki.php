@@ -16,15 +16,15 @@
 
             <!-- search -->
             <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search or jump to ..." aria-label="Search or jump to">
+              <input name="search-keyword" id="search-keyword" class="form-control mr-sm-2" type="search" placeholder="Search or jump to ..." aria-label="Search or jump to">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
 
             <!-- Search or jump to -->
-            <div id="search-jump-to" class="card">
+            <div id="search-jump-to" class="card d-none">
                 <div class="card-header">
                     <form class="form-inline my-2 my-lg-0">
-                      <input class="form-control mr-sm-2" type="search" placeholder="Search or jump to ..." aria-label="Search or jump to">
+                      <input name="search-keyword" id="search-jump-to-keyword" class="form-control mr-sm-2" type="search" placeholder="Search or jump to ..." aria-label="Search or jump to">
                       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </div>
