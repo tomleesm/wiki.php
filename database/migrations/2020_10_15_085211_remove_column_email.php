@@ -16,6 +16,9 @@ class RemoveColumnEmail extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('email');
+        });
+
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('email_verified_at');
         });
     }

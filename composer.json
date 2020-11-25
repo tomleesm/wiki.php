@@ -12,6 +12,7 @@
         "doctrine/dbal": "^2.10",
         "elvanto/litemoji": "^2.0",
         "erusev/parsedown": "^1.7",
+        "exolnet/laravel-sqlite-fluent-drop-foreign": "^1.2",
         "ezyang/htmlpurifier": "^4.13",
         "fideloper/proxy": "^4.0",
         "keinos/parsedown-toc": "^1.1",
