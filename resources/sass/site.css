@@ -92,3 +92,8 @@ nav.table-of-contents li {
   left: 100px;
   z-index:100;
 }
+
+/* 設定高度固定 300px，工具列才會固定在可見範圍 */
+.CodeMirror-scroll {
+  height: 300px;
+}

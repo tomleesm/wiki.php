@@ -6,9 +6,9 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ $article->title }} - {{ env('APP_NAME', 'wiki.php') }}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
         <link rel="stylesheet" href="{{ asset('css/app.css')}}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/prism.css')}}" type="text/css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     </head>
     <body class="line-numbers">
         <nav class="navbar navbar-dark bg-dark navbar-expand-md mb-2">
