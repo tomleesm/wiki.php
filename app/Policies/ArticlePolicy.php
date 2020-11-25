@@ -22,7 +22,9 @@ class ArticlePolicy
 
     public function update(User $user = null, Article $article) {
         // 沒有限制
-        if($article->is_restricted === false) return true;
+        // SQLite 使用整數 1 和 0 表示 true/false
+        // 所以不用 === false，而是 == false
+        if($article->is_restricted == false) return true;
         // 沒有登入
         if(is_null($user)) return false;
         // 使用者是 Admin
