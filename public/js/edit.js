@@ -215,12 +215,11 @@ var simplemde = new SimpleMDE({
   promptURLs: true,
   // 取消拼字檢查，因爲輸入中文會一片粉紅
   spellChecker: false
-}); // 載入頁面和輸入時，更新編輯預覽
+}); // 點選分頁 Preview 時，更新編輯預覽
 
-simplemde.codemirror.on('change', function () {
+document.querySelector('#preview-tab').addEventListener('click', function () {
   refreshPreview(simplemde.value());
 });
-refreshPreview(simplemde.value());
 
 function refreshPreview(markdown) {
   // 抓取編輯條目的 textarea 的值
