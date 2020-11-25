@@ -29,6 +29,9 @@
                 @csrf
                 @yield('method-extra', '')
 
+                {{-- 執行權限控制需要抓取 $article->id --}}
+                <input type="hidden" name="article[id]" value="{{ $article->id }}">
+
                 {{-- 用隱藏欄位傳送條目標題，在 ArticleController@update 尋找 model Article --}}
                 @include('layouts.hiddenArticleTitle', ['article' => $article])
                 {{-- 工具列用來觸發檔案選擇的 <input type="file"> --}}
