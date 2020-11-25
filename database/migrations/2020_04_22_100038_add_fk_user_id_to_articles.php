@@ -15,7 +15,7 @@ class AddFkUserIdToArticles extends Migration
     {
         // 新增外鍵 user_id ，指向 users.id，指明最後修改的使用者
         Schema::table('articles', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->default(1);
 
             $table->foreign('user_id')
                   ->references('id')->on('users')
