@@ -23,7 +23,7 @@
 {{-- 如果 $article->body 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
 {!! $article->body !!}
     </div>
-    <div id="toc">
+    <div id="toc" class="ml-auto">
 {!! $article->toc !!}
     </div>
 </div>
