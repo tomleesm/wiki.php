@@ -21,7 +21,7 @@
             </form>
 
             <!-- Search or jump to -->
-            <div id="search-jump-to" class="card d-none">
+            <div id="search-jump-to" class="card">
                 <div class="card-header">
                     <form class="form-inline my-2 my-lg-0">
                       <input class="form-control mr-sm-2" type="search" placeholder="Search or jump to ..." aria-label="Search or jump to">
@@ -29,11 +29,9 @@
                     </form>
                 </div>
                 <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action">Cras justo odio</a>
-                    <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-                    <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
+                    @foreach( session()->get('articles.visited') as $titleVisited )
+                        <a href="{{ route('articles.show', ['title' => $titleVisited]) }}" class="list-group-item list-group-item-action">{{ $titleVisited }}</a>
+                    @endforeach
                 </div>
             </div>
 

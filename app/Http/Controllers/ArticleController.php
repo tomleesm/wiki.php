@@ -38,6 +38,21 @@ class ArticleController extends Controller
             session()->put('articleTitle', $title);
         }
 
+        // 把條目存到 session，用來顯示在搜尋框
+        // 抓取之前存的條目
+        $articlesVisited = session()->get('articles.visited', []);
+        if(count($articlesVisited) == 10) {
+            // 把陣列第一筆刪掉
+            array_shift($articlesVisited);
+        }
+        // 再存入新的
+        array_push($articlesVisited, $title);
+
+        // 去除重複的條目
+        $articlesVisited = array_unique($articlesVisited);
+
+        session()->put('articles.visited', $articlesVisited);
+
         // 把 markdown 語法轉成 HTML
         $article->body = Markdown::toHTML($article->content);
         $article->toc  = Markdown::toTOC($article->content);
