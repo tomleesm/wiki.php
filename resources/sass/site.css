@@ -1,3 +1,12 @@
+/* 白色背景可讀性最高 */
+body {
+  background-color: #ffffff;
+}
+/* 編輯器 active 的分頁背景爲白色 */
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  background-color: #ffffff;
+}
+
 /* conf for sindresorhus/github-markdown-css */
 .markdown-body {
   box-sizing: border-box;
