@@ -157,4 +157,17 @@ class ArticleController extends Controller
             'message' => 'Change role successfully',
         ]);
     }
+
+    /**
+     * 搜尋條目
+     */
+    public function search(Request $request) {
+        $keyword = $request->query('keyword');
+        $articles = Article::search($keyword)->paginate(25);
+
+        return view('articles.search', [
+            'keyword' => $keyword,
+            'articles' => $articles,
+        ]);
+    }
 }
