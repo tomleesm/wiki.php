@@ -163,6 +163,10 @@ class ArticleController extends Controller
      */
     public function search(Request $request) {
         $keyword = $request->query('keyword');
+
+        // 如果關鍵字是空的，回到上一頁，不執行搜尋
+        if(empty($keyword)) return back();
+
         $articles = Article::search($keyword)->paginate(25);
 
         return view('articles.search', [
