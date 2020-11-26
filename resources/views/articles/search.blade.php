@@ -3,9 +3,14 @@
 @section('title', 'Search ' . $keyword)
 
 @section('content')
-    @inject('markdown', 'App\Markdown\MarkdownService')
-    @php use Illuminate\Support\Str; @endphp
+@inject('markdown', 'App\Markdown\MarkdownService')
+@php use Illuminate\Support\Str; @endphp
 
+@if($articles->count() == 0)
+    <p>The article <a href="{{ route('articles.show', ['title' => $keyword]) }}">{{ $keyword }}</a> does not exist. You can create it.</p>
+    <p>There were no results matching the query.</p>
+    </p>
+@else
     @foreach($articles as $article)
     <dl>
         <dt><a href="{{ route('articles.show', ['title' => $article->title]) }}" class="h4">{{ $article->title }}</a></dt>
@@ -17,4 +22,5 @@
     @endforeach
 
     {{ $articles->appends(['keyword' => $keyword])->links() }}
+@endif
 @endsection
