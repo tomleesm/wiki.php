@@ -20,7 +20,8 @@
         "laravel/framework": "^6.2",
         "laravel/socialite": "^5.0",
         "laravel/tinker": "^2.0",
-        "moontoast/math": "1.1.2"
+        "moontoast/math": "1.1.2",
+        "nicolaslopezj/searchable": "^1.13"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
