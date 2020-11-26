@@ -167,7 +167,9 @@ class ArticleController extends Controller
         // 如果關鍵字是空的，回到上一頁，不執行搜尋
         if(empty($keyword)) return back();
 
-        $articles = Article::search($keyword)->paginate(25);
+        $articles = Article::search($keyword)
+                           ->orderBy('title', 'ASC')
+                           ->paginate(25);
 
         return view('articles.search', [
             'keyword' => $keyword,
