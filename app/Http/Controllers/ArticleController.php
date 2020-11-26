@@ -157,4 +157,23 @@ class ArticleController extends Controller
             'message' => 'Change role successfully',
         ]);
     }
+
+    /**
+     * 搜尋條目
+     */
+    public function search(Request $request) {
+        $keyword = $request->query('keyword');
+
+        // 如果關鍵字是空的，回到上一頁，不執行搜尋
+        if(empty($keyword)) return back();
+
+        $articles = Article::search($keyword)
+                           ->orderBy('title', 'ASC')
+                           ->paginate(25);
+
+        return view('articles.search', [
+            'keyword' => $keyword,
+            'articles' => $articles,
+        ]);
+    }
 }

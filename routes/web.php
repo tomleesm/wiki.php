@@ -17,6 +17,7 @@ Route::get('articles/{title}/edit',     'ArticleController@edit')->name('article
 Route::put('articles/{title}',          'ArticleController@update')->name('articles.update');
 Route::patch('articles/auth/{user}',    'ArticleController@auth')->name('articles.auth');
 Route::post('preview',                  'ArticleController@preview');
+Route::get('search/articles',           'ArticleController@search')->name('articles.search');
 
 Route::get('images/{image}',            'ImageController@show')->name('images.show');
 Route::post('images',                   'ImageController@store')->name('images.store');
