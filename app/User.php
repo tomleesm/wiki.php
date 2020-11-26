@@ -9,6 +9,27 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
+    use \Nicolaslopezj\Searchable\SearchableTrait;
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'users.name' => 1,
+            'users.email' => 1,
+            'users.provider' => 1,
+        ]
+    ];
 
     /**
      * The attributes that are mass assignable.

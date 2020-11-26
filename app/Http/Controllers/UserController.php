@@ -23,9 +23,7 @@ class UserController extends Controller
 
         // 搜尋使用者
         if( ! empty($keyword) ) {
-            $users = User::where('name',       'LIKE', "%$keyword%")
-                         ->orWhere('provider', 'LIKE', "%$keyword%")
-                         ->orWhere('email',    'LIKE', "%$keyword%")
+            $users = User::search($keyword)
                          ->orderBy('name', 'ASC')
                          ->paginate(25);
         } else {

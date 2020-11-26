@@ -16,7 +16,7 @@
     <form method="get" action="{{ route('user.auth') }}" class="form-inline">
         <div class="form-group mb-2 mr-2">
             <label class="sr-only" for="search-user">search user</label>
-            <input type="text" name="keyword" value="{{ $keyword ?? '' }}" placeholder="Search user" id="search-user" class="form-control mr-2">
+            <input type="search" name="keyword" value="{{ $keyword ?? '' }}" placeholder="Search user" id="search-user" class="form-control mr-2">
             <button class="btn btn-primary">Search</button>
         </div>
     </form>
