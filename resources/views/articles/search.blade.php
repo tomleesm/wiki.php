@@ -15,4 +15,6 @@
         <dd>{!! Str::words(strip_tags($markdown->toHTML($article->content)), '100', '...') !!}</dd>
     </dl>
     @endforeach
+
+    {{ $articles->appends(['keyword' => $keyword])->links() }}
 @endsection
