@@ -12,7 +12,7 @@
     </head>
     <body class="line-numbers">
         <nav class="navbar navbar-dark bg-dark navbar-expand-md mb-2">
-            <a class="navbar-brand" href="{{ route('home') }}">Wiki.php</a>
+            <a class="navbar-brand" href="{{ route('home') }}">{{ env('APP_NAME', 'Wiki.php') }}</a>
 
             <!-- search -->
             <form class="form-inline my-2 my-lg-0" action="{{ route('articles.search') }}" method="get">
