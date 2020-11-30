@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="d-flex flex-column flex-md-row">
+<div class="row title">
     <h1>{{ $article->title }}</h1>
 
     <div class="ml-auto mt-2">
@@ -17,13 +17,13 @@
     <p>Welcome to Wiki.</p>
     <p><a href="{{ route('articles.create') }}">Start to write something.</a></p>
 @else
-
-<div class="article show content markdown-body">
-    <div id="body">
+<div class="row">
+    <div class="content markdown-body col-12 col-lg-10">
 {{-- 如果 $article->body 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
 {!! $article->body !!}
     </div>
-    <div id="toc" class="ml-auto">
+    {{-- 寬度 lg 以上才顯示目錄 --}}
+    <div class="toc d-none d-lg-block col-lg-2 ml-auto">
 {!! $article->toc !!}
     </div>
 </div>
