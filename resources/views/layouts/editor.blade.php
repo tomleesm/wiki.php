@@ -9,7 +9,7 @@
 @yield('modal-alert', '')
 
 <!-- Nav tabs -->
-<ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="true">@yield('tab-label')</a>
   </li>
