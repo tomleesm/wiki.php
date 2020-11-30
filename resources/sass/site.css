@@ -23,12 +23,6 @@
 
 /******** 目錄設定 ********/
 
-/* 隱藏目錄 ul 和 li 預設的圓點 */
-nav.table-of-contents ul,
-nav.table-of-contents li {
-  list-style: none;
-}
-
 /* #body, $toc 的最近上層元素要設爲 display: flex 才能用 order */
 .content {
   display: flex;
@@ -75,6 +69,10 @@ nav.table-of-contents li {
 #toc a {
   /* 顏色只能套用在 inline 元素，例如 <a> */
   color: #99979c;
+}
+#toc a:hover {
+  /* 顏色只能套用在 inline 元素，例如 <a> */
+  color: #007bff;
 }
 
 /* Search or jump to 在 navbar 上方 */
