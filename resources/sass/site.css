@@ -39,12 +39,11 @@
   /* 和左邊內容區塊隔一點距離 */
   margin-left: 1em;
 
-  /* 如果設定 sticky 在 #toc 這種區塊元素，似乎會失效，所以設定在 #toc > ul */
+  /* 如果設定 sticky 在 .toc 這種區塊元素，似乎會失效，所以設定在 .toc > ul */
   position: sticky;
   top: 10px;
 
   /* 爲使 overflow 有效，區塊容器要有 height 或 max-height */
-  /* 設定放在 $toc 會讓sticky 失效，所以放在這裡 */
   max-height: 90vh;
   overflow-x: hidden;
   overflow-y: auto;
@@ -55,7 +54,6 @@
   color: #99979c;
 }
 .toc a:hover {
-  /* 顏色只能套用在 inline 元素，例如 <a> */
   color: #007bff;
 }
 
