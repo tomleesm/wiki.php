@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="{{ asset('css/app.css')}}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/prism.css')}}" type="text/css">
     </head>
-    <body class="line-numbers">
+    <body class="line-numbers bg-white">
         <nav class="navbar navbar-dark bg-dark navbar-expand-md mb-2">
             <a class="navbar-brand" href="{{ route('home') }}">{{ env('APP_NAME', 'Wiki.php') }}</a>
 
