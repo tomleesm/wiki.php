@@ -9,7 +9,7 @@
 @yield('modal-alert', '')
 
 <!-- Nav tabs -->
-<ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="true">@yield('tab-label')</a>
   </li>
@@ -23,7 +23,7 @@
     {{-- 輸入 div --}}
     <div class="tab-pane edit active" id="edit" role="tabpanel" aria-labelledby="edit-tab">
         {{-- 條目標題 --}}
-        <h3>{{ $article->title }}</h3>
+        <h1>{{ $article->title }}</h1>
         @yield('form')
             @csrf
             @yield('method-extra', '')
@@ -40,15 +40,17 @@
     </div>
     {{-- 預覽 div --}}
     <div class="tab-pane" id="preview" role="tabpanel" aria-labelledby="preview-tab">
-        <h3>{{ $article->title }}</h3>
+        <h1>{{ $article->title }}</h1>
         <div class="preview markdown-body">
         </div>
     </div>
 
+      <div class="form-inline mt-3">
         @section('btn-save-cancel')
         <button class="btn btn-primary">Save</button>
         <a class="btn" href="{{ route('articles.show', ['title' => $article->title]) }}">Cancel</a>
         @show
+      </div>
     </form>
 </div>
 @endsection
