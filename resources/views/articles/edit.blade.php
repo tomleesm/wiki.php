@@ -31,7 +31,6 @@
 
 @section('btn-save-cancel')
 {{-- 按鈕 Save, Cancel 和權限控制選單 --}}
-<div class="form-inline">
     @can('update', $article)
     @parent
     @else
@@ -52,5 +51,4 @@
     </div>
     @endif
     @endauth
-</div>
 @endsection

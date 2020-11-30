@@ -45,10 +45,12 @@
         </div>
     </div>
 
+      <div class="form-inline mt-3">
         @section('btn-save-cancel')
         <button class="btn btn-primary">Save</button>
         <a class="btn" href="{{ route('articles.show', ['title' => $article->title]) }}">Cancel</a>
         @show
+      </div>
     </form>
 </div>
 @endsection
