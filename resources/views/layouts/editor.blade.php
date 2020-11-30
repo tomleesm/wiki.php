@@ -23,7 +23,7 @@
     {{-- 輸入 div --}}
     <div class="tab-pane edit active" id="edit" role="tabpanel" aria-labelledby="edit-tab">
         {{-- 條目標題 --}}
-        <h3>{{ $article->title }}</h3>
+        <h1>{{ $article->title }}</h1>
         @yield('form')
             @csrf
             @yield('method-extra', '')
@@ -40,7 +40,7 @@
     </div>
     {{-- 預覽 div --}}
     <div class="tab-pane" id="preview" role="tabpanel" aria-labelledby="preview-tab">
-        <h3>{{ $article->title }}</h3>
+        <h1>{{ $article->title }}</h1>
         <div class="preview markdown-body">
         </div>
     </div>
