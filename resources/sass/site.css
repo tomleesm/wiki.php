@@ -15,31 +15,18 @@
   }
 }
 
-/* 設定 nline code 是深灰色背景，白色字 */
+/* 設定 inline code 是深灰色背景，白色字 */
 .markdown-body code {
   background-color: #343a40;
-}
-
-code {
   color: #ffffff;
 }
+
+/******** 目錄設定 ********/
 
 /* 隱藏目錄 ul 和 li 預設的圓點 */
 nav.table-of-contents ul,
 nav.table-of-contents li {
   list-style: none;
-}
-
-/* Edit 預覽的圖片不要太大 */
-.preview img {
-  max-width: 100%;
-}
-
-/******** 目錄設定 ********/
-
-/* 編輯時的預覽不顯示目錄 */
-.preview > #toc{
-  display: none;
 }
 
 /* #body, $toc 的最近上層元素要設爲 display: flex 才能用 order */
