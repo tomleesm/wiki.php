@@ -18,7 +18,7 @@
     <p><a href="{{ route('articles.create') }}">Start to write something.</a></p>
 @else
 
-<div id="readArticleContent" class="article content markdown-body">
+<div class="article show content markdown-body">
     <div id="body">
 {{-- 如果 $article->body 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
 {!! $article->body !!}
