@@ -18,14 +18,17 @@
     <p><a href="{{ route('articles.create') }}">Start to write something.</a></p>
 @else
 <div class="row">
-    <div class="content markdown-body col-12 col-lg-10">
+    <div class="content markdown-body col-12 @unless($article->toc == '') col-lg-10 @endunless">
 {{-- 如果 $article->body 有縮排，會造成 markdown 轉 html 的第一行變成 <pre> --}}
 {!! $article->body !!}
     </div>
+
+    @unless($article->toc == '')
     {{-- 寬度 lg 以上才顯示目錄 --}}
     <div class="toc d-none d-lg-block col-lg-2 ml-auto">
 {!! $article->toc !!}
     </div>
+    @endunless
 </div>
 @endempty
 @endsection
