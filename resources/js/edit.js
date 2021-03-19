@@ -143,6 +143,8 @@ var simplemde = new SimpleMDE({
   promptURLs: true,
   // 取消拼字檢查，因爲輸入中文會一片粉紅
   spellChecker: false,
+  // 程式碼輸入區塊會自動縮排，預設使用 tab，設爲 false 則改爲 space
+  indentWithTabs: false,
 });
 
 // 點選分頁 Preview 時，更新編輯預覽
